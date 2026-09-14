@@ -4,7 +4,7 @@ An open skill file that lets an AI agent turn a raw talking-head clip into a fin
 
 The agent asks how hard you want the edit (1 to 100), then removes pauses, writes word-synced captions, animates info cards on the words that earn them, zooms, grades color, keys green screens, mixes a music bed under the voice with ducking, adds sound effects, normalizes loudness, and checks its own render against nine quality gates.
 
-- Site and tutorial: https://splicecraft.vercel.app
+- Site and tutorial: https://bryankwandou.github.io/splicecraft/ (Vercel deploy pending: the Vercel team is at its 200-project Hobby limit)
 - The skill: [`skills/splicecraft/SKILL.md`](skills/splicecraft/SKILL.md)
 - Requirements: ffmpeg (with libass) and Python 3.9+. Transcription via a Groq API key or offline faster-whisper.
 
