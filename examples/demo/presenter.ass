@@ -1,0 +1,14 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: S,Arial,20,&H00303030,&H00303030,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0,0,7,0,0,0,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,0:01:00.00,S,,0,0,0,,{\an7\pos(240,1180)\p1\1c&H2B2B33&}m 300 0 b 520 0 600 120 600 300 l 600 740 l 0 740 l 0 300 b 0 120 80 0 300 0
+Dialogue: 1,0:00:00.00,0:01:00.00,S,,0,0,0,,{\an7\pos(390,700)\p1\1c&H7FA3D6&}m 150 0 b 240 0 300 90 300 220 b 300 360 230 440 150 440 b 70 440 0 360 0 220 b 0 90 60 0 150 0
+Dialogue: 2,0:00:00.00,0:01:00.00,S,,0,0,0,,{\an7\pos(372,660)\p1\1c&H202020&}m 168 0 b 280 0 336 60 336 130 l 0 130 b 0 60 56 0 168 0

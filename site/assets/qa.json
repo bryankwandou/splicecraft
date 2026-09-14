@@ -1,0 +1,59 @@
+{
+  "video": "edited.mp4",
+  "pass": true,
+  "checks": [
+    {
+      "gate": "loudness",
+      "pass": true,
+      "detail": "integrated -14.4 LUFS (target -14 +/- 2)"
+    },
+    {
+      "gate": "true_peak",
+      "pass": true,
+      "detail": "peak -1.5 dBFS (must be <= -0.5)"
+    },
+    {
+      "gate": "no_black_gaps",
+      "pass": true,
+      "detail": "0 black segments over 0.3s"
+    },
+    {
+      "gate": "resolution",
+      "pass": true,
+      "detail": "1080x1920"
+    },
+    {
+      "gate": "duration_match",
+      "pass": true,
+      "detail": "render 32.51s vs plan 32.51s"
+    },
+    {
+      "gate": "card_density",
+      "pass": true,
+      "detail": "7.4 cards/min, ceiling 8.5"
+    },
+    {
+      "gate": "no_card_overlap",
+      "pass": true,
+      "detail": "0 overlapping cards"
+    },
+    {
+      "gate": "breathing_room",
+      "pass": true,
+      "detail": "38% of runtime has no card (min 35%)"
+    },
+    {
+      "gate": "captions_present",
+      "pass": true,
+      "detail": "83 captioned words"
+    }
+  ],
+  "probe": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30.0,
+    "duration": 32.509,
+    "has_audio": true,
+    "orientation": "vertical"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "note": "Edit level 1-100 is split into five tiers. Continuous values (silence gap, card density, zoom, grade strength) are interpolated inside splicecraft.py:params_for. Tier params below are switches.",
+  "tiers": [
+    {"name": "Clean",      "min": 1,  "max": 20,  "params": {"captions": "plain",     "caption_words": 7, "zoom": false, "sfx": false, "music": false, "hook_title": false, "progress": false, "flash": false, "word_zoom": false, "allow_ranking": false, "callbacks": false}},
+    {"name": "Social",     "min": 21, "max": 40,  "params": {"captions": "chunk",     "caption_words": 4, "zoom": true,  "sfx": false, "music": true,  "hook_title": true,  "progress": false, "flash": false, "word_zoom": false, "allow_ranking": true,  "callbacks": false}},
+    {"name": "Creator",    "min": 41, "max": 60,  "params": {"captions": "highlight", "caption_words": 3, "zoom": true,  "sfx": true,  "music": true,  "hook_title": true,  "progress": false, "flash": false, "word_zoom": true,  "allow_ranking": true,  "callbacks": true}},
+    {"name": "Pro",        "min": 61, "max": 80,  "params": {"captions": "pop",       "caption_words": 3, "zoom": true,  "sfx": true,  "music": true,  "hook_title": true,  "progress": true,  "flash": false, "word_zoom": true,  "allow_ranking": true,  "callbacks": true}},
+    {"name": "Showrunner", "min": 81, "max": 100, "params": {"captions": "kinetic",   "caption_words": 3, "zoom": true,  "sfx": true,  "music": true,  "hook_title": true,  "progress": true,  "flash": true,  "word_zoom": true,  "allow_ranking": true,  "callbacks": true}}
+  ]
+}

@@ -1,0 +1,753 @@
+{
+  "version": 1,
+  "source_words": "words.json",
+  "params": {
+    "captions": "kinetic",
+    "caption_words": 3,
+    "zoom": true,
+    "sfx": true,
+    "music": true,
+    "hook_title": true,
+    "progress": true,
+    "flash": true,
+    "word_zoom": true,
+    "allow_ranking": true,
+    "callbacks": true,
+    "level": 85,
+    "tier": "Showrunner",
+    "silence_gap": 0.397,
+    "cards_per_min": 8.5,
+    "min_card_gap": 3.35,
+    "zoom_amount": 1.187,
+    "grade_strength": 0.887
+  },
+  "theme": {
+    "accent": "#FF5A1F",
+    "on_accent": "#FFFFFF",
+    "card_bg": "#FFFFFF",
+    "card_text": "#14161A",
+    "muted": "#6B7280",
+    "caption_text": "#FFFFFF",
+    "caption_stroke": "#0B0C0F",
+    "caption_size": 76,
+    "caption_y": 1390,
+    "card_y": 230,
+    "grade": "punchy",
+    "bpm": 100,
+    "music_mood": "bright",
+    "bg_a": "#FFE9DC",
+    "bg_b": "#FFB38A",
+    "cta_text": "Follow for part two"
+  },
+  "keep": [
+    [
+      0.0,
+      3.14
+    ],
+    [
+      3.34,
+      6.54
+    ],
+    [
+      7.24,
+      10.94
+    ],
+    [
+      11.62,
+      13.06
+    ],
+    [
+      13.26,
+      15.64
+    ],
+    [
+      16.48,
+      17.88
+    ],
+    [
+      18.66,
+      19.62
+    ],
+    [
+      20.44,
+      21.3
+    ],
+    [
+      22.1,
+      23.06
+    ],
+    [
+      23.94,
+      25.36
+    ],
+    [
+      25.58,
+      27.38
+    ],
+    [
+      28.1,
+      33.06
+    ],
+    [
+      33.76,
+      36.06
+    ],
+    [
+      36.64,
+      38.06
+    ],
+    [
+      38.22,
+      40.789
+    ]
+  ],
+  "duration": 32.509,
+  "words": [
+    {
+      "w": "Can",
+      "s": 0.02,
+      "e": 0.24,
+      "brk": false
+    },
+    {
+      "w": "an",
+      "s": 0.24,
+      "e": 0.44,
+      "brk": false
+    },
+    {
+      "w": "AI",
+      "s": 0.44,
+      "e": 0.7,
+      "brk": false
+    },
+    {
+      "w": "agent",
+      "s": 0.7,
+      "e": 1.08,
+      "brk": false
+    },
+    {
+      "w": "edit",
+      "s": 1.08,
+      "e": 1.36,
+      "brk": false
+    },
+    {
+      "w": "a",
+      "s": 1.36,
+      "e": 1.5,
+      "brk": false
+    },
+    {
+      "w": "video",
+      "s": 1.5,
+      "e": 1.8,
+      "brk": false
+    },
+    {
+      "w": "better",
+      "s": 1.8,
+      "e": 2.08,
+      "brk": false
+    },
+    {
+      "w": "than",
+      "s": 2.08,
+      "e": 2.3,
+      "brk": false
+    },
+    {
+      "w": "you?",
+      "s": 2.3,
+      "e": 3.02,
+      "brk": true
+    },
+    {
+      "w": "Let's",
+      "s": 3.26,
+      "e": 3.52,
+      "brk": false
+    },
+    {
+      "w": "find",
+      "s": 3.52,
+      "e": 3.8,
+      "brk": false
+    },
+    {
+      "w": "out.",
+      "s": 3.8,
+      "e": 4.64,
+      "brk": true
+    },
+    {
+      "w": "I",
+      "s": 5.02,
+      "e": 5.14,
+      "brk": false
+    },
+    {
+      "w": "recorded",
+      "s": 5.14,
+      "e": 5.58,
+      "brk": false
+    },
+    {
+      "w": "one",
+      "s": 5.58,
+      "e": 5.88,
+      "brk": false
+    },
+    {
+      "w": "take.",
+      "s": 5.88,
+      "e": 6.22,
+      "brk": true
+    },
+    {
+      "w": "Three",
+      "s": 6.46,
+      "e": 6.66,
+      "brk": false
+    },
+    {
+      "w": "minutes,",
+      "s": 6.66,
+      "e": 7.58,
+      "brk": false
+    },
+    {
+      "w": "two",
+      "s": 7.58,
+      "e": 7.74,
+      "brk": false
+    },
+    {
+      "w": "mistakes,",
+      "s": 7.74,
+      "e": 8.84,
+      "brk": false
+    },
+    {
+      "w": "zero",
+      "s": 8.84,
+      "e": 9.12,
+      "brk": false
+    },
+    {
+      "w": "edits",
+      "s": 9.12,
+      "e": 9.42,
+      "brk": false
+    },
+    {
+      "w": "from",
+      "s": 9.42,
+      "e": 9.66,
+      "brk": false
+    },
+    {
+      "w": "me.",
+      "s": 9.66,
+      "e": 9.92,
+      "brk": true
+    },
+    {
+      "w": "Here's",
+      "s": 10.16,
+      "e": 10.46,
+      "brk": false
+    },
+    {
+      "w": "a",
+      "s": 10.46,
+      "e": 10.6,
+      "brk": false
+    },
+    {
+      "w": "quote.",
+      "s": 10.6,
+      "e": 11.36,
+      "brk": true
+    },
+    {
+      "w": "They",
+      "s": 11.6,
+      "e": 11.74,
+      "brk": false
+    },
+    {
+      "w": "say",
+      "s": 11.74,
+      "e": 11.98,
+      "brk": false
+    },
+    {
+      "w": "the",
+      "s": 11.98,
+      "e": 12.16,
+      "brk": false
+    },
+    {
+      "w": "first",
+      "s": 12.16,
+      "e": 12.46,
+      "brk": false
+    },
+    {
+      "w": "second",
+      "s": 12.46,
+      "e": 12.8,
+      "brk": false
+    },
+    {
+      "w": "decides",
+      "s": 12.8,
+      "e": 13.28,
+      "brk": false
+    },
+    {
+      "w": "everything.",
+      "s": 13.28,
+      "e": 13.74,
+      "brk": true
+    },
+    {
+      "w": "Here's",
+      "s": 13.98,
+      "e": 14.26,
+      "brk": false
+    },
+    {
+      "w": "the",
+      "s": 14.26,
+      "e": 14.36,
+      "brk": false
+    },
+    {
+      "w": "before",
+      "s": 14.36,
+      "e": 14.66,
+      "brk": false
+    },
+    {
+      "w": "and",
+      "s": 14.66,
+      "e": 14.84,
+      "brk": false
+    },
+    {
+      "w": "after.",
+      "s": 14.84,
+      "e": 15.14,
+      "brk": true
+    },
+    {
+      "w": "Here's",
+      "s": 15.38,
+      "e": 15.68,
+      "brk": false
+    },
+    {
+      "w": "a",
+      "s": 15.68,
+      "e": 15.8,
+      "brk": false
+    },
+    {
+      "w": "ranking.",
+      "s": 15.8,
+      "e": 16.1,
+      "brk": true
+    },
+    {
+      "w": "Hook",
+      "s": 16.34,
+      "e": 16.54,
+      "brk": false
+    },
+    {
+      "w": "first.",
+      "s": 16.54,
+      "e": 16.96,
+      "brk": true
+    },
+    {
+      "w": "Caption",
+      "s": 17.2,
+      "e": 17.58,
+      "brk": false
+    },
+    {
+      "w": "second.",
+      "s": 17.58,
+      "e": 17.92,
+      "brk": true
+    },
+    {
+      "w": "Music",
+      "s": 18.16,
+      "e": 18.5,
+      "brk": false
+    },
+    {
+      "w": "third.",
+      "s": 18.5,
+      "e": 19.34,
+      "brk": true
+    },
+    {
+      "w": "Here's",
+      "s": 19.58,
+      "e": 19.88,
+      "brk": false
+    },
+    {
+      "w": "a",
+      "s": 19.88,
+      "e": 20.0,
+      "brk": false
+    },
+    {
+      "w": "word",
+      "s": 20.0,
+      "e": 20.22,
+      "brk": false
+    },
+    {
+      "w": "worth",
+      "s": 20.22,
+      "e": 20.48,
+      "brk": false
+    },
+    {
+      "w": "zooming",
+      "s": 20.48,
+      "e": 20.8,
+      "brk": false
+    },
+    {
+      "w": "into.",
+      "s": 20.8,
+      "e": 21.14,
+      "brk": true
+    },
+    {
+      "w": "Rhythm.",
+      "s": 21.38,
+      "e": 22.1,
+      "brk": true
+    },
+    {
+      "w": "Some",
+      "s": 21.62,
+      "e": 22.96,
+      "brk": false
+    },
+    {
+      "w": "sentences",
+      "s": 22.96,
+      "e": 23.54,
+      "brk": false
+    },
+    {
+      "w": "need",
+      "s": 23.54,
+      "e": 23.88,
+      "brk": false
+    },
+    {
+      "w": "nothing",
+      "s": 23.88,
+      "e": 24.16,
+      "brk": false
+    },
+    {
+      "w": "at",
+      "s": 24.16,
+      "e": 24.38,
+      "brk": false
+    },
+    {
+      "w": "all,",
+      "s": 24.38,
+      "e": 25.1,
+      "brk": false
+    },
+    {
+      "w": "and",
+      "s": 25.1,
+      "e": 25.18,
+      "brk": false
+    },
+    {
+      "w": "the",
+      "s": 25.18,
+      "e": 25.3,
+      "brk": false
+    },
+    {
+      "w": "edit",
+      "s": 25.3,
+      "e": 25.52,
+      "brk": false
+    },
+    {
+      "w": "knows",
+      "s": 25.52,
+      "e": 25.82,
+      "brk": false
+    },
+    {
+      "w": "that.",
+      "s": 25.82,
+      "e": 26.1,
+      "brk": true
+    },
+    {
+      "w": "Now",
+      "s": 26.34,
+      "e": 26.62,
+      "brk": false
+    },
+    {
+      "w": "bring",
+      "s": 26.62,
+      "e": 26.88,
+      "brk": false
+    },
+    {
+      "w": "back",
+      "s": 26.88,
+      "e": 27.22,
+      "brk": false
+    },
+    {
+      "w": "the",
+      "s": 27.22,
+      "e": 27.4,
+      "brk": false
+    },
+    {
+      "w": "number",
+      "s": 27.4,
+      "e": 27.64,
+      "brk": false
+    },
+    {
+      "w": "from",
+      "s": 27.64,
+      "e": 27.86,
+      "brk": false
+    },
+    {
+      "w": "the",
+      "s": 27.86,
+      "e": 28.08,
+      "brk": false
+    },
+    {
+      "w": "start.",
+      "s": 28.08,
+      "e": 28.4,
+      "brk": true
+    },
+    {
+      "w": "Remember",
+      "s": 28.64,
+      "e": 29.12,
+      "brk": false
+    },
+    {
+      "w": "it.",
+      "s": 29.12,
+      "e": 29.82,
+      "brk": true
+    },
+    {
+      "w": "Follow",
+      "s": 30.06,
+      "e": 30.42,
+      "brk": false
+    },
+    {
+      "w": "for",
+      "s": 30.42,
+      "e": 30.64,
+      "brk": false
+    },
+    {
+      "w": "the",
+      "s": 30.64,
+      "e": 30.78,
+      "brk": false
+    },
+    {
+      "w": "full",
+      "s": 30.78,
+      "e": 31.02,
+      "brk": false
+    },
+    {
+      "w": "skill",
+      "s": 31.02,
+      "e": 31.3,
+      "brk": false
+    },
+    {
+      "w": "file.",
+      "s": 31.3,
+      "e": 32.5,
+      "brk": true
+    }
+  ],
+  "cards": [
+    {
+      "type": "hook",
+      "start": 0.02,
+      "end": 3.62,
+      "text": "Can an AI agent edit a video better than you?",
+      "label": ""
+    },
+    {
+      "type": "number",
+      "start": 6.46,
+      "end": 10.52,
+      "label": "BY THE NUMBERS",
+      "items": [
+        {
+          "value": "3",
+          "label": "minutes",
+          "t": 6.46
+        },
+        {
+          "value": "2",
+          "label": "mistakes",
+          "t": 7.58
+        },
+        {
+          "value": "0",
+          "label": "edits",
+          "t": 8.84
+        }
+      ]
+    },
+    {
+      "type": "quote",
+      "start": 11.6,
+      "end": 14.34,
+      "label": "QUOTE",
+      "text": "They say the first second decides everything."
+    },
+    {
+      "type": "ranking",
+      "start": 16.39,
+      "end": 19.94,
+      "label": "RANKED",
+      "items": [
+        {
+          "rank": 1,
+          "text": "Hook",
+          "t": 16.54
+        },
+        {
+          "rank": 2,
+          "text": "Caption",
+          "t": 17.58
+        },
+        {
+          "rank": 3,
+          "text": "Music",
+          "t": 18.5
+        }
+      ]
+    },
+    {
+      "type": "callback",
+      "start": 26.34,
+      "end": 29.96,
+      "label": "BACK TO THE START",
+      "items": [
+        {
+          "value": "3",
+          "label": "minutes"
+        },
+        {
+          "value": "2",
+          "label": "mistakes"
+        },
+        {
+          "value": "0",
+          "label": "edits"
+        }
+      ]
+    },
+    {
+      "type": "cta",
+      "start": 30.06,
+      "end": 32.509,
+      "text": "Follow for the full skill file.",
+      "label": ""
+    }
+  ],
+  "zooms": [
+    {
+      "start": 0.02,
+      "end": 2.02,
+      "amount": 1.187,
+      "ease": "in"
+    },
+    {
+      "start": 6.46,
+      "end": 7.66,
+      "amount": 1.1122,
+      "ease": "punch"
+    },
+    {
+      "start": 13.98,
+      "end": 15.14,
+      "amount": 1.06545,
+      "ease": "drift"
+    }
+  ],
+  "sfx": [
+    {
+      "t": 0.02,
+      "kind": "pop"
+    },
+    {
+      "t": 6.46,
+      "kind": "pop"
+    },
+    {
+      "t": 11.6,
+      "kind": "pop"
+    },
+    {
+      "t": 16.39,
+      "kind": "whoosh"
+    },
+    {
+      "t": 17.58,
+      "kind": "tick"
+    },
+    {
+      "t": 18.5,
+      "kind": "tick"
+    },
+    {
+      "t": 26.34,
+      "kind": "pop"
+    },
+    {
+      "t": 30.06,
+      "kind": "pop"
+    }
+  ],
+  "flashes": [
+    {
+      "t": 0.02
+    }
+  ]
+}
