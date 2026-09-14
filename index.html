@@ -229,7 +229,7 @@ footer .row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;m
       <button data-lang="en" aria-pressed="true">EN</button>
       <button data-lang="id" aria-pressed="false">ID</button>
     </div>
-    <a class="btn ghost" href="https://github.com/nayrbryanGaming/splicecraft" style="padding:8px 14px;font-size:14px">GitHub</a>
+    <a class="btn ghost" href="https://github.com/bryankwandou/splicecraft" style="padding:8px 14px;font-size:14px">GitHub</a>
   </div>
 </nav>
 
@@ -240,12 +240,12 @@ footer .row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;m
       <h1 class="rv" style="margin-top:18px" data-i18n-html="hero_title">Hand an agent a raw take. Get back a <span class="cut">finished</span> short.</h1>
       <p class="lede rv" data-i18n="hero_lede">One SKILL.md and one Python script. Claude, Codex, Gemini, or a small local model reads it, asks how hard you want the edit, then cuts pauses, writes captions word by word, animates cards, grades color, keys green screens, mixes music, and checks its own work.</p>
       <div class="install rv">
-        <code id="cmd">npx skills add nayrbryanGaming/splicecraft</code>
+        <code id="cmd">npx skills add bryankwandou/splicecraft</code>
         <button class="copy" data-copy="cmd" data-i18n="copy">Copy</button>
       </div>
       <div class="hero-cta rv">
         <a class="btn solid" href="#how" data-i18n="cta_how">See the pipeline</a>
-        <a class="btn ghost" href="https://github.com/nayrbryanGaming/splicecraft/blob/main/skills/splicecraft/SKILL.md" data-i18n="cta_read">Read SKILL.md</a>
+        <a class="btn ghost" href="https://github.com/bryankwandou/splicecraft/blob/main/skills/splicecraft/SKILL.md" data-i18n="cta_read">Read SKILL.md</a>
       </div>
       <div class="meta-row rv">
         <div><b>1–100</b><span data-i18n="m1">edit levels</span></div>
@@ -396,16 +396,16 @@ QA PASSED</pre></div>
       <button role="tab" aria-selected="false" data-tab="manual">No agent</button>
     </div>
     <div class="tabpanel rv">
-<pre data-panel="claude">npx skills add nayrbryanGaming/splicecraft
+<pre data-panel="claude">npx skills add bryankwandou/splicecraft
 
 # then, inside Claude Code
 Use the splicecraft skill. Edit ./raw/take1.mp4. Ask me the intake questions first.</pre>
-<pre data-panel="codex" hidden>git clone https://github.com/nayrbryanGaming/splicecraft .splicecraft
+<pre data-panel="codex" hidden>git clone https://github.com/bryankwandou/splicecraft .splicecraft
 echo "When asked to edit a video, follow .splicecraft/skills/splicecraft/SKILL.md exactly." >> AGENTS.md
 
 # prompt
 Read .splicecraft/skills/splicecraft/SKILL.md, then edit ./raw/take1.mp4 step by step.</pre>
-<pre data-panel="gemini" hidden>git clone https://github.com/nayrbryanGaming/splicecraft .splicecraft
+<pre data-panel="gemini" hidden>git clone https://github.com/bryankwandou/splicecraft .splicecraft
 cat >> GEMINI.md &lt;&lt;'EOF'
 For any video editing request, read .splicecraft/skills/splicecraft/SKILL.md
 and follow the steps in order. Do not skip Step 6 (QA). Do not invent flags.
@@ -417,7 +417,7 @@ EOF</pre>
 4. Run Step 4 with --level 60 --style studio. Paste the card list.
 5. Run Step 5.
 6. Run Step 6 and paste the QA table.</pre>
-<pre data-panel="manual" hidden>git clone https://github.com/nayrbryanGaming/splicecraft
+<pre data-panel="manual" hidden>git clone https://github.com/bryankwandou/splicecraft
 export GROQ_API_KEY=...        # or: pip install faster-whisper
 python splicecraft/skills/splicecraft/scripts/splicecraft.py auto take.mp4 \
   -d work --level 60 --style studio --size 1080x1920</pre>
@@ -455,7 +455,7 @@ python splicecraft/skills/splicecraft/scripts/splicecraft.py auto take.mp4 \
     <div class="big">splice<span>craft</span></div>
     <div class="row">
       <span data-i18n="foot">MIT licensed. Built on ffmpeg and libass.</span>
-      <span><a href="https://github.com/nayrbryanGaming/splicecraft">GitHub</a> · <a href="https://github.com/nayrbryanGaming/splicecraft/blob/main/skills/splicecraft/SKILL.md">SKILL.md</a></span>
+      <span><a href="https://github.com/bryankwandou/splicecraft">GitHub</a> · <a href="https://github.com/bryankwandou/splicecraft/blob/main/skills/splicecraft/SKILL.md">SKILL.md</a></span>
     </div>
   </div>
 </footer>
