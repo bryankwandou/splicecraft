@@ -7,9 +7,9 @@ The script makes the decisions, so output quality depends very little on which m
 Install once (either works):
 
 ```bash
-npx skills add nayrbryanGaming/splicecraft
+npx skills add bryankwandou/splicecraft
 # or
-git clone https://github.com/nayrbryanGaming/splicecraft ~/.claude/skills-src/splicecraft
+git clone https://github.com/bryankwandou/splicecraft ~/.claude/skills-src/splicecraft
 cp -r ~/.claude/skills-src/splicecraft/skills/splicecraft ~/.claude/skills/
 ```
 
@@ -22,7 +22,7 @@ Use the splicecraft skill. Edit ./raw/take1.mp4. Ask me the intake questions fir
 ## OpenAI Codex CLI
 
 ```bash
-git clone https://github.com/nayrbryanGaming/splicecraft .splicecraft
+git clone https://github.com/bryankwandou/splicecraft .splicecraft
 ```
 
 Prompt:
@@ -41,7 +41,7 @@ When asked to edit a video, follow .splicecraft/skills/splicecraft/SKILL.md exac
 ## Gemini CLI
 
 ```bash
-git clone https://github.com/nayrbryanGaming/splicecraft .splicecraft
+git clone https://github.com/bryankwandou/splicecraft .splicecraft
 ```
 
 Add to `GEMINI.md`:

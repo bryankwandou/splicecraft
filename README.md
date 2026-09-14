@@ -13,13 +13,13 @@ The agent asks how hard you want the edit (1 to 100), then removes pauses, write
 Claude Code and other agents that read `SKILL.md` folders:
 
 ```bash
-npx skills add nayrbryanGaming/splicecraft
+npx skills add bryankwandou/splicecraft
 ```
 
 Any agent (Codex, Gemini CLI, Cursor, a local model):
 
 ```bash
-git clone https://github.com/nayrbryanGaming/splicecraft .splicecraft
+git clone https://github.com/bryankwandou/splicecraft .splicecraft
 ```
 
 Then tell it: `Read .splicecraft/skills/splicecraft/SKILL.md and follow it to edit ./take.mp4.`
