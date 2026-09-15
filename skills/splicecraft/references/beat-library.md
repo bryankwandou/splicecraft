@@ -1,5 +1,8 @@
 # Beat library
 
+> **Published:** 2026-09-15 · **Last reviewed:** 2026-09-15
+> **Agent check:** compare this date with today. If more than 6 months have passed, or a platform, model, or tool named here has changed, research the current facts on the web before relying on them, tell the user what changed, and update this file.
+
 A beat is one sentence and the treatment it gets. The planner (`plan` in `scripts/splicecraft.py`) checks beats in the order listed. The first match wins. A sentence that matches nothing gets captions only.
 
 All positions use a 1080 x 1920 design grid and are scaled to the output size. Cards live in the top third (y 230 to about 600). Captions live at y 1390. The face is assumed to sit between y 600 and y 1300.
@@ -20,7 +23,7 @@ Card timing rule for every type: `start` = the first word of the trigger, `end` 
 ## 2. cta
 
 - **Trigger:** a sentence in the last 40% of the video containing follow, subscribe, or ikuti. Used once.
-- **Look:** accent pill near the bottom (y 1620) with `cta_text` from the theme.
+- **Look:** accent pill in the card zone at the top (y card_y + 40); the bottom ~400 px is covered by platform buttons and captions with `cta_text` from the theme.
 - **Variant:** "comment WORD" becomes a question pill reading `Comment WORD`.
 - **Do not:** show two CTAs back to back. The planner keeps only the first follow sentence.
 

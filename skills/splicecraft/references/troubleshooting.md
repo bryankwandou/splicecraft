@@ -1,5 +1,8 @@
 # Troubleshooting
 
+> **Published:** 2026-09-15 · **Last reviewed:** 2026-09-15
+> **Agent check:** compare this date with today. If more than 6 months have passed, or a platform, model, or tool named here has changed, research the current facts on the web before relying on them, tell the user what changed, and update this file.
+
 | Symptom | Cause | Fix |
 |---|---|---|
 | `ffmpeg not found on PATH` | not installed or terminal opened before install | install, then open a new terminal |

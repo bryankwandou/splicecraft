@@ -1,5 +1,8 @@
 # Baseline teardown: "Which AI edits better?"
 
+> **Published:** 2026-09-15 · **Last reviewed:** 2026-09-15
+> **Agent check:** compare this date with today. If more than 6 months have passed, or a platform, model, or tool named here has changed, research the current facts on the web before relying on them, tell the user what changed, and update this file.
+
 Source studied: a 107.6 second vertical video (1080x1920, 60 fps, AAC stereo, mean loudness -17.8 dB, peak -0.9 dB) from the withPT.ai account. One creator, one raw take, handed to two AI models with the same prompt. The frame is split: the top half is one model's edit, the bottom half is the other's, both playing in sync under a fixed header.
 
 Method: frames sampled every 2 s into contact sheets, scene changes detected with ffmpeg `select=gt(scene,0.25)`, speech transcribed with Whisper large-v3 at word level. Timestamps below are from the source.

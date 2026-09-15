@@ -1,5 +1,8 @@
 # Design study 2: the frosted-glass edit
 
+> **Published:** 2026-09-15 · **Last reviewed:** 2026-09-15
+> **Agent check:** compare this date with today. If more than 6 months have passed, or a platform, model, or tool named here has changed, research the current facts on the web before relying on them, tell the user what changed, and update this file.
+
 Source studied: a 26.0 second vertical video (1080x1920, 30 fps) from the softgirlnocode account. Same format as the first baseline (two AI models edit one take, stacked), but a very different visual system. A woman speaks to camera in a bright apartment: grey wall, window, white chair, black top.
 
 Transcript (Whisper large-v3):
