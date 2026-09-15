@@ -5,3 +5,5 @@ work/
 splicecraft_out/
 examples/demo/auto.log
 .env
+
+.vercel
