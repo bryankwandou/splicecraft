@@ -7,3 +7,5 @@ examples/demo/auto.log
 .env
 
 .vercel
+examples/demo/out_brief/
+examples/demo/out_brief.log

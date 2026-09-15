@@ -1,0 +1,34 @@
+{
+  "hackathon_demo": [
+    "Hi judges. For this hackathon we built a wallet that pays refunds on Solana. The problem is sellers disappear. Our solution locks a bond on devnet. Here is the live dashboard. Users can open a claim in two clicks. The code is on GitHub and the demo is deployed.",
+    "Halo juri. Di hackaton ini kami bikin prototype untuk UMKM. Masalah mereka adalah pencatatan. Solusi kami dashboard live yang sudah deploy. Tim kami tiga orang."
+  ],
+  "tutorial_docs": [
+    "In this tutorial I will show you how to install the tool. Step one, open the settings menu. Then click the button that says configure. Next, type the command and run it. Select the folder and the file. That is the whole setup guide from the documentation.",
+    "Langkah pertama buka pengaturan. Lalu klik tombol pasang. Kemudian pilih folder. Jalankan perintahnya. Ini panduan dari dokumentasi resmi."
+  ],
+  "product_launch": [
+    "Introducing our new app. Today we launch the feature customers asked for. It is available now and free to start. Sign up for the waitlist, pricing is limited for the first week.",
+    "Memperkenalkan fitur baru kami. Harga promo terbatas, gratis untuk daftar hari ini. Beli sekarang."
+  ],
+  "education_explainer": [
+    "Why do cats purr? Research says it is because the vibration helps bones heal. According to one study, 25 to 150 hertz is the range. The history of this fact actually goes back decades of science.",
+    "Kenapa langit biru? Menurut penelitian, karena cahaya biru tersebar lebih banyak. Faktanya 70 persen orang tidak tahu artinya."
+  ],
+  "story_vlog": [
+    "Honestly I was not ready for this trip. Yesterday felt like the longest day of my life. My family and my friend waited at the airport. This story is about love and the day I almost missed it.",
+    "Jujur rasanya kemarin hari paling berat dalam hidup aku. Ini cerita tentang keluarga dan teman."
+  ],
+  "sales_pitch": [
+    "This is the secret to growing revenue. Most business owners make the same mistakes with clients. My strategy doubled sales and profit. Three marketing tips that grew my income and my ROI.",
+    "Rahasia omzet naik. Strategi bisnis ini bikin penjualan dan untung naik, klien makin banyak, cuan makin besar."
+  ],
+  "podcast_talk": [
+    "Welcome to episode forty of the podcast. My guest today does a lot of interviews. What do you think? Do you agree? That is my honest opinion. What was the hardest question in this conversation?",
+    "Selamat datang di episode baru obrolan kita. Tamu hari ini punya pendapat menarik. Kamu setuju? Menurutku ini penting."
+  ],
+  "ai_comparison": [
+    "Which AI model is better at video editing, ChatGPT or Claude? We tested both with the same prompt. Fable versus Gemini in a benchmark. The winner surprised me. This comparison shows which agent won.",
+    "Mana AI yang lebih bagus? Kita uji GPT lawan Claude dengan prompt yang sama. Bandingkan hasilnya dan lihat pemenangnya."
+  ]
+}

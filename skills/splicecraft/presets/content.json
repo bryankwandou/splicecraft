@@ -1,0 +1,2401 @@
+{
+ "note": "Script library for the script command. frameworks: 100 content structures. hooks: 200 named opening techniques; risky ones manipulate emotion and may only be used with a true claim. genre_scripts: which frameworks, hooks and beat order suit each genre.",
+ "frameworks": [
+  {
+   "category": "conversion",
+   "name": "AIDA",
+   "steps": [
+    "Attention",
+    "Interest",
+    "Desire",
+    "Action"
+   ]
+  },
+  {
+   "category": "conversion",
+   "name": "PAS",
+   "steps": [
+    "Problem",
+    "Agitate",
+    "Solution"
+   ]
+  },
+  {
+   "category": "conversion",
+   "name": "BAB",
+   "steps": [
+    "Before",
+    "After",
+    "Bridge"
+   ]
+  },
+  {
+   "category": "conversion",
+   "name": "FAB",
+   "steps": [
+    "Features",
+    "Advantages",
+    "Benefits"
+   ]
+  },
+  {
+   "category": "conversion",
+   "name": "4P",
+   "steps": [
+    "Promise",
+    "Picture",
+    "Proof",
+    "Push"
+   ]
+  },
+  {
+   "category": "conversion",
+   "name": "4C",
+   "steps": [
+    "Clear",
+    "Concise",
+    "Compelling",
+    "Credible"
+   ]
+  },
+  {
+   "category": "conversion",
+   "name": "4U",
+   "steps": [
+    "Useful",
+    "Urgent",
+    "Unique",
+    "Ultra-specific"
+   ]
+  },
+  {
+   "category": "conversion",
+   "name": "ACCA",
+   "steps": [
+    "Awareness",
+    "Comprehension",
+    "Conviction",
+    "Action"
+   ]
+  },
+  {
+   "category": "conversion",
+   "name": "AIDA-C",
+   "steps": [
+    "Attention",
+    "Interest",
+    "Desire",
+    "Action",
+    "Conviction"
+   ]
+  },
+  {
+   "category": "conversion",
+   "name": "PASTOR",
+   "steps": [
+    "Problem",
+    "Amplify",
+    "Story",
+    "Transformation",
+    "Offer",
+    "Response"
+   ]
+  },
+  {
+   "category": "conversion",
+   "name": "QUEST",
+   "steps": [
+    "Qualify",
+    "Understand",
+    "Educate",
+    "Stimulate",
+    "Transition"
+   ]
+  },
+  {
+   "category": "conversion",
+   "name": "SLAP",
+   "steps": [
+    "Stop",
+    "Look",
+    "Act",
+    "Purchase"
+   ]
+  },
+  {
+   "category": "conversion",
+   "name": "AIDCA",
+   "steps": [
+    "Attention",
+    "Interest",
+    "Desire",
+    "Conviction",
+    "Action"
+   ]
+  },
+  {
+   "category": "conversion",
+   "name": "AICPB",
+   "steps": [
+    "Attention",
+    "Interest",
+    "Concern",
+    "Proof",
+    "Benefit"
+   ]
+  },
+  {
+   "category": "conversion",
+   "name": "PASPP",
+   "steps": [
+    "Problem",
+    "Agitate",
+    "Solution",
+    "Proof",
+    "Pitch"
+   ]
+  },
+  {
+   "category": "story",
+   "name": "Hero's Journey",
+   "steps": [
+    "Status quo",
+    "Call to adventure",
+    "Conflict",
+    "Transformation",
+    "Return"
+   ]
+  },
+  {
+   "category": "story",
+   "name": "Pixar Pitch",
+   "steps": [
+    "Once upon a time",
+    "Every day",
+    "One day",
+    "Because of that",
+    "Until finally"
+   ]
+  },
+  {
+   "category": "story",
+   "name": "Sparkline",
+   "steps": [
+    "What is",
+    "What could be",
+    "Contrast",
+    "Call to action"
+   ]
+  },
+  {
+   "category": "story",
+   "name": "Freytag Pyramid",
+   "steps": [
+    "Exposition",
+    "Inciting incident",
+    "Rising action",
+    "Climax",
+    "Resolution"
+   ]
+  },
+  {
+   "category": "story",
+   "name": "Star-Chain-Hook",
+   "steps": [
+    "Star hook",
+    "Chain of facts",
+    "Hook CTA"
+   ]
+  },
+  {
+   "category": "story",
+   "name": "Three-Act",
+   "steps": [
+    "Setup",
+    "Confrontation",
+    "Resolution"
+   ]
+  },
+  {
+   "category": "story",
+   "name": "Hook-Story-Offer",
+   "steps": [
+    "Emotional hook",
+    "Personal story",
+    "Offer"
+   ]
+  },
+  {
+   "category": "story",
+   "name": "PASS",
+   "steps": [
+    "Problem",
+    "Agitate",
+    "Story",
+    "Solution"
+   ]
+  },
+  {
+   "category": "story",
+   "name": "SOAR",
+   "steps": [
+    "Situation",
+    "Obstacle",
+    "Action",
+    "Result"
+   ]
+  },
+  {
+   "category": "story",
+   "name": "Mystery Box",
+   "steps": [
+    "Teasing question",
+    "Deepen the problem",
+    "Unexpected resolution"
+   ]
+  },
+  {
+   "category": "story",
+   "name": "Underdog Arc",
+   "steps": [
+    "Humble start",
+    "Big obstacle",
+    "Failure",
+    "Win"
+   ]
+  },
+  {
+   "category": "story",
+   "name": "Vulnerability-First",
+   "steps": [
+    "Honest confession",
+    "Background",
+    "Lesson",
+    "Solution"
+   ]
+  },
+  {
+   "category": "story",
+   "name": "Inverted Pyramid",
+   "steps": [
+    "Climax first",
+    "Supporting context",
+    "Conclusion"
+   ]
+  },
+  {
+   "category": "story",
+   "name": "Before-Epiphany-After",
+   "steps": [
+    "Old problem",
+    "Sudden realization",
+    "New result"
+   ]
+  },
+  {
+   "category": "story",
+   "name": "Parallel Lives",
+   "steps": [
+    "Two choices",
+    "Consequences",
+    "Direction"
+   ]
+  },
+  {
+   "category": "short",
+   "name": "HVC",
+   "steps": [
+    "3-second hook",
+    "Value drop",
+    "Immediate CTA"
+   ]
+  },
+  {
+   "category": "short",
+   "name": "Pattern Disrupt-Context-Payoff",
+   "steps": [
+    "Surprising visual",
+    "Short context",
+    "Payoff"
+   ]
+  },
+  {
+   "category": "short",
+   "name": "Contrarian-Proof-Twist",
+   "steps": [
+    "Controversial claim",
+    "Proof",
+    "Twist ending"
+   ]
+  },
+  {
+   "category": "short",
+   "name": "GRWM Storytime",
+   "steps": [
+    "Visual activity",
+    "Story narration",
+    "Main message"
+   ]
+  },
+  {
+   "category": "short",
+   "name": "POV Scenario",
+   "steps": [
+    "Relatable situation",
+    "Realistic reaction",
+    "Punchline"
+   ]
+  },
+  {
+   "category": "short",
+   "name": "Stop and Show",
+   "steps": [
+    "Physical demo first",
+    "Short steps",
+    "Final result"
+   ]
+  },
+  {
+   "category": "short",
+   "name": "Open Loop-Fulfillment",
+   "steps": [
+    "Hanging question",
+    "Visual teaser",
+    "Answer at the end"
+   ]
+  },
+  {
+   "category": "short",
+   "name": "B-Roll Text Hook",
+   "steps": [
+    "Aesthetic visual",
+    "On-screen claim",
+    "Detailed voiceover"
+   ]
+  },
+  {
+   "category": "short",
+   "name": "Mistake-Fix",
+   "steps": [
+    "Stop doing X",
+    "Why it fails",
+    "Do Y"
+   ]
+  },
+  {
+   "category": "short",
+   "name": "Tension-Resolution Loop",
+   "steps": [
+    "Awkward question",
+    "Escalate tension",
+    "Satisfying answer"
+   ]
+  },
+  {
+   "category": "short",
+   "name": "Myth vs Fact",
+   "steps": [
+    "Common belief",
+    "Myth broken",
+    "Actual fact"
+   ]
+  },
+  {
+   "category": "short",
+   "name": "Secret Unlocked",
+   "steps": [
+    "Rarely covered topic",
+    "Secret steps",
+    "Save this video"
+   ]
+  },
+  {
+   "category": "short",
+   "name": "3-Second Visual Shock",
+   "steps": [
+    "Unusual action",
+    "Logical explanation",
+    "Practical advice"
+   ]
+  },
+  {
+   "category": "short",
+   "name": "Before/After Transition",
+   "steps": [
+    "Bad state",
+    "Fast transition",
+    "Perfect result"
+   ]
+  },
+  {
+   "category": "short",
+   "name": "Endless Loop",
+   "steps": [
+    "Hook",
+    "Fast body",
+    "Ending that flows into second one"
+   ]
+  },
+  {
+   "category": "education",
+   "name": "What-Why-How",
+   "steps": [
+    "Definition",
+    "Why it matters",
+    "How to do it"
+   ]
+  },
+  {
+   "category": "education",
+   "name": "ELUM",
+   "steps": [
+    "Entertain",
+    "Learn",
+    "Understand",
+    "Master"
+   ]
+  },
+  {
+   "category": "education",
+   "name": "Teardown",
+   "steps": [
+    "Success case",
+    "Mechanism",
+    "Key lesson"
+   ]
+  },
+  {
+   "category": "education",
+   "name": "PAE",
+   "steps": [
+    "Problem statement",
+    "Root cause",
+    "Action steps"
+   ]
+  },
+  {
+   "category": "education",
+   "name": "Rule of 3",
+   "steps": [
+    "Hook",
+    "Three pillars",
+    "Short conclusion"
+   ]
+  },
+  {
+   "category": "education",
+   "name": "FAA",
+   "steps": [
+    "Complex framework",
+    "Simple analogy",
+    "Everyday use"
+   ]
+  },
+  {
+   "category": "education",
+   "name": "Jargon-Buster",
+   "steps": [
+    "Technical term",
+    "Very simple explanation",
+    "Real example"
+   ]
+  },
+  {
+   "category": "education",
+   "name": "CSR",
+   "steps": [
+    "Context",
+    "Solution",
+    "Result data"
+   ]
+  },
+  {
+   "category": "education",
+   "name": "STAR",
+   "steps": [
+    "Situation",
+    "Task",
+    "Action",
+    "Result"
+   ]
+  },
+  {
+   "category": "education",
+   "name": "5W1H",
+   "steps": [
+    "What",
+    "Why",
+    "Who",
+    "Where",
+    "When",
+    "How"
+   ]
+  },
+  {
+   "category": "education",
+   "name": "Checklist",
+   "steps": [
+    "Show the gap",
+    "Full checklist",
+    "Summary"
+   ]
+  },
+  {
+   "category": "education",
+   "name": "Comparison Breakdown",
+   "steps": [
+    "X vs Y",
+    "Pros and cons",
+    "Final pick"
+   ]
+  },
+  {
+   "category": "education",
+   "name": "Resource Stack",
+   "steps": [
+    "Best tools",
+    "Specific use",
+    "Top pick"
+   ]
+  },
+  {
+   "category": "education",
+   "name": "Case Study",
+   "steps": [
+    "Starting challenge",
+    "Execution",
+    "Measured result"
+   ]
+  },
+  {
+   "category": "education",
+   "name": "Trend-Insight-Prediction",
+   "steps": [
+    "Current trend",
+    "Hidden data",
+    "Prediction"
+   ]
+  },
+  {
+   "category": "psychology",
+   "name": "FOMO",
+   "steps": [
+    "Scarcity",
+    "Cost of missing out",
+    "Instant action"
+   ]
+  },
+  {
+   "category": "psychology",
+   "name": "Social Proof Stack",
+   "steps": [
+    "Bold claim",
+    "Real testimony",
+    "Statistic",
+    "Join"
+   ]
+  },
+  {
+   "category": "psychology",
+   "name": "Us vs Them",
+   "steps": [
+    "Common enemy",
+    "Different position",
+    "Unite the audience"
+   ]
+  },
+  {
+   "category": "psychology",
+   "name": "Unpopular Opinion",
+   "steps": [
+    "Against the grain",
+    "Logical argument",
+    "Invite debate"
+   ]
+  },
+  {
+   "category": "psychology",
+   "name": "Identity Shift",
+   "steps": [
+    "Name profile X",
+    "Challenge old mindset",
+    "Become Y"
+   ]
+  },
+  {
+   "category": "psychology",
+   "name": "Confession-Transformation",
+   "steps": [
+    "Past regret",
+    "Lesson",
+    "Change guide"
+   ]
+  },
+  {
+   "category": "psychology",
+   "name": "Curiosity Gap",
+   "steps": [
+    "Puzzle",
+    "Build curiosity",
+    "Answer"
+   ]
+  },
+  {
+   "category": "psychology",
+   "name": "Expectation vs Reality",
+   "steps": [
+    "Common expectation",
+    "Reality",
+    "Tactic"
+   ]
+  },
+  {
+   "category": "psychology",
+   "name": "Friction Reduction",
+   "steps": [
+    "Heavy task",
+    "One-minute trick",
+    "Quick win"
+   ]
+  },
+  {
+   "category": "psychology",
+   "name": "Fear-Relief-Reward",
+   "steps": [
+    "Hidden risk",
+    "Protection",
+    "Quick reward"
+   ]
+  },
+  {
+   "category": "psychology",
+   "name": "Status Elevator",
+   "steps": [
+    "Credibility-killing mistake",
+    "High-value alternative",
+    "Level-up step"
+   ]
+  },
+  {
+   "category": "psychology",
+   "name": "Shocking Stat-Insight",
+   "steps": [
+    "Shocking number",
+    "Reason behind it",
+    "How to use it"
+   ]
+  },
+  {
+   "category": "psychology",
+   "name": "Rejection to Triumph",
+   "steps": [
+    "Early doubt",
+    "Proof steps",
+    "Evidence of success"
+   ]
+  },
+  {
+   "category": "psychology",
+   "name": "Paradox Breakdown",
+   "steps": [
+    "Contradiction",
+    "Underlying logic",
+    "Smart use"
+   ]
+  },
+  {
+   "category": "psychology",
+   "name": "Trojan Horse",
+   "steps": [
+    "Humor or meme",
+    "Smooth transition",
+    "High-value lesson"
+   ]
+  },
+  {
+   "category": "community",
+   "name": "Crowdsourced Question",
+   "steps": [
+    "Audience dilemma",
+    "Best options",
+    "Discuss in comments"
+   ]
+  },
+  {
+   "category": "community",
+   "name": "A/B Poll",
+   "steps": [
+    "Option A vs B",
+    "Quick comparison",
+    "Vote"
+   ]
+  },
+  {
+   "category": "community",
+   "name": "Challenge-Progress-Result",
+   "steps": [
+    "Recurring challenge",
+    "Obstacles",
+    "Transformation"
+   ]
+  },
+  {
+   "category": "community",
+   "name": "Audit",
+   "steps": [
+    "Open review of audience work",
+    "Concrete fixes"
+   ]
+  },
+  {
+   "category": "community",
+   "name": "Build in Public",
+   "steps": [
+    "Project goal",
+    "Honest update",
+    "Lessons and results"
+   ]
+  },
+  {
+   "category": "community",
+   "name": "Q&A Escalation",
+   "steps": [
+    "Simple question",
+    "Deeper follow-up",
+    "Complete answer"
+   ]
+  },
+  {
+   "category": "community",
+   "name": "Tier List",
+   "steps": [
+    "S to F ranking",
+    "Live evaluation",
+    "Debate"
+   ]
+  },
+  {
+   "category": "community",
+   "name": "Stitch/Duet Response",
+   "steps": [
+    "Popular clip",
+    "Different take",
+    "Evidence"
+   ]
+  },
+  {
+   "category": "community",
+   "name": "Interactive Quiz",
+   "steps": [
+    "Case question",
+    "Answer choices",
+    "Explanation"
+   ]
+  },
+  {
+   "category": "community",
+   "name": "Resource Swap",
+   "steps": [
+    "Comment keyword",
+    "Auto delivery",
+    "Engagement lift"
+   ]
+  },
+  {
+   "category": "ai",
+   "name": "Prompt-to-Result",
+   "steps": [
+    "Prompt",
+    "Raw AI output",
+    "Human polish"
+   ]
+  },
+  {
+   "category": "ai",
+   "name": "Hyper-Personalized Segment",
+   "steps": [
+    "Call out a profession",
+    "Specific solution"
+   ]
+  },
+  {
+   "category": "ai",
+   "name": "Spatial Visual Demo",
+   "steps": [
+    "3D or interactive view",
+    "Main feature",
+    "Direct access"
+   ]
+  },
+  {
+   "category": "ai",
+   "name": "Deepfake vs Real",
+   "steps": [
+    "Visual test",
+    "Technical tell",
+    "Trust signal"
+   ]
+  },
+  {
+   "category": "ai",
+   "name": "Data Narrative",
+   "steps": [
+    "Modern chart",
+    "Simplified story",
+    "Key conclusion"
+   ]
+  },
+  {
+   "category": "ai",
+   "name": "Micro-SaaS Teardown",
+   "steps": [
+    "Tool architecture",
+    "Revenue numbers",
+    "Growth blueprint"
+   ]
+  },
+  {
+   "category": "ai",
+   "name": "Automation Workflow",
+   "steps": [
+    "Trigger",
+    "Automated flow",
+    "Time saved"
+   ]
+  },
+  {
+   "category": "ai",
+   "name": "Synthetic Persona Dialogue",
+   "steps": [
+    "Two opposing views",
+    "Summary",
+    "Synthesis"
+   ]
+  },
+  {
+   "category": "ai",
+   "name": "Future-Proofing",
+   "steps": [
+    "Industry shift",
+    "Relevant vs obsolete skills",
+    "Action plan"
+   ]
+  },
+  {
+   "category": "ai",
+   "name": "Zero-Click Value",
+   "steps": [
+    "Full value in the post",
+    "No friction",
+    "Follow"
+   ]
+  },
+  {
+   "category": "ai",
+   "name": "Curation-Filter-Action",
+   "steps": [
+    "Information overload",
+    "Top 1% filter",
+    "Execution guide"
+   ]
+  },
+  {
+   "category": "ai",
+   "name": "One-Prompt Solution",
+   "steps": [
+    "Pain point",
+    "One prompt",
+    "Result preview"
+   ]
+  },
+  {
+   "category": "ai",
+   "name": "Algorithmic Insight",
+   "steps": [
+    "How the algorithm works now",
+    "Strategy change",
+    "Apply it"
+   ]
+  },
+  {
+   "category": "ai",
+   "name": "Interactive Simulator",
+   "steps": [
+    "Input numbers",
+    "Live projection",
+    "Free trial"
+   ]
+  },
+  {
+   "category": "ai",
+   "name": "Evergreen Engine",
+   "steps": [
+    "Timeless principle",
+    "Modern tool",
+    "Long-term guide"
+   ]
+  }
+ ],
+ "hooks": [
+  {
+   "category": "emotion",
+   "name": "Rage Bait",
+   "risky": true,
+   "template": "{strong_claim}. Fight me in the comments."
+  },
+  {
+   "category": "emotion",
+   "name": "FOMO Trigger",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "emotion",
+   "name": "Shock Value",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "emotion",
+   "name": "Controversy Framing",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "emotion",
+   "name": "Curiosity Gap",
+   "risky": false,
+   "template": "Nobody tells you this about {topic}."
+  },
+  {
+   "category": "emotion",
+   "name": "Ego Trigger",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "emotion",
+   "name": "Nostalgia Bait",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "emotion",
+   "name": "Empathy Trap",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "emotion",
+   "name": "Guilt Hook",
+   "risky": true,
+   "template": null
+  },
+  {
+   "category": "emotion",
+   "name": "Schadenfreude",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "emotion",
+   "name": "Insecurity Trigger",
+   "risky": true,
+   "template": null
+  },
+  {
+   "category": "emotion",
+   "name": "Validation Seeking",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "emotion",
+   "name": "Outrage",
+   "risky": true,
+   "template": null
+  },
+  {
+   "category": "emotion",
+   "name": "Paranoia Bait",
+   "risky": true,
+   "template": null
+  },
+  {
+   "category": "emotion",
+   "name": "Secret Society Appeal",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "emotion",
+   "name": "Status Anxiety",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "emotion",
+   "name": "Revenge Narrative",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "emotion",
+   "name": "Identity Affirmation",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "emotion",
+   "name": "Misery Loves Company",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "emotion",
+   "name": "Perceived Scarcity",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "curiosity",
+   "name": "Pattern Interrupt",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "curiosity",
+   "name": "Open Loop",
+   "risky": false,
+   "template": "By the end of this you'll know {payoff}. But first, {setup}."
+  },
+  {
+   "category": "curiosity",
+   "name": "Information Asymmetry",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "curiosity",
+   "name": "Paradox",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "curiosity",
+   "name": "Contrarian Statement",
+   "risky": false,
+   "template": "{common_belief} is wrong. Here's why."
+  },
+  {
+   "category": "curiosity",
+   "name": "Counter-Intuitive Claim",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "curiosity",
+   "name": "Cliffhanger",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "curiosity",
+   "name": "Myth-Busting",
+   "risky": false,
+   "template": "{myth}? That's a myth."
+  },
+  {
+   "category": "curiosity",
+   "name": "Trojan Horse",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "curiosity",
+   "name": "What-If",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "curiosity",
+   "name": "Cognitive Dissonance",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "curiosity",
+   "name": "Expectation Violation",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "curiosity",
+   "name": "Secret Unlocking",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "curiosity",
+   "name": "Unexpected Twist",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "curiosity",
+   "name": "The Glitch",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "curiosity",
+   "name": "Mystery Box",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "curiosity",
+   "name": "The Loophole",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "curiosity",
+   "name": "Zero-Context",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "curiosity",
+   "name": "Unpopular Opinion",
+   "risky": false,
+   "template": "Unpopular opinion: {opinion}."
+  },
+  {
+   "category": "curiosity",
+   "name": "Confession",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "value",
+   "name": "Shortcut",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "value",
+   "name": "Negative Framing",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "value",
+   "name": "Mistake Highlight",
+   "risky": false,
+   "template": "The mistake that cost me {cost}."
+  },
+  {
+   "category": "value",
+   "name": "Stop Doing X",
+   "risky": false,
+   "template": "Stop {mistake} if you want {result}."
+  },
+  {
+   "category": "value",
+   "name": "Cheap vs Expensive",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "value",
+   "name": "Resource Stack",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "value",
+   "name": "Cheat Code",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "value",
+   "name": "Time-Saving Claim",
+   "risky": false,
+   "template": "This saves me {time} every {period}."
+  },
+  {
+   "category": "value",
+   "name": "Friction Reduction",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "value",
+   "name": "Authority Drop",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "value",
+   "name": "Teardown",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "value",
+   "name": "Instant Gratification",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "value",
+   "name": "Hack/Exploit",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "value",
+   "name": "Free Resource",
+   "risky": false,
+   "template": "Free {resource} that feels illegal to know about."
+  },
+  {
+   "category": "value",
+   "name": "Cost of Ignorance",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "value",
+   "name": "The Audit",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "value",
+   "name": "Zero to Hero",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "value",
+   "name": "The Blueprint",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "value",
+   "name": "Risk Avoidance",
+   "risky": false,
+   "template": "Don't {action} until you check this."
+  },
+  {
+   "category": "value",
+   "name": "Efficiency Upgrade",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "visual_audio",
+   "name": "Text-over-Video",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "visual_audio",
+   "name": "Green Screen Reaction",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "visual_audio",
+   "name": "Micro-Movement Cut",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "visual_audio",
+   "name": "Visual Shock Drop",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "visual_audio",
+   "name": "SFX Jump",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "visual_audio",
+   "name": "Whisper/ASMR",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "visual_audio",
+   "name": "Physical Demo First",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "visual_audio",
+   "name": "Extreme Close-up",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "visual_audio",
+   "name": "Reverse Progression",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "visual_audio",
+   "name": "B-Roll Disconnect",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "visual_audio",
+   "name": "Fast Collage",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "visual_audio",
+   "name": "Prop Opening",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "visual_audio",
+   "name": "On-Screen Countdown",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "visual_audio",
+   "name": "Mid-Action Start",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "visual_audio",
+   "name": "Silent Subtitles-Only",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "visual_audio",
+   "name": "Eye-Contact Stare",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "visual_audio",
+   "name": "Screen Recording Reveal",
+   "risky": false,
+   "template": "Watch this: {demo_action}."
+  },
+  {
+   "category": "visual_audio",
+   "name": "Motion Blur Transition",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "visual_audio",
+   "name": "Split-Screen Comparison",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "visual_audio",
+   "name": "Text Deletion Animation",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "social",
+   "name": "Us vs Them",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "social",
+   "name": "Insider Knowledge",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "social",
+   "name": "Tribe Callout",
+   "risky": false,
+   "template": "If you're a {audience}, watch this before {deadline}."
+  },
+  {
+   "category": "social",
+   "name": "POV Relatable",
+   "risky": false,
+   "template": "POV: you {relatable_moment}."
+  },
+  {
+   "category": "social",
+   "name": "Calling Out Bad Advice",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "social",
+   "name": "Underdog",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "social",
+   "name": "Social Proof Stack",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "social",
+   "name": "Peer Pressure",
+   "risky": true,
+   "template": null
+  },
+  {
+   "category": "social",
+   "name": "Common Enemy",
+   "risky": true,
+   "template": null
+  },
+  {
+   "category": "social",
+   "name": "Taboo Subject",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "social",
+   "name": "Gatekeeping Callout",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "social",
+   "name": "Loyalty Test",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "social",
+   "name": "Industry Insider Confession",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "social",
+   "name": "Generational Divide",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "social",
+   "name": "Meme Hijack",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "social",
+   "name": "Community Challenge",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "social",
+   "name": "Tea Spilling",
+   "risky": true,
+   "template": null
+  },
+  {
+   "category": "social",
+   "name": "Vulnerability Opener",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "social",
+   "name": "Unfiltered Truth",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "social",
+   "name": "Direct Call-Out",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "story_format",
+   "name": "GRWM Storytime",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "story_format",
+   "name": "Day in the Life",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "story_format",
+   "name": "Inverted Pyramid",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "story_format",
+   "name": "Mid-Story Climax",
+   "risky": false,
+   "template": "{climax_moment}. Let me back up."
+  },
+  {
+   "category": "story_format",
+   "name": "Dramatic Monologue",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "story_format",
+   "name": "Simulated Conversation",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "story_format",
+   "name": "Mock Interview",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "story_format",
+   "name": "Voiceover Overlay",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "story_format",
+   "name": "Before/After Reveal",
+   "risky": false,
+   "template": "Before: {before}. After: {after}."
+  },
+  {
+   "category": "story_format",
+   "name": "Timeline Jump",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "story_format",
+   "name": "Result First",
+   "risky": false,
+   "template": "This is {result}. Here's how {subject} got there."
+  },
+  {
+   "category": "story_format",
+   "name": "Fail-to-Win Start",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "story_format",
+   "name": "Third-Person Narration",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "story_format",
+   "name": "Real-Time Reaction",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "story_format",
+   "name": "Unboxing Teaser",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "story_format",
+   "name": "Behind the Scenes",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "story_format",
+   "name": "Interrogation Format",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "story_format",
+   "name": "News Anchor",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "story_format",
+   "name": "Documentary Style",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "story_format",
+   "name": "Cinematic Cold Open",
+   "risky": false,
+   "template": "{sensory_line}."
+  },
+  {
+   "category": "interactive",
+   "name": "Poll",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "interactive",
+   "name": "Direct Question",
+   "risky": false,
+   "template": "Why does {problem} keep happening to you?"
+  },
+  {
+   "category": "interactive",
+   "name": "Quiz/Test",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "interactive",
+   "name": "A/B Test",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "interactive",
+   "name": "Comment Trigger",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "interactive",
+   "name": "Stitch/Duet Setup",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "interactive",
+   "name": "Tier List Teaser",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "interactive",
+   "name": "Guess the Result",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "interactive",
+   "name": "Challenge Accepted",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "interactive",
+   "name": "Spot the Difference",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "interactive",
+   "name": "Fill in the Blank",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "interactive",
+   "name": "Crowdsourced Dilemma",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "interactive",
+   "name": "Dare/Bet",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "interactive",
+   "name": "Screenshot This",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "interactive",
+   "name": "Double-Tap Trick",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "interactive",
+   "name": "Tag a Friend",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "interactive",
+   "name": "Secret Code",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "interactive",
+   "name": "Live Demo Ask",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "interactive",
+   "name": "Rating Scale",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "interactive",
+   "name": "Debate Trigger",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "data_ai",
+   "name": "AI vs Human",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "data_ai",
+   "name": "Stat Bomb",
+   "risky": false,
+   "template": "{stat}. And almost nobody talks about it."
+  },
+  {
+   "category": "data_ai",
+   "name": "Algorithm Exposure",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "data_ai",
+   "name": "Prompt Reveal",
+   "risky": false,
+   "template": "One prompt turned {input} into {output}."
+  },
+  {
+   "category": "data_ai",
+   "name": "Automation Showdown",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "data_ai",
+   "name": "Future Prediction",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "data_ai",
+   "name": "Data Leak Framing",
+   "risky": true,
+   "template": null
+  },
+  {
+   "category": "data_ai",
+   "name": "Tool Stack Reveal",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "data_ai",
+   "name": "Workflow Shortcut",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "data_ai",
+   "name": "Synthetic Reveal",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "data_ai",
+   "name": "Benchmark Comparison",
+   "risky": false,
+   "template": "I gave {a} and {b} the same task. One of them failed."
+  },
+  {
+   "category": "data_ai",
+   "name": "Code Teardown",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "data_ai",
+   "name": "Tech Replacement Threat",
+   "risky": true,
+   "template": null
+  },
+  {
+   "category": "data_ai",
+   "name": "Zero-Click Value",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "data_ai",
+   "name": "Automated Result Showcase",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "data_ai",
+   "name": "Industry Obsolescence",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "data_ai",
+   "name": "AI Tool War",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "data_ai",
+   "name": "Hyper-Personalization",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "data_ai",
+   "name": "Privacy Warning",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "data_ai",
+   "name": "Old Tech vs New",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "sales",
+   "name": "Urgency Trigger",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "sales",
+   "name": "Price Shock",
+   "risky": true,
+   "template": null
+  },
+  {
+   "category": "sales",
+   "name": "Guarantee First",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "sales",
+   "name": "Offer Stack",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "sales",
+   "name": "Freebie Bait",
+   "risky": true,
+   "template": null
+  },
+  {
+   "category": "sales",
+   "name": "Risk-Free Pitch",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "sales",
+   "name": "VIP Exclusive",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "sales",
+   "name": "Price vs Value",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "sales",
+   "name": "Direct Problem Pitch",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "sales",
+   "name": "Limited Edition",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "sales",
+   "name": "Comparison Matrix",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "sales",
+   "name": "ROI First",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "sales",
+   "name": "Hard Truth Sell",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "sales",
+   "name": "Discontinuation Warning",
+   "risky": true,
+   "template": null
+  },
+  {
+   "category": "sales",
+   "name": "Case Study Teaser",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "sales",
+   "name": "Transformation Pitch",
+   "risky": false,
+   "template": "From {before} to {after} in {time}."
+  },
+  {
+   "category": "sales",
+   "name": "Unfair Advantage",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "sales",
+   "name": "Competitor Flaw",
+   "risky": true,
+   "template": null
+  },
+  {
+   "category": "sales",
+   "name": "Pain-Point Amplification",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "sales",
+   "name": "Guarantee Challenge",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "meta",
+   "name": "Meta-Hook",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "meta",
+   "name": "Anti-Hook",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "meta",
+   "name": "Fake-Out",
+   "risky": true,
+   "template": null
+  },
+  {
+   "category": "meta",
+   "name": "Overly Honest",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "meta",
+   "name": "Whispered Secret",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "meta",
+   "name": "Chaotic Energy",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "meta",
+   "name": "Awkward Silence",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "meta",
+   "name": "Breaking Character",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "meta",
+   "name": "Glitch in the Matrix",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "meta",
+   "name": "Subverted Expectation",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "meta",
+   "name": "Infinite Loop",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "meta",
+   "name": "Multimodal Teaser",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "meta",
+   "name": "Hyper-Specific Persona",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "meta",
+   "name": "Raw Footage Drop",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "meta",
+   "name": "Self-Deprecating",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "meta",
+   "name": "Absurdist",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "meta",
+   "name": "Context Collapse",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "meta",
+   "name": "Accidental Reveal",
+   "risky": true,
+   "template": null
+  },
+  {
+   "category": "meta",
+   "name": "Fast-Forward Teaser",
+   "risky": false,
+   "template": null
+  },
+  {
+   "category": "meta",
+   "name": "Silence-to-Noise Spike",
+   "risky": false,
+   "template": null
+  }
+ ],
+ "genre_scripts": {
+  "hackathon_demo": {
+   "frameworks": [
+    "PAS",
+    "STAR",
+    "CSR",
+    "Stop and Show",
+    "Build in Public",
+    "Rule of 3"
+   ],
+   "hooks": [
+    "Result First",
+    "Screen Recording Reveal",
+    "Stat Bomb",
+    "Direct Question",
+    "Before/After Reveal"
+   ],
+   "beats": [
+    "hook",
+    "problem",
+    "why_now",
+    "solution_demo",
+    "proof",
+    "how_it_works",
+    "impact",
+    "closing",
+    "cta"
+   ]
+  },
+  "tutorial_docs": {
+   "frameworks": [
+    "What-Why-How",
+    "Checklist",
+    "PAE",
+    "Jargon-Buster",
+    "Friction Reduction"
+   ],
+   "hooks": [
+    "Time-Saving Claim",
+    "Stop Doing X",
+    "Screen Recording Reveal",
+    "Mistake Highlight",
+    "Free Resource"
+   ],
+   "beats": [
+    "hook",
+    "outcome_preview",
+    "requirements",
+    "step_1",
+    "step_2",
+    "step_3",
+    "common_mistake",
+    "recap",
+    "cta"
+   ]
+  },
+  "product_launch": {
+   "frameworks": [
+    "AIDA",
+    "BAB",
+    "FAB",
+    "4P",
+    "PASTOR"
+   ],
+   "hooks": [
+    "Before/After Reveal",
+    "Transformation Pitch",
+    "Tribe Callout",
+    "Result First",
+    "Curiosity Gap"
+   ],
+   "beats": [
+    "hook",
+    "relatable_pain",
+    "tension",
+    "reveal",
+    "benefits",
+    "proof",
+    "offer",
+    "closing",
+    "cta"
+   ]
+  },
+  "education_explainer": {
+   "frameworks": [
+    "What-Why-How",
+    "Myth vs Fact",
+    "Shocking Stat-Insight",
+    "5W1H",
+    "Curiosity Gap"
+   ],
+   "hooks": [
+    "Curiosity Gap",
+    "Myth-Busting",
+    "Stat Bomb",
+    "Direct Question",
+    "Contrarian Statement"
+   ],
+   "beats": [
+    "hook",
+    "why_care",
+    "fact_1",
+    "fact_2",
+    "twist",
+    "takeaway",
+    "closing",
+    "cta"
+   ]
+  },
+  "story_vlog": {
+   "frameworks": [
+    "Pixar Pitch",
+    "Before-Epiphany-After",
+    "Vulnerability-First",
+    "Three-Act",
+    "Underdog Arc"
+   ],
+   "hooks": [
+    "Mid-Story Climax",
+    "Cinematic Cold Open",
+    "POV Relatable",
+    "Confession",
+    "Open Loop"
+   ],
+   "beats": [
+    "hook",
+    "setting",
+    "relatable",
+    "conflict",
+    "tension",
+    "turning_point",
+    "lesson",
+    "closing",
+    "cta"
+   ]
+  },
+  "sales_pitch": {
+   "frameworks": [
+    "PAS",
+    "PASTOR",
+    "Hook-Story-Offer",
+    "Fear-Relief-Reward",
+    "Social Proof Stack"
+   ],
+   "hooks": [
+    "Mistake Highlight",
+    "Stop Doing X",
+    "Stat Bomb",
+    "Unpopular Opinion",
+    "Risk Avoidance"
+   ],
+   "beats": [
+    "hook",
+    "problem",
+    "agitate",
+    "story",
+    "solution",
+    "proof",
+    "offer",
+    "urgency",
+    "cta"
+   ]
+  },
+  "podcast_talk": {
+   "frameworks": [
+    "Inverted Pyramid",
+    "Q&A Escalation",
+    "Unpopular Opinion",
+    "Synthetic Persona Dialogue"
+   ],
+   "hooks": [
+    "Mid-Story Climax",
+    "Unpopular Opinion",
+    "Direct Question",
+    "Open Loop"
+   ],
+   "beats": [
+    "hook",
+    "guest_or_context",
+    "question",
+    "answer",
+    "surprise",
+    "takeaway",
+    "cta"
+   ]
+  },
+  "ai_comparison": {
+   "frameworks": [
+    "Comparison Breakdown",
+    "Prompt-to-Result",
+    "Tension-Resolution Loop",
+    "Tier List",
+    "Open Loop-Fulfillment"
+   ],
+   "hooks": [
+    "Benchmark Comparison",
+    "Prompt Reveal",
+    "Open Loop",
+    "Result First",
+    "Unpopular Opinion"
+   ],
+   "beats": [
+    "hook",
+    "rules_of_test",
+    "contender_a",
+    "contender_b",
+    "tension",
+    "verdict",
+    "why",
+    "cta"
+   ]
+  }
+ },
+ "beat_guide": {
+  "hook": "0-3 s. One sentence. Make a claim, show a result, or ask a question the viewer needs answered. No greeting, no name.",
+  "outcome_preview": "Show the finished result for 1-2 s so the viewer knows the payoff.",
+  "requirements": "What the viewer needs before starting. One line.",
+  "step_1": "One action per step. Say the button or command out loud.",
+  "step_2": "Same.",
+  "step_3": "Same.",
+  "common_mistake": "The error most people hit and the fix.",
+  "recap": "Three steps in one sentence.",
+  "problem": "The pain, concrete: who, what breaks, what it costs.",
+  "why_now": "Why this matters today (a trend, a cost, a deadline). Real, checkable.",
+  "solution_demo": "Show the product working on screen. Say what the viewer is looking at.",
+  "proof": "Numbers, a live link, a user quote, a benchmark. Only true ones.",
+  "how_it_works": "One sentence of architecture judges can repeat.",
+  "impact": "Who benefits and by how much.",
+  "relatable_pain": "A moment the audience has lived ('you open the app and...').",
+  "tension": "Raise the stakes: what happens if nothing changes, or which side is losing.",
+  "reveal": "Name the product or answer. Land it on a beat.",
+  "benefits": "Outcomes, not features. Max three.",
+  "offer": "Price, access, bonus. Plain.",
+  "urgency": "A real deadline or limit. Never invent scarcity.",
+  "why_care": "Why this fact changes something for the viewer.",
+  "fact_1": "One fact with a source.",
+  "fact_2": "A second fact that builds on the first.",
+  "twist": "The part that contradicts what the viewer assumed.",
+  "takeaway": "What to do or remember.",
+  "setting": "Where and when, in one image.",
+  "relatable": "The feeling the viewer shares.",
+  "conflict": "What went wrong.",
+  "turning_point": "The moment things changed.",
+  "lesson": "What it taught you, stated simply.",
+  "agitate": "Make the cost of the problem vivid.",
+  "story": "A short personal or customer story.",
+  "solution": "The fix, framed as the bridge.",
+  "guest_or_context": "Who is talking and why they are worth hearing.",
+  "question": "The sharpest question of the episode.",
+  "answer": "The best 20 seconds of the answer.",
+  "surprise": "The unexpected line.",
+  "rules_of_test": "Same prompt, same task, how it is scored.",
+  "contender_a": "Result A, shown.",
+  "contender_b": "Result B, shown.",
+  "verdict": "Say who won. Always answer the hook.",
+  "why": "The reason it won.",
+  "closing": "One line that ties back to the hook (callback).",
+  "cta": "One action only: follow, comment a keyword, try the link, or watch part two.",
+  "market_size": "TAM > SAM > SOM in one breath, then why you can win the SOM first. Numbers only if sourced."
+ }
+}

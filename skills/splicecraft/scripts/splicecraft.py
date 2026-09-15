@@ -18,6 +18,7 @@ Subcommands (run in order, or use `auto`):
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
 import os
@@ -287,17 +288,196 @@ def remap_fn(keep):
     return f, acc
 
 
+def detect_genre(words) -> dict:
+    """Score every genre in presets/genres.json against the transcript. Returns the ranking."""
+    text = " " + " ".join(norm_sentence(w["w"]) for w in words) + " "
+    text = re.sub(r"\s+", " ", text)
+    n = max(1, len(words))
+    genres = read_json(PRESETS / "genres.json")["genres"]
+    scores = {}
+    for name, g in genres.items():
+        hits = {}
+        for k in g["keywords"]:
+            kk = " " + re.sub(r"\s+", " ", norm_sentence(k)).strip() + " "
+            c = text.count(kk)
+            if c:
+                hits[k.strip()] = c * (2 if (" " in kk.strip() or len(kk.strip()) >= 7) else 1)
+        scores[name] = {"score": sum(hits.values()) * 100.0 / n, "hits": hits}
+    nums = sum(1 for w in words if number_value(w["w"]) is not None)
+    qs = sum(1 for w in words if w["w"].endswith("?"))
+    scores["education_explainer"]["score"] += nums * 40.0 / n
+    scores["podcast_talk"]["score"] += qs * 60.0 / n
+    ranked = sorted(scores.items(), key=lambda kv: -kv[1]["score"])
+    best = ranked[0][0] if ranked[0][1]["score"] >= 1.0 else "education_explainer"
+    return {"genre": best, "label": genres[best]["label"], "ranking": [
+        {"genre": k, "score": round(v["score"], 2), "hits": v["hits"]} for k, v in ranked]}
+
+
+def variant_theme(theme, genre_cfg, variants, seed):
+    """Deterministic per-video variation: accent from the genre palette, caption size, card height, grade."""
+    pal = genre_cfg["palettes"]
+    theme["accent"] = pal[seed % len(pal)]
+    theme["caption_size"] = int(round(theme.get("caption_size", 74) * variants["caption_size_scale"][(seed // 8) % 3]))
+    theme["card_y"] = theme.get("card_y", 230) + variants["card_y_offset"][(seed // 24) % 3]
+    g = variants["grade"][(seed // 72) % len(variants["grade"])]
+    if g != "style":
+        theme["grade"] = g
+    theme["cta_text"] = genre_cfg["cta_text"]
+    theme["music_mood"] = genre_cfg["music_mood"]
+    theme["bpm"] = genre_cfg["bpm"]
+    return theme
+
+
+def option_count() -> dict:
+    """How many distinct edit setups the planner can produce, computed from the preset files."""
+    styles = read_json(PRESETS / "styles.json")
+    gp = read_json(PRESETS / "genres.json")
+    v = gp["variants"]
+    palettes = len(next(iter(gp["genres"].values()))["palettes"])
+    per = palettes * len(v["caption_size_scale"]) * len(v["card_y_offset"]) * len(v["grade"])
+    total = len(gp["genres"]) * len(styles) * per * 100 * 3
+    return {"music_templates": len(music_templates()), "genres": len(gp["genres"]), "styles": len(styles), "variants_per_genre_and_style": per,
+            "levels": 100, "aspect_ratios": 3, "total_combinations": total}
+
+
+BRIEF_ORDER = ["platform", "market", "age", "stage", "funnel", "niche"]
+
+
+def load_brief(path: str | None) -> dict:
+    if not path:
+        return {}
+    b = read_json(path)
+    aud = read_json(PRESETS / "audience.json")
+    for k in BRIEF_ORDER:
+        if b.get(k) and b[k] not in aud[k]:
+            die(f"brief: unknown {k} '{b[k]}'; choose from {', '.join(aud[k])}")
+    return b
+
+
+def brief_effects(b: dict) -> dict:
+    """Fold a brief into one set of edit decisions, with the reason for each."""
+    aud = read_json(PRESETS / "audience.json")
+    eff = {"level": 0, "density": 1.0, "caption_scale": 1.0, "caption_modes": [], "style": None, "energy": None,
+           "grade": None, "cta": None, "size": None, "moods": [], "frameworks": [], "compliance": [], "why": []}
+    for k in BRIEF_ORDER:
+        if not b.get(k):
+            continue
+        e = aud[k][b[k]]
+        eff["level"] += e.get("level", 0)
+        eff["density"] *= e.get("density", 1.0)
+        eff["caption_scale"] *= e.get("caption_scale", 1.0)
+        for m in e.get("caption_modes", []):
+            if m in CAPTION_MODES and m not in eff["caption_modes"]:
+                eff["caption_modes"].append(m)
+        for f in ("style", "energy", "grade", "cta", "size"):
+            if e.get(f) and not (f == "cta" and eff["cta"] not in (None, "follow") and k == "funnel"):  # a specific market CTA beats the funnel CTA
+                eff[f] = e[f]
+        eff["moods"] += e.get("moods", [])
+        eff["frameworks"] += e.get("frameworks", [])
+        if e.get("compliance"):
+            eff["compliance"].append(e["compliance"])
+        eff["why"].append(f"{k}={b[k]}: {e.get('note', '')}".rstrip(": "))
+    eff["density"] = round(eff["density"], 3)
+    eff["caption_scale"] = round(eff["caption_scale"], 3)
+    return eff
+
+
+def brief_report(b: dict) -> dict:
+    eff = brief_effects(b)
+    aud = read_json(PRESETS / "audience.json")
+    rep_ = {"effects": eff, "checks": []}
+    tam, sam, som = (b.get("tam"), b.get("sam"), b.get("som"))
+    if tam and sam and som:
+        if not (som <= sam <= tam):
+            rep_["checks"].append("FAIL: need SOM <= SAM <= TAM")
+        else:
+            rep_["checks"].append(f"market: SAM is {sam / tam:.0%} of TAM, SOM is {som / sam:.1%} of SAM")
+    if b.get("revenue_target") and b.get("price"):
+        fd = dict(aud["funnel_defaults"])
+        fd.update({k: b[k] for k in ("view_to_profile", "profile_to_click", "click_to_buy") if k in b})
+        buyers = b["revenue_target"] / b["price"]
+        views = buyers / (fd["view_to_profile"] * fd["profile_to_click"] * fd["click_to_buy"])
+        rep_["revenue_math"] = {"buyers_needed": round(buyers), "views_needed": round(views),
+                                "assumptions": {k: fd[k] for k in ("view_to_profile", "profile_to_click", "click_to_buy")},
+                                "warning": "Assumptions are placeholders unless the brief sets them from real analytics."}
+        if som and buyers > som:
+            rep_["checks"].append(f"FAIL: revenue target needs {round(buyers)} buyers but SOM is {som}")
+    p_ = b.get("platform")
+    if p_ and b.get("seconds"):
+        lo, hi = aud["platform"][p_]["ideal_seconds"]
+        if not lo <= b["seconds"] <= hi:
+            rep_["checks"].append(f"WARN: {b['seconds']} s is outside {p_}'s usual {lo}-{hi} s")
+    return rep_
+
+
 def plan(words_path: str, out: str, level: int, style: str, duration: float | None, brand: str | None,
-         no_cut: bool):
+         no_cut: bool, genre: str = "none", variant: int | None = None, captions: str | None = None,
+         brief: str | None = None):
     data = read_json(words_path)
     words = data["words"]
     if not words:
         die("transcript has no words")
-    p = params_for(level)
     styles = read_json(PRESETS / "styles.json")
+    gp = read_json(PRESETS / "genres.json")
+    detected, gcfg = None, None
+    if genre == "auto" or style == "auto":
+        detected = detect_genre(words)
+        if genre in ("auto", "none"):
+            genre = detected["genre"]
+    if genre != "none":
+        if genre not in gp["genres"]:
+            die(f"unknown genre {genre}; choose from auto, none, {', '.join(gp['genres'])}")
+        gcfg = gp["genres"][genre]
+        level = clamp(int(level) + gcfg["level_shift"], 1, 100)
+    bf = load_brief(brief)
+    eff = brief_effects(bf) if bf else None
+    if eff:
+        level = clamp(int(level) + eff["level"], 1, 100)
+    if style == "auto":
+        style = (eff or {}).get("style") or (gcfg["style"] if gcfg else "studio")
     if style not in styles:
-        die(f"unknown style {style}; choose from {', '.join(styles)}")
+        die(f"unknown style {style}; choose from auto, {', '.join(styles)}")
+    p = params_for(level)
+    if captions:
+        p["captions"] = captions
     theme = dict(styles[style])
+    theme["style"] = style
+    if gcfg:
+        if variant is None:
+            variant = int(hashlib.sha1(" ".join(w["w"] for w in words).encode("utf8")).hexdigest(), 16) % 360
+        o = dict(gcfg["params"])
+        p["cards_per_min"] = round(p["cards_per_min"] * o.pop("cards_per_min_scale", 1.0), 2)
+        p["zoom_amount"] = round(1 + (p["zoom_amount"] - 1) * o.pop("zoom_scale", 1.0), 3)
+        p.update(o)
+        if not captions and p["level"] > 20:
+            cm = gcfg.get("caption_modes") or [p["captions"]]
+            p["captions"] = cm[(int(variant or 0) // 5) % len(cm)] if variant is not None else cm[0]
+        p["genre"] = genre
+        p["drop_beats"] = gcfg["drop_beats"]
+        theme = variant_theme(theme, gcfg, gp["variants"], int(variant))
+        p["variant"] = int(variant)
+    if eff:
+        p["cards_per_min"] = round(p["cards_per_min"] * eff["density"], 2)
+        theme["caption_size"] = int(round(theme.get("caption_size", 74) * eff["caption_scale"]))
+        if eff["caption_modes"] and not captions and p["level"] > 20:
+            p["captions"] = eff["caption_modes"][int(variant or 0) % len(eff["caption_modes"])]
+        if eff["grade"]:
+            theme["grade"] = eff["grade"]
+        if eff["cta"]:
+            theme["cta_text"] = eff["cta"][0].upper() + eff["cta"][1:]
+        if p["level"] >= 81 and bf.get("age") in ("gen_x", "boomer"):
+            p["flash"] = False
+        p["brief"] = {"input": bf, "why": eff["why"], "compliance": eff["compliance"]}
+    mp = pick_music(words, genre if genre != "none" else None, style, int(variant or 0))
+    if eff and (eff["energy"] or eff["moods"]):
+        mood, key, drums, timbre, energy = mp["template"].split(".")
+        mm = read_json(PRESETS / "music.json")["moods"]
+        moods = [m for m in eff["moods"] if m in mm]
+        mp["template"] = ".".join([moods[int(variant or 0) % len(moods)] if moods else mood, key, drums, timbre,
+                                   eff["energy"] or energy])
+        mp["reason"] += "; brief adjusted mood/energy"
+    theme["music_template"] = mp["template"]
+    p["music_pick"] = mp
     if brand:
         theme.update(read_json(brand))
     dur = duration or (words[-1]["e"] + 0.8)
@@ -474,6 +654,12 @@ def plan(words_path: str, out: str, level: int, style: str, duration: float | No
         if p["zoom"] and len(sw) >= 5 and si % max(2, 6 - p["level"] // 20) == 0:
             zooms.append({"start": s0, "end": s1, "amount": 1 + (p["zoom_amount"] - 1) * 0.35, "ease": "drift"})
 
+    if p.get("drop_beats"):
+        dropped = [c for c in cards if c["type"] in p["drop_beats"]]
+        cards[:] = [c for c in cards if c["type"] not in p["drop_beats"]]
+        for v in dropped:
+            zooms[:] = [z for z in zooms if not (v["start"] <= z["start"] < v["end"])]
+            sfx[:] = [x for x in sfx if not (v["start"] - 0.2 <= x["t"] < v["end"])]
     cards.sort(key=lambda c: c["start"])
     for c, nxt in zip(cards, cards[1:]):  # never let two cards share the screen
         if c["end"] > nxt["start"] - 0.1:
@@ -496,6 +682,7 @@ def plan(words_path: str, out: str, level: int, style: str, duration: float | No
         "source_words": os.path.basename(words_path),
         "params": p,
         "theme": theme,
+        "detected": detected,
         "keep": keep,
         "duration": round(out_dur, 3),
         "words": W,
@@ -646,6 +833,9 @@ def caption_chunks(words, maxw, maxdur):
     return chunks
 
 
+CAPTION_MODES = ["plain", "clean_accent", "chunk", "highlight", "pop", "kinetic", "sweep", "boxed", "bounce", "stack"]
+
+
 def is_keyword(w):
     n = norm(w)
     return (n not in STOP and len(n) >= 6) or number_value(w) is not None
@@ -673,6 +863,61 @@ def build_ass(edl: dict, W: int, H: int, path: str, font_bold: str, font_body: s
             raw = [r.upper() for r in raw]
         if mode == "plain":
             A.add(c0, c1, f"{{\\pos({X},{Y})\\fad(80,80)}}{' '.join(raw)}", "Caption", 10)
+            continue
+        if mode == "clean_accent":  # calm, but keywords carry the accent so it is never flat
+            txt = " ".join(f"{{\\1c{acc}}}{r}{{\\1c{base}}}" if is_keyword(w["w"]) else r for r, w in zip(raw, ch))
+            A.add(c0, c1, f"{{\\pos({X},{Y})\\fad(90,90)\\fscx96\\fscy96\\t(0,120,\\fscx100\\fscy100)}}{txt}",
+                  "Caption", 10)
+            continue
+        if mode == "sweep":  # karaoke fill: accent sweeps through each word as it is spoken
+            ks = []
+            for i, w in enumerate(ch):
+                end_i = ch[i + 1]["s"] if i + 1 < len(ch) else w["e"]
+                ks.append(f"{{\\kf{max(1, int(round((end_i - w['s']) * 100)))}}}{raw[i]}")
+            lead = max(0, int(round((ch[0]["s"] - c0) * 100)))
+            A.add(c0, c1, f"{{\\pos({X},{Y})\\1c{acc}\\2c{base}\\fad(60,80)\\k{lead}}}" + " ".join(ks), "Caption", 10)
+            continue
+        if mode == "boxed":  # accent pill slides under the active word
+            fs = t.get("caption_size", 74)
+            cw = [max(1, len(r)) * fs * 0.5 for r in raw]
+            gap = fs * 0.3
+            total = sum(cw) + gap * (len(cw) - 1)
+            x0 = 540 - total / 2
+            for i, w in enumerate(ch):
+                a = w["s"] if i else c0
+                b = ch[i + 1]["s"] if i + 1 < len(ch) else c1
+                bx = x0 + sum(cw[:i]) + gap * i
+                pw, ph = cw[i] + fs * 0.4, fs * 1.25
+                A.add(a, b, f"{{\\an7\\pos({A.px(bx - fs * 0.2)},{A.px(cap_y - ph / 2)})\\p1\\bord0\\shad0\\1c{acc}"
+                            f"\\fscx85\\fscy85\\t(0,80,\\fscx100\\fscy100)}}{rrect(A.px(pw), A.px(ph), A.px(fs * 0.3))}",
+                      "Shape", 9)
+                parts = [f"{{\\1c{ass_color(t.get('on_accent', '#FFFFFF'))}\\bord0}}{r}{{\\1c{base}\\bord{int(7 * A.s)}}}"
+                         if j == i else r for j, r in enumerate(raw)]
+                A.add(a, b, f"{{\\pos({X},{Y})}}" + " ".join(parts), "Caption", 10)
+            continue
+        if mode == "bounce":  # each word drops in from above with overshoot
+            for i, w in enumerate(ch):
+                a = w["s"] if i else c0
+                b = ch[i + 1]["s"] if i + 1 < len(ch) else c1
+                parts = []
+                for j, r in enumerate(raw):
+                    if j < i:
+                        parts.append(r)
+                    elif j == i:
+                        parts.append(f"{{\\1c{acc if is_keyword(ch[j]['w']) else base}\\frz-6\\fscy70"
+                                     f"\\t(0,90,\\frz3\\fscy115)\\t(90,170,\\frz0\\fscy100)}}{r}{{\\1c{base}\\frz0}}")
+                    else:
+                        parts.append(f"{{\\alpha&HFF&}}{r}{{\\alpha&H00&}}")
+                A.add(a, b, f"{{\\move({X},{Y - A.px(30) if not i else Y},{X},{Y},0,120)}}" + " ".join(parts), "Caption", 10)
+            continue
+        if mode == "stack":  # small lead-in line, the keyword huge underneath
+            kws = [j for j, w in enumerate(ch) if is_keyword(w["w"])]
+            k = max(kws, key=lambda j: len(raw[j])) if kws else max(range(len(raw)), key=lambda j: len(raw[j]))
+            small = " ".join(r for j, r in enumerate(raw) if j != k) or " "
+            A.add(c0, c1, f"{{\\pos({X},{Y - A.px(70)})\\fscx70\\fscy70\\fad(80,80)}}{small}", "Caption", 10)
+            ks = ch[k]["s"]
+            A.add(max(c0, ks - 0.05), c1, f"{{\\pos({X},{Y + A.px(20)})\\1c{acc}\\fscx60\\fscy60"
+                  f"\\t(0,120,\\fscx135\\fscy135)\\t(120,220,\\fscx125\\fscy125)}}{raw[k].upper()}", "Caption", 11)
             continue
         if mode == "chunk":
             A.add(c0, c1, f"{{\\pos({X},{Y})\\fscx88\\fscy88\\t(0,90,\\fscx100\\fscy100)}}{' '.join(raw)}",
@@ -825,7 +1070,7 @@ def build_ass(edl: dict, W: int, H: int, path: str, font_bold: str, font_body: s
                                f"\\fscx0\\t(0,300,\\fscx100)\\fad(0,200)}}{rrect(A.px(420), A.px(10), A.px(5))}",
                   "Shape", 6)
         elif ty == "cta":
-            y = 1620
+            y = top + 40  # platform UI covers the bottom ~400 px (Reels/TikTok safe zones, 2026)
             A.panel(a, b, 190, y, 700, 130, t["accent"], 0, 65)
             A.text(a + 0.1, b, 540, y + 65, t.get("cta_text", "Follow for part two"), 50, t["on_accent"],
                    "Card", 5, 6, "rise")
@@ -904,6 +1149,214 @@ def synth_music(out: str, seconds: float, bpm: int = 96, mood: str = "bright"):
          "-af", f"lowpass=f=7000,afade=t=in:d=1.5,afade=t=out:st={max(0, seconds-1.5):.2f}:d=1.5,aformat=channel_layouts=stereo",
          out])
     log(f"wrote {out}")
+
+
+def music_templates(genre: str | None = None):
+    """Every template id, optionally only those that match a genre."""
+    m = read_json(PRESETS / "music.json")
+    g = m["genre_match"].get(genre) if genre else None
+    moods = g["moods"] if g else list(m["moods"])
+    drums = g["drums"] if g else list(m["drums"])
+    timbres = g["timbres"] if g else list(m["timbres"])
+    energy = g["energy"] if g else list(m["energy"])
+    return [f"{mo}.{k}.{d}.{t}.{e}" for mo in moods for k in m["keys"] for d in drums for t in timbres for e in energy]
+
+
+def pick_music(words, genre: str | None, style: str, seed: int) -> dict:
+    """Choose a template that fits the genre and the speaker's pace (words per minute)."""
+    m = read_json(PRESETS / "music.json")
+    dur = max(1.0, words[-1]["e"] - words[0]["s"]) if words else 60.0
+    wpm = len(words) * 60.0 / dur
+    energy = "low" if wpm < 130 else "mid" if wpm < 170 else "high"
+    g = m["genre_match"].get(genre)
+    if g:
+        moods, drums, timbres = g["moods"], g["drums"], g["timbres"]
+        if energy not in g["energy"]:
+            energy = g["energy"][0] if energy == "low" else g["energy"][-1]
+    else:
+        moods, drums, timbres = [m["style_default"].get(style, "bright_pop")], ["soft_pulse", "lofi"], ["warm"]
+    tid = ".".join([moods[seed % len(moods)], m["keys"][(seed // 3) % 12], drums[(seed // 7) % len(drums)],
+                    timbres[(seed // 11) % len(timbres)], energy])
+    return {"template": tid, "wpm": round(wpm), "reason": f"genre {genre or 'none'}, style {style}, "
+            f"{round(wpm)} words/min -> {energy} energy"}
+
+
+def synth_template(out: str, seconds: float, tid: str):
+    """Render one music template (mood.key.drums.timbre.energy) with ffmpeg aevalsrc. License-free."""
+    need("ffmpeg")
+    m = read_json(PRESETS / "music.json")
+    try:
+        mood, key, drums, timbre, energy = tid.split(".")
+        md, dr, en = m["moods"][mood], m["drums"][drums], m["energy"][energy]
+        ki = m["keys"].index(key)
+        assert timbre in m["timbres"]
+    except (ValueError, KeyError, AssertionError):
+        die(f"bad music template {tid}; list them with: splicecraft.py music list")
+    bpm = md["bpm"] * en
+    beat = 60.0 / bpm
+    step = beat / 4
+    bar = beat * 4
+    root = 196.0 * 2 ** (ki / 12.0)
+    chords = md["chords"]
+    idx = f"mod(floor(t/{bar * 2:.4f}),{len(chords)})"
+
+    def freq(n):
+        return "(" + "+".join(f"eq({idx},{i})*{root * 2 ** (c[n] / 12.0):.3f}" for i, c in enumerate(chords)) + ")"
+
+    def voice(f):
+        if timbre == "sine":
+            return f"sin(2*PI*{f}*t)"
+        if timbre == "warm":
+            return f"(sin(2*PI*{f}*t)+0.45*sin(4*PI*{f}*t)+0.2*sin(6*PI*{f}*t))/1.4"
+        if timbre == "organ":
+            return f"(sin(2*PI*{f}*t)+0.4*sin(4*PI*{f}*t)+0.3*sin(8*PI*{f}*t))/1.5"
+        return f"(sin(2*PI*{f}*t)+0.3*sin(4*PI*{f}*t))*(0.35+exp(-4*mod(t,{beat:.4f})))"
+
+    pad = "+".join(f"0.04*{voice(freq(n))}" for n in range(3))
+    bass = f"0.07*sin(2*PI*{freq(0)}/2*t)*(0.5+0.5*exp(-3*mod(t,{beat * 2:.4f})))"
+    st = f"mod(floor(t/{step:.5f}),16)"
+
+    def gate(pattern):
+        hits = [i for i, ch in enumerate(pattern) if ch == "x"]
+        return "(" + "+".join(f"eq({st},{i})" for i in hits) + ")" if hits else "0"
+
+    env = f"mod(t,{step:.5f})"
+    kick = f"0.24*{gate(dr['kick'])}*sin(2*PI*(48+60*exp(-30*{env}))*t)*exp(-11*{env})"
+    hat = f"0.02*{gate(dr['hat'])}*(random(0)*2-1)*exp(-70*{env})"
+    clap = f"0.05*{gate(dr['clap'])}*(random(1)*2-1)*exp(-22*{env})"
+    swell = f"(0.8+0.2*sin(2*PI*t/{bar * 2:.4f}))"
+    expr = f"({pad})*{swell}+{bass}+{kick}+{hat}+{clap}"
+    # synthesize one full chord cycle once (per-sample expressions are slow), then loop it to length
+    cycle = bar * 2 * len(chords)
+    loop = str(Path(out).with_suffix("")) + ".cycle.wav"
+    run(["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i", f"aevalsrc='{expr}':s=32000:d={min(cycle, seconds + 2):.4f}",
+         "-c:a", "pcm_s16le", loop])
+    run(["ffmpeg", "-y", "-v", "error", "-stream_loop", "-1", "-i", loop, "-t", f"{seconds + 1:.2f}",
+         "-af", f"aresample=44100,highpass=f=30,lowpass=f=9000,afade=t=in:d=1.2,"
+                f"afade=t=out:st={max(0, seconds - 1.5):.2f}:d=1.5,aformat=channel_layouts=stereo,loudnorm=I=-20:TP=-2",
+         out])
+    os.remove(loop)
+    log(f"wrote {out} ({tid}, {bpm:.0f} bpm)")
+
+
+BEAT_SHARE = {"hook": 0.09, "cta": 0.07, "closing": 0.06, "verdict": 0.1, "solution_demo": 0.18, "proof": 0.12}
+TITLE_PATTERNS = ["I tried {topic} so you don't have to", "{topic}: what nobody tells you",
+                  "{topic} in {seconds} seconds", "Stop doing this with {topic}", "The {topic} mistake costing you {cost}",
+                  "{a} vs {b}: which one actually wins", "How I {result} with {topic}"]
+TITLE_PATTERNS_ID = ["Aku coba {topic} biar kamu nggak perlu", "{topic}: yang jarang orang bilang", "{topic} dalam {seconds} detik",
+                     "Stop lakukan ini soal {topic}", "Kesalahan {topic} yang bikin rugi {cost}", "{a} vs {b}: mana yang menang"]
+
+
+def script(topic: str, genre: str, seconds: int, framework: str | None, hook: str | None, audience: str,
+           language: str, out: str | None, brief: str | None = None):
+    """Write a timed script skeleton: hooks, beats with word budgets, titles, description, hashtags, edit plan."""
+    c = read_json(PRESETS / "content.json")
+    gp = read_json(PRESETS / "genres.json")["genres"]
+    if genre not in c["genre_scripts"]:
+        die(f"unknown genre {genre}; choose from {', '.join(c['genre_scripts'])}")
+    gs = c["genre_scripts"][genre]
+    fw_by = {f["name"].lower(): f for f in c["frameworks"]}
+    hk_by = {h["name"].lower(): h for h in c["hooks"]}
+    bf = load_brief(brief)
+    eff = brief_effects(bf) if bf else None
+    if eff and eff["frameworks"] and not framework:
+        framework = eff["frameworks"][0]
+    beats_extra = []
+    if bf.get("market") in ("investor", "hackathon", "b2b") and bf.get("tam"):
+        beats_extra = ["market_size"]
+    fw = fw_by.get((framework or gs["frameworks"][0]).lower()) or die(f"unknown framework {framework}")
+    hook_names = [hook] if hook else gs["hooks"][:3]
+    hooks = [hk_by.get(h.lower()) or die(f"unknown hook {h}") for h in hook_names]
+    beats = list(gs["beats"])
+    if beats_extra:
+        beats.insert(max(1, len(beats) - 3), "market_size")
+    wps = 2.6 if language.startswith("en") else 2.3
+    rest = [b for b in beats if b not in BEAT_SHARE]
+    fixed = sum(BEAT_SHARE.get(b, 0) for b in beats)
+    each = max(0.05, (1 - fixed) / max(1, len(rest)))
+    t, rows = 0.0, []
+    for b in beats:
+        d = seconds * BEAT_SHARE.get(b, each)
+        rows.append((b, t, t + d, max(3, int(d * wps))))
+        t += d
+    g = gp[genre]
+    L = [f"# Script: {topic}", "",
+         f"- Genre: **{genre}** ({g['label']}) · length {seconds} s · audience: {audience} · language: {language}",
+         f"- Structure: **{fw['name']}** ({' > '.join(fw['steps'])})",
+         f"- Edit plan: `--genre {genre} --style auto` -> style {g['style']}, captions {', '.join(g.get('caption_modes', []))}",
+         f"- Speak about {wps} words per second: {int(seconds * wps)} words total. Every line below has its budget.", "",
+         ]
+    if eff:
+        r = brief_report(bf)
+        L += ["", "## Brief", ""] + [f"- {w}" for w in eff["why"]] + [f"- {c}" for c in r["checks"]]
+        if r.get("revenue_math"):
+            m = r["revenue_math"]
+            L.append(f"- Revenue math: {m['buyers_needed']} buyers -> about {m['views_needed']:,} views with "
+                     f"assumptions {m['assumptions']} ({m['warning']})")
+        L += [f"- Compliance: {c}" for c in eff["compliance"]]
+        if bf.get("tam"):
+            L.append(f"- Market beat: say TAM {bf['tam']:,}, SAM {bf.get('sam', 0):,}, SOM {bf.get('som', 0):,} "
+                     f"({bf.get('market_unit', 'units')}); each number becomes a count-up card")
+    L += ["", "## Hook options (pick one, film all three if you can and keep the best)", ""]
+    for h in hooks:
+        warn = " **risky: only with a claim you can prove**" if h["risky"] else ""
+        tpl = h.get("template") or "(write one line using this technique)"
+        L.append(f"- **{h['name']}** ({h['category']}){warn}: `{tpl}`")
+    L += ["", "## Beats", "", "| # | Time | Beat | Words | What to say | Your line |", "|---|---|---|---|---|---|"]
+    for i, (b, a, e, n) in enumerate(rows, 1):
+        L.append(f"| {i} | {a:.0f}-{e:.0f} s | {b} | ~{n} | {c['beat_guide'].get(b, '')} | |")
+    L += ["", "## Retention rules for this script", "",
+          "- The hook is the first words spoken. Cut any greeting.",
+          "- Say a number, name, or visual every 3 to 5 seconds (the planner turns them into cards).",
+          "- Put one open loop in the first 5 seconds and close it before the CTA.",
+          "- Short sentences. One idea per sentence. A 1-3 word sentence becomes a giant word hit.",
+          "- The closing line calls back to the hook, so a replay feels like a loop.",
+          "- One CTA only. Say it, and the planner shows it.", "",
+          "## Title options", ""]
+    patterns = TITLE_PATTERNS_ID if language.startswith("id") else TITLE_PATTERNS
+    fill = {"topic": topic, "seconds": seconds, "cost": "jam" if language.startswith("id") else "hours", "a": "Option A", "b": "Option B", "result": "got results"}
+    L += [f"- {pt.format(**fill)}" for pt in patterns[:6]]
+    tag = re.sub(r"[^\w]", "", topic.title())[:28]
+    L += ["", "## Description", "",
+          f"Line 1 (shows before 'more'): the hook as a sentence plus the payoff.",
+          "Line 2: what the viewer gets, one concrete detail.",
+          f"Line 3: the CTA ({g['cta_text']}).",
+          f"Line 4: 3 to 5 hashtags: one broad, two niche, one branded. Example: #{tag} #{genre.split('_')[0]} #fyp", "",
+          "## After filming", "",
+          "```bash",
+          "python splicecraft.py auto take.mp4 -d work --level 60 --style auto --genre " + genre + " --size 1080x1920",
+          "```"]
+    text = "\n".join(L) + "\n"
+    if out:
+        Path(out).write_text(text, encoding="utf-8")
+        log(f"wrote {out}")
+    else:
+        print(text)
+
+
+PITCH_REASONS = {
+    "fix_wrong_sample_rate": 2.0,   # source was recorded/played at the wrong rate; semitones set from the measured ratio
+    "anonymize_speaker": 5.0,       # the user asked to disguise a voice (whistleblower, minor, privacy)
+    "character_effect": 12.0,       # an explicit comedic or character voice the user asked for, on purpose
+    "match_music_key": 1.0,         # a sung or hummed line that must sit in the music's key
+}
+
+
+def voice_pitch_filter(edl: dict) -> str:
+    """Voice pitch is never changed unless params.voice names an allowed reason. See references/audio.md."""
+    v = edl.get("params", {}).get("voice") or {}
+    st = float(v.get("pitch_semitones", 0) or 0)
+    if st == 0:
+        return ""
+    reason = v.get("reason")
+    if reason not in PITCH_REASONS:
+        die(f"voice pitch change of {st} semitones refused: params.voice.reason must be one of "
+            f"{', '.join(PITCH_REASONS)} (see references/audio.md, 'Voice pitch')")
+    if abs(st) > PITCH_REASONS[reason]:
+        die(f"voice pitch {st} semitones exceeds the {PITCH_REASONS[reason]} limit for {reason}")
+    r = 2 ** (st / 12.0)
+    log(f"voice pitch {st:+.2f} semitones ({reason}); tempo kept")
+    return f"asetrate={48000 * r:.1f},aresample=48000,atempo={1 / r:.5f},"
 
 
 # ------------------------------------------------------------------ render
@@ -1030,7 +1483,7 @@ def render(src: str, edl_path: str, out: str, size: str | None, fps: int | None,
     dur = edl["duration"]
     if info["has_audio"]:
         asel = "+".join(f"between(t,{s:.3f},{e:.3f})" for s, e in keep)
-        fc.append(f"[0:a]aselect='{asel}',asetpts=N/SR/TB,aresample=48000,"
+        fc.append(f"[0:a]aselect='{asel}',asetpts=N/SR/TB,aresample=48000,{voice_pitch_filter(edl)}"
                   f"highpass=f=75,acompressor=threshold=-20dB:ratio=3:attack=5:release=120,"
                   f"equalizer=f=3200:t=q:w=1.2:g=2.5,asplit=2[voice][vkey]")
     else:
@@ -1042,7 +1495,10 @@ def render(src: str, edl_path: str, out: str, size: str | None, fps: int | None,
         mpath = music
         if not mpath:
             mpath = str(work / "bed.wav")
-            synth_music(mpath, dur, theme.get("bpm", 96), theme.get("music_mood", "bright"))
+            if theme.get("music_template"):
+                synth_template(mpath, dur, theme["music_template"])
+            else:
+                synth_music(mpath, dur, theme.get("bpm", 96), theme.get("music_mood", "bright"))
         inputs += ["-stream_loop", "-1", "-i", mpath]
         fc.append(f"[{idx}:a]aresample=48000,atrim=0:{dur:.3f},volume={music_db}dB[mraw]")
         fc.append("[mraw][vkey]sidechaincompress=threshold=0.03:ratio=8:attack=20:release=350[music]")
@@ -1154,7 +1610,11 @@ def main():
 
     def plan_args(s):
         s.add_argument("--level", type=int, default=60)
-        s.add_argument("--style", default="studio")
+        s.add_argument("--style", default="studio", help="a look from presets/styles.json, or auto (from the genre)")
+        s.add_argument("--genre", default="none", help="auto (detect from transcript), none, or a name in presets/genres.json")
+        s.add_argument("--brief", help="brief.json: platform, market, age, stage, funnel, niche, tam/sam/som, revenue_target")
+        s.add_argument("--captions", choices=CAPTION_MODES, help="force a caption style")
+        s.add_argument("--variant", type=int, help="0-359 picks one per-genre look; default hashes the transcript")
         s.add_argument("--brand", help="json file overriding theme colors")
         s.add_argument("--no-cut", action="store_true", help="keep every pause")
 
@@ -1171,6 +1631,19 @@ def main():
         s.add_argument("--font-bold"); s.add_argument("--font-body"); s.add_argument("--fontsdir")
         s.add_argument("--crf", type=int, default=19); s.add_argument("--preset", default="medium")
 
+    s = sub.add_parser("music"); s.add_argument("action", choices=["list", "count", "pick", "render"])
+    s.add_argument("target", nargs="?", help="pick: words.json   render: template id")
+    s.add_argument("--genre"); s.add_argument("--style", default="studio"); s.add_argument("--limit", type=int, default=20)
+    s.add_argument("--seconds", type=float, default=20); s.add_argument("-o", "--out", default="music.wav")
+    s.add_argument("--seed", type=int, default=0)
+    s = sub.add_parser("script"); s.add_argument("topic")
+    s.add_argument("--genre", default="education_explainer"); s.add_argument("--seconds", type=int, default=45)
+    s.add_argument("--framework"); s.add_argument("--hook"); s.add_argument("--audience", default="general")
+    s.add_argument("--language", default="en"); s.add_argument("-o", "--out"); s.add_argument("--brief")
+    s = sub.add_parser("brief"); s.add_argument("brief")
+    s = sub.add_parser("library"); s.add_argument("kind", choices=["frameworks", "hooks"]); s.add_argument("--category")
+    s = sub.add_parser("detect"); s.add_argument("words"); s.add_argument("-o", "--out")
+    sub.add_parser("options")
     s = sub.add_parser("render"); s.add_argument("src"); s.add_argument("edl"); s.add_argument("-o", "--out", default="edited.mp4"); render_args(s)
     s = sub.add_parser("qa"); s.add_argument("video"); s.add_argument("--edl"); s.add_argument("-o", "--out")
     s = sub.add_parser("sheet"); s.add_argument("video"); s.add_argument("-o", "--out", default="sheet.jpg")
@@ -1187,7 +1660,40 @@ def main():
     elif a.cmd == "transcribe":
         transcribe(a.src, a.out, a.language, a.key_file, a.engine)
     elif a.cmd == "plan":
-        plan(a.words, a.out, a.level, a.style, a.duration, a.brand, a.no_cut)
+        plan(a.words, a.out, a.level, a.style, a.duration, a.brand, a.no_cut, a.genre, a.variant, a.captions, a.brief)
+    elif a.cmd == "detect":
+        res = detect_genre(read_json(a.words)["words"])
+        if a.out:
+            write_json(a.out, res)
+        res["ranking"] = res["ranking"][:4]
+        print(json.dumps(res, indent=2, ensure_ascii=False))
+    elif a.cmd == "script":
+        script(a.topic, a.genre, a.seconds, a.framework, a.hook, a.audience, a.language, a.out, a.brief)
+    elif a.cmd == "brief":
+        print(json.dumps(brief_report(load_brief(a.brief)), indent=2, ensure_ascii=False))
+    elif a.cmd == "library":
+        items = read_json(PRESETS / "content.json")[a.kind]
+        for it in items:
+            if not a.category or it["category"] == a.category:
+                extra = " > ".join(it["steps"]) if a.kind == "frameworks" else ("RISKY" if it["risky"] else "")
+                print(f"{it['category']:<13} {it['name']:<32} {extra}")
+        print(f"... {len(items)} {a.kind}")
+    elif a.cmd == "music":
+        if a.action == "count":
+            print(json.dumps({"all": len(music_templates()), **{g: len(music_templates(g)) for g in
+                              read_json(PRESETS / "music.json")["genre_match"]}}, indent=2))
+        elif a.action == "list":
+            ids = music_templates(a.genre)
+            print("\n".join(ids[:: max(1, len(ids) // a.limit)][:a.limit]))
+            print(f"... {len(ids)} templates" + (f" for {a.genre}" if a.genre else ""))
+        elif a.action == "pick":
+            w = read_json(a.target)["words"]
+            g = a.genre or detect_genre(w)["genre"]
+            print(json.dumps(pick_music(w, g, a.style, a.seed), indent=2))
+        else:
+            synth_template(a.out, a.seconds, a.target)
+    elif a.cmd == "options":
+        print(json.dumps(option_count(), indent=2))
     elif a.cmd == "render":
         render(a.src, a.edl, a.out, a.size, a.fps, a.music, a.music_db, a.key, a.bg, a.lut, a.grade,
                a.font_bold, a.font_body, a.fontsdir, a.crf, a.preset)
@@ -1205,7 +1711,7 @@ def main():
         if not words.exists():
             transcribe(a.src, str(words), a.language, a.key_file, a.engine)
         info = probe(a.src)
-        plan(str(words), str(d / "edl.json"), a.level, a.style, info["duration"], a.brand, a.no_cut)
+        plan(str(words), str(d / "edl.json"), a.level, a.style, info["duration"], a.brand, a.no_cut, a.genre, a.variant, a.captions, a.brief)
         out = str(d / "edited.mp4")
         render(a.src, str(d / "edl.json"), out, a.size, a.fps, a.music, a.music_db, a.key, a.bg, a.lut, a.grade,
                a.font_bold, a.font_body, a.fontsdir, a.crf, a.preset)

@@ -1,0 +1,483 @@
+{
+  "note": "Video genres the planner can detect from the transcript. keywords are scored per occurrence (English + Indonesian). style is the default look when --style auto; level_shift moves the requested level; params override the level's params; drop_beats removes card types that do not suit the genre; palettes are accent colors picked per video by --variant (or a hash of the transcript).",
+  "genres": {
+    "hackathon_demo": {
+      "label": "Hackathon / product demo",
+      "keywords": [
+        "hackathon",
+        "demo",
+        "we built",
+        "i built",
+        "built",
+        "prototype",
+        "mvp",
+        "judges",
+        "submission",
+        "track",
+        "bounty",
+        "solana",
+        "onchain",
+        "on-chain",
+        "smart contract",
+        "devnet",
+        "mainnet",
+        "wallet",
+        "api",
+        "github",
+        "deploy",
+        "deployed",
+        "live",
+        "dashboard",
+        "users can",
+        "problem",
+        "solution",
+        "team",
+        "pitch",
+        "hackaton",
+        "kami membangun",
+        "kami bikin",
+        "juri",
+        "solusi",
+        "masalah",
+        "tim"
+      ],
+      "style": "neon",
+      "level_shift": 5,
+      "params": {
+        "cards_per_min_scale": 1.1,
+        "flash": false
+      },
+      "drop_beats": [],
+      "palettes": [
+        "#C6FF3D",
+        "#00E5FF",
+        "#FF3DCB",
+        "#7C5CFF",
+        "#FFB800",
+        "#14F195",
+        "#FF5A1F",
+        "#3DA5FF"
+      ],
+      "cta_text": "Try the live demo",
+      "music_mood": "bright",
+      "bpm": 112,
+      "caption_modes": [
+        "boxed",
+        "pop",
+        "kinetic"
+      ]
+    },
+    "tutorial_docs": {
+      "label": "Tutorial / documentation / walkthrough",
+      "keywords": [
+        "step",
+        "steps",
+        "click",
+        "install",
+        "open",
+        "type",
+        "run",
+        "command",
+        "settings",
+        "configure",
+        "setup",
+        "set up",
+        "folder",
+        "file",
+        "documentation",
+        "docs",
+        "tutorial",
+        "how to",
+        "guide",
+        "next",
+        "then",
+        "select",
+        "menu",
+        "button",
+        "langkah",
+        "klik",
+        "buka",
+        "pasang",
+        "jalankan",
+        "pengaturan",
+        "cara",
+        "panduan",
+        "dokumentasi",
+        "pilih",
+        "lalu",
+        "kemudian"
+      ],
+      "style": "editorial",
+      "level_shift": -15,
+      "params": {
+        "cards_per_min_scale": 0.8,
+        "zoom_scale": 0.5,
+        "flash": false
+      },
+      "drop_beats": [
+        "word",
+        "versus"
+      ],
+      "palettes": [
+        "#1F5BFF",
+        "#0F8A5F",
+        "#B8410E",
+        "#6D28D9",
+        "#0E7490",
+        "#BE185D",
+        "#374151",
+        "#A16207"
+      ],
+      "cta_text": "Full guide in the description",
+      "music_mood": "moody",
+      "bpm": 84,
+      "caption_modes": [
+        "clean_accent",
+        "sweep",
+        "highlight"
+      ]
+    },
+    "product_launch": {
+      "label": "Product launch / ad",
+      "keywords": [
+        "introducing",
+        "launch",
+        "new",
+        "announce",
+        "available",
+        "price",
+        "pricing",
+        "free",
+        "sign up",
+        "waitlist",
+        "feature",
+        "features",
+        "customers",
+        "brand",
+        "today",
+        "limited",
+        "discount",
+        "order",
+        "buy",
+        "memperkenalkan",
+        "peluncuran",
+        "baru",
+        "harga",
+        "gratis",
+        "fitur",
+        "daftar",
+        "beli",
+        "promo"
+      ],
+      "style": "glass",
+      "level_shift": 10,
+      "params": {
+        "cards_per_min_scale": 1.0
+      },
+      "drop_beats": [
+        "callback"
+      ],
+      "palettes": [
+        "#3DDC97",
+        "#FF7AB6",
+        "#FFD166",
+        "#8EC5FF",
+        "#FF8A5B",
+        "#B794F6",
+        "#5EEAD4",
+        "#F5F5F5"
+      ],
+      "cta_text": "Link in bio",
+      "music_mood": "bright",
+      "bpm": 104,
+      "caption_modes": [
+        "bounce",
+        "boxed",
+        "pop"
+      ]
+    },
+    "education_explainer": {
+      "label": "Education / explainer / news",
+      "keywords": [
+        "why",
+        "because",
+        "means",
+        "research",
+        "study",
+        "percent",
+        "data",
+        "history",
+        "science",
+        "fact",
+        "facts",
+        "explain",
+        "reason",
+        "actually",
+        "study shows",
+        "according",
+        "kenapa",
+        "karena",
+        "artinya",
+        "penelitian",
+        "fakta",
+        "sejarah",
+        "data",
+        "menurut",
+        "persen"
+      ],
+      "style": "studio",
+      "level_shift": 0,
+      "params": {
+        "cards_per_min_scale": 1.0
+      },
+      "drop_beats": [],
+      "palettes": [
+        "#FF5A1F",
+        "#2563EB",
+        "#16A34A",
+        "#DB2777",
+        "#9333EA",
+        "#EA580C",
+        "#0891B2",
+        "#CA8A04"
+      ],
+      "cta_text": "Follow for part two",
+      "music_mood": "bright",
+      "bpm": 96,
+      "caption_modes": [
+        "highlight",
+        "stack",
+        "pop"
+      ]
+    },
+    "story_vlog": {
+      "label": "Story / vlog / personal",
+      "keywords": [
+        "i was",
+        "my life",
+        "felt",
+        "feel",
+        "life",
+        "day",
+        "yesterday",
+        "story",
+        "family",
+        "friend",
+        "love",
+        "trip",
+        "honestly",
+        "aku",
+        "gue",
+        "cerita",
+        "hidup",
+        "hari",
+        "kemarin",
+        "rasanya",
+        "keluarga",
+        "teman",
+        "jujur"
+      ],
+      "style": "cinema",
+      "level_shift": -5,
+      "params": {
+        "cards_per_min_scale": 0.6,
+        "flash": false
+      },
+      "drop_beats": [
+        "ranking",
+        "versus"
+      ],
+      "palettes": [
+        "#E8B04A",
+        "#D97757",
+        "#C9A227",
+        "#E07A5F",
+        "#B5838D",
+        "#81B29A",
+        "#F2CC8F",
+        "#CDB4DB"
+      ],
+      "cta_text": "Follow for the rest of the story",
+      "music_mood": "moody",
+      "bpm": 80,
+      "caption_modes": [
+        "sweep",
+        "clean_accent",
+        "highlight"
+      ]
+    },
+    "sales_pitch": {
+      "label": "Sales / business / finance tips",
+      "keywords": [
+        "money",
+        "revenue",
+        "profit",
+        "clients",
+        "business",
+        "sales",
+        "income",
+        "growth",
+        "marketing",
+        "strategy",
+        "mistake",
+        "mistakes",
+        "tips",
+        "secret",
+        "roi",
+        "uang",
+        "omzet",
+        "untung",
+        "klien",
+        "bisnis",
+        "penjualan",
+        "strategi",
+        "rahasia",
+        "cuan"
+      ],
+      "style": "noir",
+      "level_shift": 10,
+      "params": {
+        "cards_per_min_scale": 1.15
+      },
+      "drop_beats": [],
+      "palettes": [
+        "#E11D48",
+        "#F59E0B",
+        "#10B981",
+        "#F43F5E",
+        "#FACC15",
+        "#22D3EE",
+        "#FB7185",
+        "#FFFFFF"
+      ],
+      "cta_text": "Comment GUIDE",
+      "music_mood": "bright",
+      "bpm": 100,
+      "caption_modes": [
+        "stack",
+        "kinetic",
+        "boxed"
+      ]
+    },
+    "podcast_talk": {
+      "label": "Podcast / interview / long talk",
+      "keywords": [
+        "podcast",
+        "episode",
+        "guest",
+        "interview",
+        "conversation",
+        "question",
+        "think",
+        "opinion",
+        "agree",
+        "tamu",
+        "obrolan",
+        "episode",
+        "pendapat",
+        "setuju",
+        "menurutku"
+      ],
+      "style": "cinema",
+      "level_shift": -20,
+      "params": {
+        "cards_per_min_scale": 0.5,
+        "zoom_scale": 0.6,
+        "flash": false
+      },
+      "drop_beats": [
+        "word"
+      ],
+      "palettes": [
+        "#E8B04A",
+        "#7DD3FC",
+        "#F0ABFC",
+        "#86EFAC",
+        "#FCA5A5",
+        "#FDE68A",
+        "#C4B5FD",
+        "#FDBA74"
+      ],
+      "cta_text": "Full episode on the channel",
+      "music_mood": "moody",
+      "bpm": 76,
+      "caption_modes": [
+        "sweep",
+        "highlight",
+        "clean_accent"
+      ]
+    },
+    "ai_comparison": {
+      "label": "AI / tool comparison (like the withpt.ai reference)",
+      "keywords": [
+        " vs ",
+        "versus",
+        "better",
+        "compare",
+        "comparison",
+        "test",
+        "tested",
+        "benchmark",
+        "winner",
+        "won",
+        "gpt",
+        "chatgpt",
+        "claude",
+        "fable",
+        "gemini",
+        "astra",
+        "model",
+        "prompt",
+        "agent",
+        "ai",
+        "lebih bagus",
+        "bandingkan",
+        "pemenang",
+        "uji"
+      ],
+      "style": "studio",
+      "level_shift": 5,
+      "params": {
+        "cards_per_min_scale": 1.1
+      },
+      "drop_beats": [],
+      "palettes": [
+        "#FF5A1F",
+        "#10A37F",
+        "#D97757",
+        "#4285F4",
+        "#8B5CF6",
+        "#EC4899",
+        "#14B8A6",
+        "#F59E0B"
+      ],
+      "cta_text": "Which one wins? Comment below",
+      "music_mood": "bright",
+      "bpm": 104,
+      "caption_modes": [
+        "kinetic",
+        "boxed",
+        "stack"
+      ]
+    }
+  },
+  "variants": {
+    "caption_size_scale": [
+      0.92,
+      1.0,
+      1.08
+    ],
+    "card_y_offset": [
+      -40,
+      0,
+      40
+    ],
+    "grade": [
+      "style",
+      "punchy",
+      "warm",
+      "cinematic",
+      "clean"
+    ]
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "note": "Project brief -> edit decisions. Each field in brief.json picks one entry below; its effects are applied in order platform, market, age, stage, funnel, niche. level: added to the level. density: multiplies cards per minute. caption_scale: multiplies caption size. caption_modes: preferred caption styles (first that exists wins over the genre's). energy: music energy override. style: used when --style auto. Research date for platform numbers: 2026-09-15; see references/audience-and-market.md for sources.",
+  "platform": {
+    "tiktok":        {"size": "1080x1920", "ideal_seconds": [15, 45], "max_reach_seconds": 180, "level": 5,  "density": 1.0, "note": "completion rate is the heaviest signal; ~70% completion benchmark; search uses captions, on-screen text and transcript"},
+    "reels":         {"size": "1080x1920", "ideal_seconds": [15, 60], "max_reach_seconds": 180, "level": 5,  "density": 1.0, "note": "shares and saves weigh above likes; Reels over 3 minutes stop being recommended to non-followers"},
+    "shorts":        {"size": "1080x1920", "ideal_seconds": [30, 45], "max_reach_seconds": 180, "level": 0,  "density": 1.0, "note": "ranked on watch time per impression; ~65% average view duration gate under 30 s, ~50% above"},
+    "linkedin":      {"size": "1080x1350", "ideal_seconds": [30, 90], "max_reach_seconds": 600, "level": -15, "density": 0.8, "caption_modes": ["clean_accent", "highlight"], "note": "professional feed, many watch muted at work; proof and clarity over hype"},
+    "youtube_long":  {"size": "1920x1080", "ideal_seconds": [480, 900], "max_reach_seconds": 7200, "level": -20, "density": 0.5, "caption_modes": ["clean_accent", "sweep"], "note": "cards every few seconds tire a long viewer; chapters matter more"},
+    "x_twitter":     {"size": "1080x1080", "ideal_seconds": [20, 60], "max_reach_seconds": 140, "level": 0, "density": 1.0, "note": "autoplay muted in feed; first frame must read as a claim"}
+  },
+  "market": {
+    "b2c":       {"level": 5,   "density": 1.1, "cta": "follow", "note": "impulse and emotion; faster cuts, brighter look"},
+    "b2b":       {"level": -10, "density": 0.85, "caption_modes": ["highlight", "stack", "clean_accent"], "style": "editorial", "cta": "book a demo", "note": "multi-stakeholder, 60-180 day cycles; proof, numbers, case studies"},
+    "b2g":       {"level": -20, "density": 0.7, "caption_modes": ["clean_accent"], "style": "editorial", "cta": "download the brief", "note": "compliance and trust first; no hype language"},
+    "investor":  {"level": -5,  "density": 1.0, "caption_modes": ["stack", "highlight"], "style": "cinema", "cta": "see the deck", "note": "market size, traction, team; every number on screen"},
+    "creator":   {"level": 10,  "density": 1.15, "cta": "follow", "note": "personality-led; kinetic captions and word hits"},
+    "nonprofit": {"level": -10, "density": 0.8, "caption_modes": ["sweep", "clean_accent"], "style": "cinema", "cta": "donate or share", "note": "story first, one clear ask"},
+    "hackathon": {"level": 0,   "density": 1.1, "caption_modes": ["boxed", "highlight"], "style": "neon", "cta": "try the live demo", "note": "judges scan many videos; claim, demo, proof inside 60-120 s"}
+  },
+  "age": {
+    "gen_z":      {"range": [13, 28], "level": 10,  "caption_scale": 1.0,  "caption_modes": ["kinetic", "bounce", "boxed"], "energy": "high", "note": "fast pattern changes, self-aware humor, native platform style"},
+    "millennial": {"range": [29, 44], "level": 0,   "caption_scale": 1.0,  "caption_modes": ["pop", "highlight", "boxed"], "energy": "mid", "note": "value and credibility; how-to and story both work"},
+    "gen_x":      {"range": [45, 60], "level": -10, "caption_scale": 1.08, "caption_modes": ["highlight", "clean_accent"], "energy": "mid", "note": "slower pace, larger text, clear benefit"},
+    "boomer":     {"range": [61, 80], "level": -20, "caption_scale": 1.15, "caption_modes": ["clean_accent", "sweep"], "energy": "low", "note": "largest captions, fewest effects, no flashes"},
+    "mixed":      {"range": [18, 65], "level": 0,   "caption_scale": 1.04, "note": "design for the oldest meaningful segment's readability"}
+  },
+  "stage": {
+    "idea":       {"level": 0,   "grade": "clean",     "note": "pre-product: build in public, problem interviews, honest and scrappy"},
+    "pre_revenue":{"level": 0,   "grade": "punchy",    "note": "prototype or hackathon: demo and proof beat polish"},
+    "growth":     {"level": 5,   "grade": "punchy",    "note": "traction exists: social proof, case studies, offers"},
+    "scale":      {"level": -5,  "grade": "cinematic", "note": "brand building: consistent look, fewer gimmicks"},
+    "enterprise": {"level": -15, "grade": "clean",     "note": "brand safety and consistency; restraint signals quality"}
+  },
+  "funnel": {
+    "awareness":     {"frameworks": ["HVC", "Curiosity Gap", "Myth vs Fact", "POV Scenario", "Endless Loop"], "cta": "follow", "note": "optimize completion and shares"},
+    "consideration": {"frameworks": ["Comparison Breakdown", "What-Why-How", "Case Study", "Teardown"], "cta": "save this", "note": "optimize saves and profile visits"},
+    "conversion":    {"frameworks": ["PAS", "AIDA", "4P", "PASTOR", "Hook-Story-Offer"], "cta": "link in bio", "note": "optimize clicks; one offer, one action"},
+    "retention":     {"frameworks": ["Build in Public", "Q&A Escalation", "Challenge-Progress-Result"], "cta": "comment your question", "note": "optimize comments and repeat viewers"}
+  },
+  "niche": {
+    "tech_ai":       {"style": "neon",      "moods": ["tech_pulse", "mysterious"],       "compliance": ""},
+    "saas_b2b":      {"style": "editorial", "moods": ["corporate_clean", "confident"],   "compliance": ""},
+    "web3_crypto":   {"style": "neon",      "moods": ["tech_pulse", "dark_tension"],     "compliance": "Not financial advice. Never promise returns. Many regions regulate crypto promotion."},
+    "finance":       {"style": "noir",      "moods": ["confident", "corporate_clean"],   "compliance": "Not financial advice. Show risk. Regulated claims need a licensed review."},
+    "health_fitness":{"style": "studio",    "moods": ["motivational", "uplifting"],      "compliance": "No medical claims or cure language. Results vary; say so."},
+    "beauty_fashion":{"style": "glass",     "moods": ["bright_pop", "chill_lofi"],       "compliance": "Disclose paid partnerships and gifted products."},
+    "food":          {"style": "studio",    "moods": ["sunny_acoustic", "playful"],      "compliance": ""},
+    "travel":        {"style": "cinema",    "moods": ["sunny_acoustic", "hopeful"],      "compliance": ""},
+    "education":     {"style": "studio",    "moods": ["corporate_clean", "hopeful"],     "compliance": "Cite sources for facts."},
+    "gaming":        {"style": "neon",      "moods": ["tech_pulse", "playful"],          "compliance": "Game footage may be copyrighted; check the publisher's video policy."},
+    "real_estate":   {"style": "cinema",    "moods": ["confident", "cinematic_epic"],    "compliance": "Housing ads have anti-discrimination rules in many regions."},
+    "parenting":     {"style": "editorial", "moods": ["emotional", "calm_ambient"],      "compliance": "Children on camera: consent and privacy."},
+    "religion":      {"style": "cinema",    "moods": ["hopeful", "calm_ambient"],        "compliance": "No rage bait. Respectful framing."},
+    "local_business":{"style": "studio",    "moods": ["sunny_acoustic", "bright_pop"],   "compliance": "Prices and promos must be accurate on the date posted."},
+    "automotive":    {"style": "noir",      "moods": ["cinematic_epic", "motivational"],      "compliance": ""},
+    "career":        {"style": "editorial", "moods": ["confident", "motivational"],      "compliance": ""},
+    "entertainment": {"style": "neon",      "moods": ["playful", "bright_pop"],          "compliance": "Clips from films, shows and songs are usually claimed."}
+  },
+  "funnel_defaults": {"view_to_profile": 0.01, "profile_to_click": 0.15, "click_to_buy": 0.02, "note": "Placeholder conversion assumptions for the revenue calculator. Replace with the user's own analytics; these are not benchmarks."}
+}

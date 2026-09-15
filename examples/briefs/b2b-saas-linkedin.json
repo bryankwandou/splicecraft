@@ -1,0 +1,13 @@
+{
+  "project": "Invoice automation SaaS",
+  "platform": "linkedin",
+  "market": "b2b",
+  "age": "gen_x",
+  "stage": "growth",
+  "funnel": "consideration",
+  "niche": "saas_b2b",
+  "seconds": 60,
+  "price": 1200,
+  "revenue_target": 240000,
+  "click_to_buy": 0.005
+}

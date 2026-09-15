@@ -1,0 +1,50 @@
+{
+  "note": "Procedural, license-free background music. A template id is mood.key.drums.timbre.energy, e.g. tech_pulse.D.driving.pluck.high. Every template is synthesized by ffmpeg on the user's machine, so there is no copyright claim risk. Chords are semitone offsets from the key root. Drum patterns are 16 steps per bar (x = hit).",
+  "keys": ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"],
+  "moods": {
+    "uplifting":      {"bpm": 104, "chords": [[0,4,7],[7,11,14],[-3,0,4],[5,9,12]], "feel": "I-V-vi-IV, wins and reveals"},
+    "bright_pop":     {"bpm": 112, "chords": [[0,4,7],[-3,0,4],[5,9,12],[7,11,14]], "feel": "I-vi-IV-V, lifestyle and launches"},
+    "hopeful":        {"bpm": 96,  "chords": [[5,9,12],[0,4,7],[7,11,14],[-3,0,4]], "feel": "IV-I-V-vi, mission and impact"},
+    "confident":      {"bpm": 100, "chords": [[-3,0,4],[5,9,12],[0,4,7],[7,11,14]], "feel": "vi-IV-I-V, pitches and tips"},
+    "corporate_clean":{"bpm": 98,  "chords": [[0,4,7],[5,9,12],[-3,0,4],[7,11,14]], "feel": "I-IV-vi-V, explainers and B2B"},
+    "playful":        {"bpm": 118, "chords": [[0,4,7],[2,5,9],[4,7,11],[5,9,12]], "feel": "I-ii-iii-IV, light and funny"},
+    "calm_ambient":   {"bpm": 76,  "chords": [[0,4,7],[5,9,12],[-3,0,4],[5,9,12]], "feel": "I-IV-vi-IV, tutorials and talk"},
+    "chill_lofi":     {"bpm": 84,  "chords": [[2,5,9],[7,11,14],[0,4,7],[-3,0,4]], "feel": "ii-V-I-vi, study, docs, vlogs"},
+    "emotional":      {"bpm": 80,  "chords": [[0,4,7],[4,7,11],[5,9,12],[5,8,12]], "feel": "I-iii-IV-iv, stories and gratitude"},
+    "tech_pulse":     {"bpm": 116, "chords": [[0,3,7],[-4,0,3],[3,7,10],[-2,2,5]], "feel": "i-VI-III-VII minor drive, demos and AI"},
+    "cinematic_epic": {"bpm": 90,  "chords": [[0,3,7],[-4,0,3],[5,8,12],[-2,2,5]], "feel": "i-VI-iv-VII, trailers and big claims"},
+    "dark_tension":   {"bpm": 94,  "chords": [[0,3,7],[1,5,8],[0,3,7],[-2,2,5]], "feel": "i-bII-i-VII, warnings, mistakes, noir"},
+    "mysterious":     {"bpm": 86,  "chords": [[0,3,7],[3,7,10],[-2,2,5],[5,8,12]], "feel": "i-III-VII-iv, secrets and reveals"},
+    "sunny_acoustic": {"bpm": 102, "chords": [[0,4,7],[7,11,14],[5,9,12],[0,4,7]], "feel": "I-V-IV-I, travel and food"},
+    "motivational":   {"bpm": 108, "chords": [[-3,0,4],[7,11,14],[5,9,12],[0,4,7]], "feel": "vi-V-IV-I, fitness and growth"},
+    "news_neutral":   {"bpm": 92,  "chords": [[0,4,7],[-3,0,4],[0,4,7],[5,9,12]], "feel": "I-vi-I-IV, reports and summaries"}
+  },
+  "drums": {
+    "none":       {"kick": "................", "hat": "................", "clap": "................"},
+    "soft_pulse": {"kick": "x.......x.......", "hat": "................", "clap": "................"},
+    "four_floor": {"kick": "x...x...x...x...", "hat": "..x...x...x...x.", "clap": "....x.......x..."},
+    "half_time":  {"kick": "x...............", "hat": "x.x.x.x.x.x.x.x.", "clap": "........x......."},
+    "lofi":       {"kick": "x.....x...x.....", "hat": "..x...x...x...xx", "clap": "....x.......x..."},
+    "trap":       {"kick": "x......x..x.....", "hat": "xxxxxxxxxxxxxxxx", "clap": "........x......."},
+    "driving":    {"kick": "x.x.x.x.x.x.x.x.", "hat": ".x.x.x.x.x.x.x.x", "clap": "....x.......x..."},
+    "broken":     {"kick": "x..x....x.x.....", "hat": "x.xx.x.xx.x.x.xx", "clap": "....x..x....x..."}
+  },
+  "timbres": {
+    "sine":  "pure soft pad, never fights the voice",
+    "warm":  "sine plus 2nd and 3rd harmonics, rounder",
+    "organ": "drawbar-like 1st, 2nd and 4th harmonics",
+    "pluck": "each beat re-attacks and decays, rhythmic"
+  },
+  "energy": {"low": 0.85, "mid": 1.0, "high": 1.15},
+  "genre_match": {
+    "hackathon_demo":      {"moods": ["tech_pulse", "confident", "uplifting", "motivational"], "drums": ["driving", "four_floor", "broken"], "timbres": ["pluck", "warm"], "energy": ["mid", "high"]},
+    "tutorial_docs":       {"moods": ["calm_ambient", "chill_lofi", "corporate_clean"], "drums": ["none", "soft_pulse", "lofi"], "timbres": ["sine", "warm"], "energy": ["low"]},
+    "product_launch":      {"moods": ["bright_pop", "uplifting", "sunny_acoustic", "playful"], "drums": ["four_floor", "driving", "half_time"], "timbres": ["pluck", "warm", "organ"], "energy": ["mid", "high"]},
+    "education_explainer": {"moods": ["corporate_clean", "hopeful", "news_neutral", "mysterious"], "drums": ["soft_pulse", "lofi", "half_time"], "timbres": ["warm", "sine", "pluck"], "energy": ["low", "mid"]},
+    "story_vlog":          {"moods": ["emotional", "hopeful", "chill_lofi", "sunny_acoustic"], "drums": ["none", "soft_pulse", "lofi"], "timbres": ["warm", "sine", "pluck"], "energy": ["low", "mid"]},
+    "sales_pitch":         {"moods": ["confident", "motivational", "dark_tension", "cinematic_epic"], "drums": ["trap", "driving", "half_time"], "timbres": ["pluck", "organ", "warm"], "energy": ["mid", "high"]},
+    "podcast_talk":        {"moods": ["calm_ambient", "chill_lofi", "news_neutral"], "drums": ["none", "soft_pulse"], "timbres": ["sine", "warm"], "energy": ["low"]},
+    "ai_comparison":       {"moods": ["tech_pulse", "mysterious", "confident", "playful"], "drums": ["broken", "driving", "trap", "half_time"], "timbres": ["pluck", "warm"], "energy": ["mid", "high"]}
+  },
+  "style_default": {"studio": "bright_pop", "cinema": "cinematic_epic", "neon": "tech_pulse", "editorial": "calm_ambient", "noir": "dark_tension", "glass": "chill_lofi"}
+}
