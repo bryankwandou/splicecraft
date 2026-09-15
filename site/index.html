@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>splicecraft</title>
+<meta name="date" content="2026-09-15">
 <meta name="description" content="An open skill file that lets any AI agent edit a raw talking-head video into a finished short: captions, cards, zooms, grade, music, QA.">
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
 <meta property="og:title" content="splicecraft">
@@ -367,6 +368,28 @@ QA PASSED</pre></div>
   </div>
 </section>
 
+<section id="genres" style="background:var(--paper-2)">
+  <div class="wrap">
+    <div class="head">
+      <div><p class="eyebrow" data-i18n="gen_eyebrow">Auto genre</p><h2 class="rv" style="margin-top:14px" data-i18n="gen_title">It reads the script, then picks the edit.</h2></div>
+      <p class="rv" data-i18n="gen_lede">The editing model is identical for every look. The transcript decides the genre: a hackathon demo gets dense number cards and a neon accent, a tutorial gets half the zoom and no word hits so the screen stays readable, a story gets a warm grade and fewer cards.</p>
+    </div>
+    <div class="stats" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">
+      <div><small data-i18n="gen_s1">genres detected</small><b>8</b></div>
+      <div><small data-i18n="gen_s2">looks per genre and style</small><b>360</b></div>
+      <div><small data-i18n="gen_s3">distinct setups</small><b>17,280</b></div>
+      <div><small data-i18n="gen_s5">music templates</small><b>18,432</b></div>
+      <div><small data-i18n="gen_s6">caption styles</small><b>10</b></div>
+      <div><small data-i18n="gen_s7">content structures</small><b>100</b></div>
+      <div><small data-i18n="gen_s8">named hooks</small><b>200</b></div>
+      <div><small data-i18n="gen_s9">brief fields that steer the edit</small><b>6</b></div>
+    </div>
+    <p class="rv" style="margin-top:18px;color:var(--ink-2);max-width:70ch" data-i18n="gen_brief">A brief (platform, market, audience age, business stage, funnel goal, niche, TAM/SAM/SOM, revenue target) changes pace, caption style, look, grade, CTA and music. Voice pitch is locked: no chipmunk, no robot.</p>
+    <p style="margin-top:12px"><a class="btn ghost" href="MEGA-SKILL.md" data-i18n="gen_mega">Read MEGA-SKILL.md (everything in one file)</a></p>
+    <div class="install" style="margin-top:22px;max-width:760px"><code>python splicecraft.py plan words.json --style auto --genre auto</code></div>
+  </div>
+</section>
+
 <section style="background:var(--paper-2)">
   <div class="wrap">
     <div class="head">
@@ -470,6 +493,12 @@ const I18N = {
     copy:"Salin", cta_how:"Lihat alurnya", cta_read:"Baca SKILL.md",
     m1:"level editan", m2:"jenis beat", m3:"gerbang QA", m4:"alat berbayar",
     before:"Mentah", after:"Hasil edit",
+    gen_eyebrow:"Genre otomatis", gen_title:"Baca naskahnya, lalu pilih gaya editnya.",
+    gen_lede:"Model editingnya sama persis untuk semua tampilan. Transkrip yang menentukan genre: demo hackathon dapat kartu angka padat dan aksen neon, tutorial dapat zoom setengah dan tanpa kata raksasa agar layar tetap terbaca, cerita dapat warna hangat dan kartu lebih sedikit.",
+    gen_s5:"template musik", gen_s6:"gaya subtitle", gen_s7:"struktur konten", gen_s8:"nama hook", gen_s9:"kolom brief yang mengarahkan editan",
+    gen_brief:"Brief (platform, pasar, usia audiens, tahap bisnis, tujuan funnel, niche, TAM/SAM/SOM, target revenue) mengubah tempo, gaya subtitle, tampilan, grade warna, CTA, dan musik. Pitch suara dikunci: tidak jadi suara tupai, tidak jadi robot.",
+    gen_mega:"Baca MEGA-SKILL.md (semua dalam satu file)",
+    gen_s1:"genre terdeteksi", gen_s2:"tampilan per genre dan gaya", gen_s3:"setelan berbeda", gen_s4:"dengan level dan rasio",
     dial_eyebrow:"Satu angka", dial_title:"Dari sekadar subtitle sampai edit penuh.",
     dial_lede:"Agen menanyakan level sebelum menyentuh file. Geser slider untuk melihat apa yang berubah. Rumusnya sama persis dengan yang dipakai skrip.",
     s_gap:"Potong jeda di atas", s_cards:"Kartu per menit", s_zoom:"Zoom", s_grade:"Kekuatan grade",

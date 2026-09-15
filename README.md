@@ -1,5 +1,7 @@
 # splicecraft
 
+> Published 2026-09-15. Platform facts were researched that day; re-check them if you read this much later.
+
 An open skill file that lets an AI agent turn a raw talking-head clip into a finished short video.
 
 The agent asks how hard you want the edit (1 to 100), then removes pauses, writes word-synced captions, animates info cards on the words that earn them, zooms, grades color, keys green screens, mixes a music bed under the voice with ducking, adds sound effects, normalizes loudness, and checks its own render against nine quality gates.
@@ -28,17 +30,25 @@ No agent at all:
 
 ```bash
 export GROQ_API_KEY=...            # or: pip install faster-whisper
-python skills/splicecraft/scripts/splicecraft.py auto take.mp4 -d work --level 60 --style studio --size 1080x1920
+python skills/splicecraft/scripts/splicecraft.py auto take.mp4 -d work --level 60 --style auto --genre auto --size 1080x1920
 ```
+
+## One-file version
+
+[`MEGA-SKILL.md`](MEGA-SKILL.md) is every file below merged into one document, for chat tools that accept a single upload. Rebuild it with `python tools/build_mega.py`.
 
 ## What is in the repo
 
 ```
 skills/splicecraft/
   SKILL.md                    step-by-step instructions any agent can follow
-  scripts/splicecraft.py      probe, transcribe, plan, render, qa, sheet, compare, synth-music, auto
+  scripts/splicecraft.py      probe, transcribe, detect, brief, script, library, music, options, plan, render, qa, sheet, compare, auto
   presets/levels.json         the five tiers behind the 1-100 dial
   presets/styles.json         six looks: studio, cinema, neon, editorial, noir, glass
+  presets/audience.json       brief options: platform, market, age, stage, funnel, niche
+  presets/content.json        100 content structures, 200 named hooks, beat guide
+  presets/music.json          18,432 license-free music templates and the genre match table
+  presets/genres.json         eight auto-detected genres (hackathon demo, tutorial, launch, ...) and 360 variants
   references/
     baseline-teardown.md      second-by-second study of the first reference video and its flaws
     design-secrets-glass.md   what makes frosted-glass edits look expensive, with recipes
@@ -48,8 +58,13 @@ skills/splicecraft/
     color-and-cinematic.md    grades, LUTs, cinematic checklist, chroma key tuning, reframing
     audio.md                  voice chain, music, ducking, loudness, sound effects
     edl-schema.md             the edit list format, for hand edits
-    agent-prompts.md          prompts for Claude Code, Codex, Gemini CLI, Cursor, small models
+    agent-prompts.md          prompts for Claude Code, ChatGPT, Codex, Fable 5.1, Gemini CLI, Cursor, small models
+    script-and-marketing.md   scripts, hooks, titles, descriptions, hashtags, 2026 platform signals with sources
+    audience-and-market.md    brief.json, demographics, TAM/SAM/SOM, revenue math, safe zones
+    music-guide.md            background music: templates, matching, mixing, licensed sources
+    genres-and-variants.md    genre detection, auto style, variant math, proof
     troubleshooting.md        errors and fixes
+examples/briefs/             three example briefs (hackathon Web3, B2B SaaS LinkedIn, Gen Z beauty Reels)
 examples/demo/                license-free demo: synthetic green-screen presenter + TTS voice, and its render
 site/                         the tutorial site deployed to Vercel
 tests/test_plan.py            planner regression tests

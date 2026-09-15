@@ -6,6 +6,10 @@ license: MIT
 
 # splicecraft
 
+> **Published:** 2026-09-15 · **Last reviewed:** 2026-09-15
+> **Agent check:** compare this date with today. If more than 6 months have passed, or a platform, model, or tool named here has changed, research the current facts on the web before relying on them, tell the user what changed, and update this skill.
+
+
 You are the editor. The user hands you a raw clip. You hand back a finished MP4 plus proof that it passed quality checks.
 
 This file is written so that any agent can follow it, including small or cheap models. Follow the steps in order. Do not skip a step. Do not invent flags that are not listed here. When a step says STOP, stop and talk to the user.
@@ -45,6 +49,22 @@ SC="python <skill-folder>/scripts/splicecraft.py"
 
 ---
 
+## Step 0.5. Brief and script (when the video is not filmed yet, or the user wants strategy)
+
+1. Write `brief.json` with the user: platform, market, age, stage, funnel, niche, and if relevant TAM/SAM/SOM, price, revenue target. Field list and effects: `references/audience-and-market.md`. Run `$SC brief brief.json` and show the checks and revenue math. Never present the placeholder conversion rates as facts.
+2. Generate the script skeleton: `$SC script "<topic>" --genre <genre> --seconds <n> --brief brief.json --language <en|id> -o script.md`.
+3. Fill the "Your line" column with the user. Use only facts the user confirms. Risky hooks only with a provable claim (`references/script-and-marketing.md`).
+4. Give the user the script, titles, description and hashtags. Then the video gets filmed and you continue at Step 1 with `--brief brief.json` on every plan.
+
+If the footage already exists, skip to Step 1 but still ask for the brief fields in question 1c.
+
+## Hard rules (apply to every step)
+
+1. **Never change voice pitch.** No chipmunk, no robot. Only `references/audio.md` 'Voice pitch and speed' can allow it, and only for its listed reasons.
+2. **Never invent facts** in scripts, cards, titles or descriptions. Numbers must come from the user or a cited source.
+3. **Never use music, fonts, or footage the user has no rights to.**
+4. **Check dates.** If this skill's Published date is more than 6 months old, research platform facts again before advising on strategy.
+
 ## Step 1. Ask before you cut (intake)
 
 Never start editing without answers to these. Ask them in one message, numbered, with the default in brackets so the user can reply "defaults".
@@ -59,9 +79,11 @@ Never start editing without answers to these. Ask them in one message, numbered,
    | 61-80 | Pro | Pop-in captions, dense cards, progress bar, film grain on cinematic looks. |
    | 81-100 | Showrunner | Kinetic keyword captions, flash hits, tightest pause removal, maximum motion. |
 
-2. **Look** [studio]. One of: `studio` (bright, orange accent), `cinema` (dark, gold, teal-orange grade), `neon` (black and lime, all caps), `editorial` (paper and blue, warm grade), `noir` (black and white, red accent), `glass` (frosted see-through cards over a blurred copy of the video, green accent, warm grade; best when the background has depth like a room or window, weak on a plain wall).
+1b. **What kind of video is it?** [auto]. Before asking, run `$SC detect work/words.json` (needs Step 3 first, so for this question alone you may transcribe early) and show the top genre with its keyword hits. Genres: hackathon_demo, tutorial_docs, product_launch, education_explainer, story_vlog, sales_pitch, podcast_talk, ai_comparison. The genre shifts the level, density, zoom, dropped beats, CTA and music. See `references/genres-and-variants.md`.
+1c. **Who is it for?** [none]. Platform, market (b2c, b2b, investor, hackathon...), audience age, business stage, funnel goal, niche. Write them into `brief.json` and pass `--brief brief.json`. The brief changes level, caption style, look, grade, CTA, music, and adds compliance warnings.
+2. **Look** [auto = chosen by genre, varied per video]. One of: `studio` (bright, orange accent), `cinema` (dark, gold, teal-orange grade), `neon` (black and lime, all caps), `editorial` (paper and blue, warm grade), `noir` (black and white, red accent), `glass` (frosted see-through cards over a blurred copy of the video, green accent, warm grade; best when the background has depth like a room or window, weak on a plain wall).
 3. **Platform and shape** [9:16 vertical]. 9:16 for TikTok, Reels, Shorts. 16:9 for YouTube. 1:1 for feeds.
-4. **Music** [generated bed]. Options: generated license-free bed, their own file (they must own the rights), or none.
+4. **Music** [auto template]. Options: auto (one of 18,432 license-free synthesized templates matched to genre and speaking pace; show the pick from `$SC music pick work/words.json` and offer `$SC music render <id> --seconds 20` as a preview), a template id they choose, their own file (they must own the rights), or none. See `references/music-guide.md`.
 5. **Green or blue screen?** [no]. If yes, ask for a background image or video, or use the animated gradient.
 6. **Brand colors or font?** [use the look]. If yes, collect hex codes and a font name.
 7. **Language of speech** [auto-detect].
@@ -74,11 +96,16 @@ Map the answers to flags:
 | Answer | Flag |
 |---|---|
 | level N | `--level N` |
-| look | `--style studio` (or cinema, neon, editorial, noir) |
+| look | `--style studio` (or cinema, neon, editorial, noir, glass, auto) |
+| genre | `--genre auto` (or a genre name, or none) |
+| audience / market | `--brief brief.json` |
+| caption style | `--captions boxed` (clean_accent, chunk, highlight, pop, kinetic, sweep, boxed, bounce, stack, plain) |
+| a different look, same genre | `--variant N` (0-359) |
 | 9:16 | `--size 1080x1920` |
 | 16:9 | `--size 1920x1080` |
 | 1:1 | `--size 1080x1080` |
 | own music | `--music path/to/song.mp3` |
+| a specific template | set `theme.music_template` in `edl.json` to the id, then render |
 | no music | pick level 1-20, or edit `edl.json` and set `params.music` to false |
 | green screen | `--key green --bg path/to/background.jpg` |
 | blue screen | `--key blue --bg ...` |
@@ -141,7 +168,7 @@ Open `work/words.json` and read the `segments`. Check:
 ## Step 4. Plan the edit
 
 ```bash
-$SC plan work/words.json -o work/edl.json --level 60 --style studio --duration <duration from probe>
+$SC plan work/words.json -o work/edl.json --level 60 --style auto --genre auto --brief brief.json --duration <duration from probe>
 ```
 
 The planner prints one line, for example:
@@ -281,5 +308,10 @@ Do not say "perfect" or "professional quality". Say what passed and what you che
 - Hand-editing the plan: `references/edl-schema.md`
 - Copy-paste prompts for Claude Code, Codex, Gemini CLI, Cursor, and small models: `references/agent-prompts.md`
 - The reference video this skill was built from, second by second, and its weak spots: `references/baseline-teardown.md`
+- Writing the script: 100 structures, 200 hooks, titles, descriptions, hashtags, platform ranking signals (2026): `references/script-and-marketing.md`
+- Target market, demographics, TAM/SAM/SOM, revenue math, safe zones: `references/audience-and-market.md`
+- Voice pitch and speed: never change pitch unless an allowed reason applies; decision table and limits: `references/audio.md` (section 'Voice pitch and speed')
+- Background music: template ids, genre match table, mood cheat sheet, mixing, beat sync, license-clear sources: `references/music-guide.md`
+- How genre detection, auto style and the 360 per-video variants work, and the option count: `references/genres-and-variants.md`
 - Why frosted-glass edits look expensive (glass cards, eyebrow labels, layout reflow, spatial captions, color pulses) and how to reproduce each: `references/design-secrets-glass.md`
 - Errors and fixes: `references/troubleshooting.md`
