@@ -9,3 +9,6 @@ examples/demo/auto.log
 .vercel
 examples/demo/out_brief/
 examples/demo/out_brief.log
+
+# verbatim transcripts of paid course material - never publish
+transcripts/

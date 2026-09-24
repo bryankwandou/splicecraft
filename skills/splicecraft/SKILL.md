@@ -1,13 +1,14 @@
 ---
 name: splicecraft
-description: Edit a raw talking-head or face-to-camera video into a finished short with word-synced captions, animated info cards, punch-in zooms, a color grade, chroma key, music with ducking, and sound effects. Use when the user gives a video file and asks to "edit this video", "add subtitles/captions", "make it look professional", "add music", "make it cinematic", "remove the green screen", "turn this into a reel/short/TikTok", or wants an edit at a chosen intensity from 1 to 100. Runs locally with ffmpeg and Python; no paid editor needed.
+description: Edit a raw talking-head or face-to-camera video into a finished short with word-synced captions, animated info cards, punch-in zooms, a color grade, chroma key, music with ducking, and sound effects — and write the script and personal-branding strategy behind it. Use when the user gives a video file and asks to "edit this video", "add subtitles/captions", "make it look professional", "add music", "make it cinematic", "remove the green screen", "turn this into a reel/short/TikTok", or wants an edit at a chosen intensity from 1 to 100. Also use when the user asks for a content script, a hook, a content plan, a niche, or personal branding strategy, or complains that a script or edit "feels AI" / "masih AI-ish". Keeps a local ledger of everything already made so it never repeats a theme. Runs locally with ffmpeg and Python; no paid editor needed.
 license: MIT
 ---
 
 # splicecraft
 
-> **Published:** 2026-09-15 · **Last reviewed:** 2026-09-15
+> **Published:** 2026-09-15 · **Last reviewed:** 2026-09-23
 > **Agent check:** compare this date with today. If more than 6 months have passed, or a platform, model, or tool named here has changed, research the current facts on the web before relying on them, tell the user what changed, and update this skill.
+> **Journal:** every design decision, measurement and known gap is recorded in `../../JOURNAL.md`. Read it before changing anything here.
 
 
 You are the editor. The user hands you a raw clip. You hand back a finished MP4 plus proof that it passed quality checks.
@@ -45,25 +46,91 @@ Set a variable for the script path so later commands are short. The skill folder
 
 ```bash
 SC="python <skill-folder>/scripts/splicecraft.py"
+LEDGER="python <skill-folder>/scripts/ledger.py"
+```
+
+Create the content ledger once per machine. It is the memory of everything this user has already made:
+
+```bash
+$LEDGER init
 ```
 
 ---
 
-## Step 0.5. Brief and script (when the video is not filmed yet, or the user wants strategy)
+## Step 0.5. Strategy and script (when the video is not filmed yet, or the user wants strategy)
 
-1. Write `brief.json` with the user: platform, market, age, stage, funnel, niche, and if relevant TAM/SAM/SOM, price, revenue target. Field list and effects: `references/audience-and-market.md`. Run `$SC brief brief.json` and show the checks and revenue math. Never present the placeholder conversion rates as facts.
-2. Generate the script skeleton: `$SC script "<topic>" --genre <genre> --seconds <n> --brief brief.json --language <en|id> -o script.md`.
-3. Fill the "Your line" column with the user. Use only facts the user confirms. Risky hooks only with a provable claim (`references/script-and-marketing.md`).
-4. Give the user the script, titles, description and hashtags. Then the video gets filmed and you continue at Step 1 with `--brief brief.json` on every plan.
+This step is where "AI-ish" is won or lost. A flat script cannot be rescued by editing.
 
-If the footage already exists, skip to Step 1 but still ask for the brief fields in question 1c.
+**0.5a — Check the ledger first. Always.**
+
+```bash
+$LEDGER check "<the topic the user proposed>" --theme <tag> --theme <tag>
+```
+
+| Result | What you do |
+|---|---|
+| exit 0, under 45% | write it |
+| exit 0, 45-61% | allowed, but **say out loud what is new about this one**. If you cannot name it, treat it as a repeat. |
+| **exit 2**, 62%+ | **do not write it.** Change the angle, the pillar, or the audience segment, and check again. |
+
+Two rules the table does not show, both learned from cold-agent tests on 2026-09-23:
+
+- **Always pass `--theme` on `check`**, using the same tags you would log. Two agents phrasing the same subject differently must still collide; tags are what make that happen.
+- **A blocked idea is still logged:** `$LEDGER add "<topic>" --status idea --theme ...`. A rejected idea is worth remembering, so it is not proposed again next week.
+
+Run `$LEDGER stats` and `$LEDGER suggest` at the start of any strategy conversation. They tell you which pillar is overdue, which hook templates are burnt out, and whether the 80/15/5 ratio is holding. Full guide: `references/content-memory.md`.
+
+**0.5b — Settle the foundation before writing a word.** Most AI-ish scripts are AI-ish because these were skipped:
+
+| Must exist | Where it comes from |
+|---|---|
+| **Premis** — one paragraph turning a weakness into a message | `references/kadev-personal-branding.md` §2.4 |
+| **Superniche** — named as a *who*, not a topic | §6.2. *"Niche bukan topik, tapi siapa secara spesifik."* |
+| **4K** — Keresahan / Kebutuhan / Keinginan / Kebiasaan of that person | §6.6 |
+| **Pillar** — Educate / Inspiration / Entertaining / Promotion | §8.2 |
+
+| **Source of the idea** — a question someone asked, a repeated complaint, a misconception, something the user saw | `references/kadev-live-mentoring.md` §2.3. An idea with no source is an invented idea. |
+| **Format** — one of the 15 named formats; if there is no winner yet, test several | `kadev-live-mentoring.md` §1, §5.3 |
+| **Funnel stage** — TOFU (tahu) / MOFU (mau) / BOFU (beli) | §5.1. A small account starts at TOFU. |
+
+If the user cannot answer these, walk them through the frameworks. Do not guess on their behalf.
+
+**0.5c — Brief.** Write `brief.json` with the user: platform, market, age, stage, funnel, niche, and if relevant TAM/SAM/SOM, price, revenue target. Field list and effects: `references/audience-and-market.md`. Run `$SC brief brief.json` and show the checks and revenue math. Never present the placeholder conversion rates as facts.
+
+**0.5d — Write.** Generate the skeleton: `$SC script "<topic>" --genre <genre> --seconds <n> --brief brief.json --language <en|id> -o script.md`. Then fill it using:
+
+- **Hook** — one of the 20 templates, brackets filled from the real 4K answers: `references/kadev-script-formulas.md` §4
+- **Elements** — all 6 Script Hack Elements present: §2
+- **Beats** — 5-beat Storytelling Hack, where beat ⑤ reverses beat ①: §3
+- **Length** — pick 20-30 s *or* 60-90 s deliberately, not 50 s by accident: §8
+- **Selling?** Use Problem → Agitation → Solution with **one** benefit per video; agitation may not be skipped: `references/kadev-live-mentoring.md` §2
+- **Opinion or education?** Write the thesis in one sentence and its 3-4 sourced arguments before any hook: `kadev-live-mentoring.md` §4.3
+
+Fill the "Your line" column *with* the user. Use only facts the user confirms.
+
+**0.5e — Gate.** Run the full checklist in `references/anti-ai-ish.md` §E before handing anything over.
+
+**0.5f — Log it.**
+
+```bash
+$LEDGER add "<topic>" --niche "<superniche>" --pillar <pillar> \
+  --hook-template <1-20> --angle "<what made THIS one different>" \
+  --format <format> --funnel <tofu|mofu|bofu> --source "<where the idea came from>" \n  --theme <tag> --theme <tag> --status scripted --script-path script.md
+```
+
+Then the video gets filmed and you continue at Step 1 with `--brief brief.json` on every plan.
+
+If the footage already exists, skip to Step 1 but still run 0.5a and ask for the brief fields in question 1c.
 
 ## Hard rules (apply to every step)
 
 1. **Never change voice pitch.** No chipmunk, no robot. Only `references/audio.md` 'Voice pitch and speed' can allow it, and only for its listed reasons.
 2. **Never invent facts** in scripts, cards, titles or descriptions. Numbers must come from the user or a cited source.
-3. **Never use music, fonts, or footage the user has no rights to.**
-4. **Check dates.** If this skill's Published date is more than 6 months old, research platform facts again before advising on strategy.
+3. **Never invent a personal story.** The 6 Script Hack Elements require a Personal Opinion / Story, and it is the one element you cannot supply — it requires having lived something. If the user cannot give you a real story, a real number or a real opinion, **stop and ask**. A plausible invented anecdote is the worst failure this skill can produce: it is both AI-ish and dishonest. See `references/anti-ai-ish.md` §A.
+4. **Never use music, fonts, or footage the user has no rights to.**
+5. **Always check the ledger before writing and log after producing.** An agent that skips the log breaks the tool for every future session.
+6. **Name production faults honestly.** Bad light, bad audio, wrong aspect ratio — say so and recommend a reshoot. Hiding them under heavy grading and zooms is itself an AI-ish move.
+7. **Check dates.** If this skill's Published date is more than 6 months old, research platform facts again before advising on strategy.
 
 ## Step 1. Ask before you cut (intake)
 
@@ -166,6 +233,33 @@ Open `work/words.json` and read the `segments`. Check:
 ---
 
 ## Step 4. Plan the edit
+
+**First, choose the cutting mode and commit to it.** This is the clearest finding from measuring 82 well-performing reference videos (`references/viral-edit-teardown.md`):
+
+> Real edits are bimodal. AI-ish edits are uniform.
+
+| Mode | Average shot length | Use when |
+|---|---|---|
+| **Cut-driven** | 0.5 - 2.5 s | voiceover over b-roll, a numbered list, a tutorial, documentation |
+| **Single-take** | 8 s to *no cuts at all* | talking head, one location, a personal story |
+
+28% of the reference videos sit in single-take mode and six of them have **zero** scene cuts across 18-46 seconds. They work. The failure mode is landing in the middle by default — a cut every 3-4 seconds regardless of what is being said — because that is the rhythm nobody chooses on purpose.
+
+Pick one. Do not average them. For single-take mode, keep the level low enough that pause removal is the only cutting that happens.
+
+**Then shape the opening and closing.** Also measured, and both are counterintuitive enough that the usual advice gets them backwards:
+
+| Position | What the reference set does |
+|---|---|
+| **Opening shot** | **held**, ~1.58× a typical shot (median 2.22 s). The first 3 s cut at **0.75×** the video's own rate — *slower*, not faster. The hook is held, not chopped. |
+| Middle | stays in the chosen mode (typical shot 1.32 s in cut-driven) |
+| **Closing shot** | **held**, ~2.42× a typical shot (median 3.16 s), in **75%** of cut-driven videos. The last 3 s cut at **0.21×** — cutting essentially stops. |
+
+> **Hold the open · chop the middle · hold the close.**
+
+**These ratios are for cut-driven mode.** In single-take mode there is no shot to "hold" — the whole video is one held shot. Do not add cuts to a talking head to create an opening or closing shape; the only cuts are removed sentences and long pauses. What still applies in single-take: the hook is spoken *and* on screen from frame one, and the last ~3 s after the closing line are kept, not trimmed.
+
+The held final shot is where the closing line lands — the one that reverses the opening (`references/kadev-script-formulas.md` §3). Do not trim it off as dead air; it is the beat that makes the video loop. Full numbers, method and limits: `references/viral-edit-teardown.md`.
 
 ```bash
 $SC plan work/words.json -o work/edl.json --level 60 --style auto --genre auto --brief brief.json --duration <duration from probe>
@@ -281,6 +375,28 @@ Send the user:
 
 Do not say "perfect" or "professional quality". Say what passed and what you checked.
 
+**Then run the anti-AI-ish gate and log the result.** Both are mandatory and neither is optional bookkeeping.
+
+Walk the checklist in `references/anti-ai-ish.md` §E. Report any ❌ plainly rather than quietly fixing or ignoring it — a production fault named honestly is worth more than a silently over-graded video.
+
+```bash
+$LEDGER add "<topic>" --niche "<superniche>" --pillar <pillar> \
+  --hook-template <1-20> --angle "<what made THIS one different>" \
+  --theme <tag> --theme <tag> \
+  --platform <tiktok|reels|shorts> --format <talking_head|voiceover|...> \
+  --seconds <final length> \
+  --script-path work/script.md --video-path work/edited.mp4 \
+  --status produced
+```
+
+If an entry already exists at `--status scripted` from Step 0.5f, update it instead of adding a second one:
+
+```bash
+$LEDGER edit <id> --set status=produced --set video_path=work/edited.mp4
+```
+
+An agent that skips the log breaks the tool for every future session. The ledger is the only memory that survives the end of this conversation.
+
 ---
 
 ## Rules that apply to every edit
@@ -299,6 +415,18 @@ Do not say "perfect" or "professional quality". Say what passed and what you che
 ---
 
 ## Going further
+
+**Strategy, script, and the anti-AI-ish gate** (the Kadev Academy body of work, Indonesian market):
+
+- The full personal branding theory — Ikigai, Johari, SWOT → **Premis** → Personal Market Fit, Perception vs Persona, Circle of Control, Golden Circle, Opportunity Mapping, the **superniche ladder**, **80/15/5**, Perfect Niche, the **4K Method**, Sweet Spot, First Impression, the four **Brand Pillars**, Hirarki Konten, self-documentation, survival, evaluation, monetisation, PING, LinkedIn: `references/kadev-personal-branding.md`
+- Writing the script — the **20 hooks**, the **6 Script Hack Elements**, the **5-beat Storytelling Hack**, Hook/Body/CTA, the Content Idea Framework, length budgets: `references/kadev-script-formulas.md`
+- **The rejection list and the delivery gate** — what "AI-ish" actually means, rule by rule, with the evidence behind each: `references/anti-ai-ish.md`
+- What 82 reference videos measurably do — cut rates, the bimodal finding, opening and closing shape, method and limits: `references/viral-edit-teardown.md`
+- What the live mentoring recordings add — the **16 formats**, **PAS** selling scripts, the **Storytelling Arc**, attention economy and the six emotions, thesis + arguments, outer/inner circle, **TOFU/MOFU/BOFU**, test → win → replicate, **Trial Reels** and **Link Reels**, and a table of real account diagnoses: `references/kadev-live-mentoring.md`
+- The content ledger — how the local memory works, what it stores, how the similarity check scores: `references/content-memory.md`
+- Why every decision here is what it is, what was measured versus guessed, and what is still open: `../../JOURNAL.md`
+
+**Craft and technique:**
 
 - Cinematic looks, LUTs, relighting a flat shot, letterboxing, and chroma key tuning: `references/color-and-cinematic.md`
 - Caption styles and the typography rules behind them: `references/captions.md`

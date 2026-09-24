@@ -441,6 +441,9 @@ QA PASSED</pre></div>
       <button role="tab" aria-selected="false" data-p="ratio">80 / 15 / 5</button>
       <button role="tab" aria-selected="false" data-p="hack">6 script elements</button>
       <button role="tab" aria-selected="false" data-p="premis">Premis</button>
+      <button role="tab" aria-selected="false" data-p="pas">PAS</button>
+      <button role="tab" aria-selected="false" data-p="funnel">Funnel</button>
+      <button role="tab" aria-selected="false" data-p="fmt">16 formats</button>
     </div>
     <div class="brgrid" id="brpanel"></div>
   </div>
@@ -728,7 +731,10 @@ setLang(saved);
 const BR={
  k4:[["Keresahan","Pain","What keeps your audience up at night. The hook starts here."],["Kebutuhan","Need","What they must have to fix it. This is the promise."],["Keinginan","Desire","What they want beyond the fix. This gives the result."],["Kebiasaan","Habit","What they already do every day. This sets the setting and timing."]],
  ratio:[["80%","Superniche","One narrow topic, repeated from new angles. This is what the algorithm learns you for."],["15%","Adjacent","Topics next to your niche that bring in a nearby audience."],["5%","Personal","Your life and your story. This part cannot be copied."]],
- hack:[["1","Pain point","Name the problem in the viewer's words."],["2","Specific number","3 cara, 4 tahun, 12 juta. Never 'beberapa'."],["3","Promise","What they will have by the end."],["4","Urgency","Why now and not later."],["5","Personal story","Something only you lived. The agent never makes one up."],["6","Interaction","One CTA question that can be answered in the comments."]],
+ hack:[["1","Pain point","Name the problem in the viewer's words."],["2","Specific number","3 cara, 4 tahun, 12 juta. Never 'beberapa'."],["3","Promise","What they will have by the end."],["4","Urgency","Why now and not later."],["5","Opinion / story","Your take, or something only you lived. The agent never makes one up."],["6","Interaction","One CTA question that can be answered in the comments."]],
+ pas:[["Problem","The viewer's pain","'Karena satu produk ini, aku diterima setelah 3 kali ditolak.' Not 'produk ini bikin kamu ganteng'."],["Agitation","Validate it, don't scare","Small true details that make people say 'iya bener juga'. This is the step that can't be skipped."],["Solution","One benefit","Keep price and the other features for another video, so people ask about them."]],
+ funnel:[["TOFU","tahu · why","Light and general. Most views. Start here while the account is small."],["MOFU","mau · what / how","Show the expertise or the product working."],["BOFU","beli · action","Offer, testimonial, DM. Fewest views, most sales. Search content lives here."]],
+ fmt:[["Low effort","Keep posting","Single post, tunjuk-tunjuk, jangan X tapi Y, music + text, 7-second storytelling."],["Mid effort","Most formats","Dialog, 10×10, comparison, carousel, carousel storytelling, day in my life."],["High effort","Credibility","Talking head, talking head + green screen, yapping."],["Rule","Test, win, replicate","Mix formats, repeat a winner 3–5 times, then keep it at 80% with 20% testing."]],
  premis:[["Weakness → message","Premis","One paragraph: who you are, what you lacked, what you learned, and who needs it. Every script must trace back to it."],["Specific audience","Not everyone","A premise written for everyone gets the same reach as one written for no one."]]
 };
 const panel=document.getElementById('brpanel');
@@ -745,12 +751,15 @@ const RULES=[
  [/\b\w+,\s*\w+,?\s*dan\s+\w+\b/i,"Adjective or list triad","Real speech uses one adjective, or none."],
  [/bukan (hanya|cuma) .{3,40} (tetapi|tapi) juga/i,"Balanced antithesis","Using this once is fine. Twice is a tell."],
  [/jadi,? itulah|demikian|semoga bermanfaat/i,"Summarising sign-off","End by reversing the opening, not by summarising it."],
+ [/kalian/i,"Talking to a crowd","Say kamu or kita. To a Gen Z viewer kalian sounds like being lectured."],
+ [/welcome back|izinin aku|izinkan (aku|saya)/i,"Creator-voice opener","Hai guys, welcome back and asking permission to start are ten years out of date. Open on the claim."],
  [/mungkin (bisa )?(jadi|saja)|cukup membantu|salah satu cara/i,"Stacked hedges","Make a claim, or cut the sentence."],
 ];
-function ctaCount(t){const m=t.match(/\b(like|comment|komen|share|save|simpan|follow|subscribe)\b/gi);return m?new Set(m.map(x=>x.toLowerCase())).size:0}
+function ctaWords(t){const m=t.match(/\b(like|comment|komen|share|save|simpan|follow|subscribe)\b/gi);return m?new Set(m.map(x=>x.toLowerCase())).size:0}
+function moves(t){const l=t.toLowerCase();return [/(ketik|komen|comment)\s+["'“]?\w+["'”]?.{0,50}(dm|kirim)/,/\?|sepakat|komen di bawah|tulis .{0,30}di komen|diskusi di komen/,/\b(save|simpan)\b/,/tag temen|mention temen|kirim ke temen/].filter(r=>r.test(l)).length}
 const ck=document.getElementById('ckin'),out=document.getElementById('ckout'),n=document.getElementById('ckn');
 function run(){const t=ck.value;const hits=RULES.filter(r=>r[0].test(t)).map(r=>[r[1],r[2]]);
- if(ctaCount(t)>1)hits.push(["Several asks in one CTA","Asking for five things gets you zero. Ask one question that can be answered in the comments."]);
+ if(ctaWords(t)>=4||moves(t)>=2)hits.push(["Several asks in one CTA","Close with one engagement move (a comment keyword or a question), then your fixed tagline if you have one. Five fresh asks get you zero."]);
  if(t.trim()&&!/\d/.test(t))hits.push(["No specific number","Element 2 of the six: 3, 4 or 5 of something."]);
  n.textContent=hits.length;n.classList.toggle('ok',!hits.length);
  out.innerHTML=hits.length?hits.map(([a,b])=>`<li>${a}<em>${b}</em></li>`).join(''):'<li class="ok">No tells found by these checks.<em>The full skill also checks cutting rhythm, openings, closings and repeats against the ledger.</em></li>';}

@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SK = ROOT / "skills" / "splicecraft"
 # Strategy layer first: these decide whether the script is any good, and a
 # reader who stops early should have read them rather than the codec notes.
-ORDER = ["anti-ai-ish.md", "kadev-personal-branding.md", "kadev-script-formulas.md",
+ORDER = ["anti-ai-ish.md", "kadev-personal-branding.md", "kadev-script-formulas.md", "kadev-live-mentoring.md",
          "viral-edit-teardown.md", "content-memory.md",
          "script-and-marketing.md", "audience-and-market.md", "captions.md", "genres-and-variants.md", "music-guide.md", "beat-library.md", "edit-levels.md",
          "color-and-cinematic.md", "audio.md", "baseline-teardown.md", "design-secrets-glass.md",
