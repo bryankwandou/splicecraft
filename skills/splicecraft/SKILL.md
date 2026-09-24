@@ -84,13 +84,13 @@ Run `$LEDGER stats` and `$LEDGER suggest` at the start of any strategy conversat
 
 | Must exist | Where it comes from |
 |---|---|
-| **Premis** — one paragraph turning a weakness into a message | `references/kadev-personal-branding.md` §2.4 |
+| **Premis** — one paragraph turning a weakness into a message | `references/academy-personal-branding.md` §2.4 |
 | **Superniche** — named as a *who*, not a topic | §6.2. *"Niche bukan topik, tapi siapa secara spesifik."* |
 | **4K** — Keresahan / Kebutuhan / Keinginan / Kebiasaan of that person | §6.6 |
 | **Pillar** — Educate / Inspiration / Entertaining / Promotion | §8.2 |
 
-| **Source of the idea** — a question someone asked, a repeated complaint, a misconception, something the user saw | `references/kadev-live-mentoring.md` §2.3. An idea with no source is an invented idea. |
-| **Format** — one of the 15 named formats; if there is no winner yet, test several | `kadev-live-mentoring.md` §1, §5.3 |
+| **Source of the idea** — a question someone asked, a repeated complaint, a misconception, something the user saw | `references/academy-live-mentoring.md` §2.3. An idea with no source is an invented idea. |
+| **Format** — one of the 15 named formats; if there is no winner yet, test several | `academy-live-mentoring.md` §1, §5.3 |
 | **Funnel stage** — TOFU (tahu) / MOFU (mau) / BOFU (beli) | §5.1. A small account starts at TOFU. |
 
 If the user cannot answer these, walk them through the frameworks. Do not guess on their behalf.
@@ -99,12 +99,12 @@ If the user cannot answer these, walk them through the frameworks. Do not guess 
 
 **0.5d — Write.** Generate the skeleton: `$SC script "<topic>" --genre <genre> --seconds <n> --brief brief.json --language <en|id> -o script.md`. Then fill it using:
 
-- **Hook** — one of the 20 templates, brackets filled from the real 4K answers: `references/kadev-script-formulas.md` §4
+- **Hook** — one of the 20 templates, brackets filled from the real 4K answers: `references/academy-script-formulas.md` §4
 - **Elements** — all 6 Script Hack Elements present: §2
 - **Beats** — 5-beat Storytelling Hack, where beat ⑤ reverses beat ①: §3
 - **Length** — pick 20-30 s *or* 60-90 s deliberately, not 50 s by accident: §8
-- **Selling?** Use Problem → Agitation → Solution with **one** benefit per video; agitation may not be skipped: `references/kadev-live-mentoring.md` §2
-- **Opinion or education?** Write the thesis in one sentence and its 3-4 sourced arguments before any hook: `kadev-live-mentoring.md` §4.3
+- **Selling?** Use Problem → Agitation → Solution with **one** benefit per video; agitation may not be skipped: `references/academy-live-mentoring.md` §2
+- **Opinion or education?** Write the thesis in one sentence and its 3-4 sourced arguments before any hook: `academy-live-mentoring.md` §4.3
 
 Fill the "Your line" column *with* the user. Use only facts the user confirms.
 
@@ -259,7 +259,7 @@ Pick one. Do not average them. For single-take mode, keep the level low enough t
 
 **These ratios are for cut-driven mode.** In single-take mode there is no shot to "hold" — the whole video is one held shot. Do not add cuts to a talking head to create an opening or closing shape; the only cuts are removed sentences and long pauses. What still applies in single-take: the hook is spoken *and* on screen from frame one, and the last ~3 s after the closing line are kept, not trimmed.
 
-The held final shot is where the closing line lands — the one that reverses the opening (`references/kadev-script-formulas.md` §3). Do not trim it off as dead air; it is the beat that makes the video loop. Full numbers, method and limits: `references/viral-edit-teardown.md`.
+The held final shot is where the closing line lands — the one that reverses the opening (`references/academy-script-formulas.md` §3). Do not trim it off as dead air; it is the beat that makes the video loop. Full numbers, method and limits: `references/viral-edit-teardown.md`.
 
 ```bash
 $SC plan work/words.json -o work/edl.json --level 60 --style auto --genre auto --brief brief.json --duration <duration from probe>
@@ -416,13 +416,13 @@ An agent that skips the log breaks the tool for every future session. The ledger
 
 ## Going further
 
-**Strategy, script, and the anti-AI-ish gate** (the Kadev Academy body of work, Indonesian market):
+**Strategy, script, and the anti-AI-ish gate** (the SpliceCraft Academy body of work, Indonesian market):
 
-- The full personal branding theory — Ikigai, Johari, SWOT → **Premis** → Personal Market Fit, Perception vs Persona, Circle of Control, Golden Circle, Opportunity Mapping, the **superniche ladder**, **80/15/5**, Perfect Niche, the **4K Method**, Sweet Spot, First Impression, the four **Brand Pillars**, Hirarki Konten, self-documentation, survival, evaluation, monetisation, PING, LinkedIn: `references/kadev-personal-branding.md`
-- Writing the script — the **20 hooks**, the **6 Script Hack Elements**, the **5-beat Storytelling Hack**, Hook/Body/CTA, the Content Idea Framework, length budgets: `references/kadev-script-formulas.md`
+- The full personal branding theory — Ikigai, Johari, SWOT → **Premis** → Personal Market Fit, Perception vs Persona, Circle of Control, Golden Circle, Opportunity Mapping, the **superniche ladder**, **80/15/5**, Perfect Niche, the **4K Method**, Sweet Spot, First Impression, the four **Brand Pillars**, Hirarki Konten, self-documentation, survival, evaluation, monetisation, PING, LinkedIn: `references/academy-personal-branding.md`
+- Writing the script — the **20 hooks**, the **6 Script Hack Elements**, the **5-beat Storytelling Hack**, Hook/Body/CTA, the Content Idea Framework, length budgets: `references/academy-script-formulas.md`
 - **The rejection list and the delivery gate** — what "AI-ish" actually means, rule by rule, with the evidence behind each: `references/anti-ai-ish.md`
 - What 82 reference videos measurably do — cut rates, the bimodal finding, opening and closing shape, method and limits: `references/viral-edit-teardown.md`
-- What the live mentoring recordings add — the **16 formats**, **PAS** selling scripts, the **Storytelling Arc**, attention economy and the six emotions, thesis + arguments, outer/inner circle, **TOFU/MOFU/BOFU**, test → win → replicate, **Trial Reels** and **Link Reels**, and a table of real account diagnoses: `references/kadev-live-mentoring.md`
+- What the live mentoring recordings add — the **16 formats**, **PAS** selling scripts, the **Storytelling Arc**, attention economy and the six emotions, thesis + arguments, outer/inner circle, **TOFU/MOFU/BOFU**, test → win → replicate, **Trial Reels** and **Link Reels**, and a table of real account diagnoses: `references/academy-live-mentoring.md`
 - The content ledger — how the local memory works, what it stores, how the similarity check scores: `references/content-memory.md`
 - Why every decision here is what it is, what was measured versus guessed, and what is still open: `../../JOURNAL.md`
 

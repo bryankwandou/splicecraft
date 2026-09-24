@@ -60,7 +60,7 @@ BLOCK_AT = 0.62
 PILLARS = ("educate", "inspiration", "entertaining", "promotion")
 
 # The formats named in the "Topik Format Winning" mentoring
-# (references/kadev-live-mentoring.md §1). Free text is still accepted, with a
+# (references/academy-live-mentoring.md §1). Free text is still accepted, with a
 # warning, because new formats appear faster than this list is updated.
 FORMATS = (
     "talking_head_greenscreen", "single_post", "dialog", "tunjuk_tunjuk",
@@ -68,7 +68,7 @@ FORMATS = (
     "yapping", "comparison", "storytelling_7s", "motivational",
     "day_in_my_life", "carousel_storytelling",
 )
-# kadev-live-mentoring.md §5: tahu -> mau -> beli/follow.
+# academy-live-mentoring.md §5: tahu -> mau -> beli/follow.
 FUNNEL = ("tofu", "mofu", "bofu")
 
 # What `edit --set` will accept. Anything else is rejected rather than written,
@@ -371,7 +371,7 @@ def cmd_add(args) -> int:
     if not entry["source"]:
         print("note: no --source. Where did this idea come from (a question someone "
               "asked, a complaint, a misconception, something you saw)? "
-              "kadev-live-mentoring.md sec 2.3", file=sys.stderr)
+              "academy-live-mentoring.md sec 2.3", file=sys.stderr)
 
     # Always report the nearest neighbour, even on add. Logging a near-duplicate
     # is allowed (the user may have decided it is fine) but it must not be silent.
@@ -656,20 +656,20 @@ def cmd_suggest(args) -> int:
         if over:
             print(f"\n  Hook fatigue: template(s) {', '.join('#'+str(h) for h in over)} "
                   f"used heavily.")
-            print("  -> pick an unused one from kadev-script-formulas.md sec 4.")
+            print("  -> pick an unused one from academy-script-formulas.md sec 4.")
 
     used = {e.get("format") for e in entries if e.get("format")}
     untried = [f for f in FORMATS if f not in used]
     if untried:
         more = " ..." if len(untried) > 6 else ""
         print(f"\n  Formats never tried: {', '.join(untried[:6])}{more}")
-        print("  -> no winner yet? test one of these (kadev-live-mentoring.md sec 1, 5.3).")
+        print("  -> no winner yet? test one of these (academy-live-mentoring.md sec 1, 5.3).")
 
     last10 = sorted(entries, key=lambda e: e.get("date", ""), reverse=True)[:10]
     if len(last10) >= 5 and all(e.get("funnel") for e in last10) and \
             not any(e.get("funnel") == "tofu" for e in last10):
         print("\n  Funnel: none of the recent pieces is TOFU. Nobody new is finding you.")
-        print("  -> make a light, general 'why' piece (kadev-live-mentoring.md sec 5.1).")
+        print("  -> make a light, general 'why' piece (academy-live-mentoring.md sec 5.1).")
 
     recent = sorted(entries, key=lambda e: e.get("date", ""), reverse=True)[:5]
     print("\n  Last 5, so you do not circle back:")

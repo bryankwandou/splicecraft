@@ -1,10 +1,10 @@
 # Live mentoring: what the recordings add to the slides
 
 > **Published:** 2026-09-24 · **Last reviewed:** 2026-09-24
-> **Source:** Kadev Academy VIP live-mentoring recordings, transcribed 2026-09-23/24 (see Provenance).
+> **Source:** SpliceCraft Academy VIP live-mentoring recordings, transcribed 2026-09-23/24 (see Provenance).
 > **Editable:** `<!-- journal -->` comments mark provenance and known gaps. See `../JOURNAL.md`.
 
-The slides (`kadev-personal-branding.md`, `kadev-script-formulas.md`) give the frameworks. The live VIP mentoring recordings show the mentors **using** those frameworks on real member accounts, and they add material that is not on any slide: the 16 formats, PAS with a worked sales script, the Storytelling Arc, and a series of account diagnoses.
+The slides (`academy-personal-branding.md`, `academy-script-formulas.md`) give the frameworks. The live VIP mentoring recordings show the mentors **using** those frameworks on real member accounts, and they add material that is not on any slide: the 16 formats, PAS with a worked sales script, the Storytelling Arc, and a series of account diagnoses.
 
 Load this file when:
 - the user asks "what format should I use", or has no winning content yet
@@ -36,7 +36,7 @@ The recording names 15 formats explicitly. The 16th is the ordinary long talking
 | 7 | **10×10** | "10×10 [identity]": ten numbered one-liners over Pinterest/meme images | Low | Identity niches | Uses number psychology: people watch to #10. Nadif's account went up within a month on this |
 | 8 | **Talking head (long)** | Plain explanation to camera with B-roll and text | High | Educators | *"Kredibilitas tidak pernah meragukan talking head."* Alternate it with the low-effort formats |
 | 9 | **Music + text** | Text over a clip with music, no voice | Very low | People not yet confident on camera, storytelling | Show your face if you can: *"people trust people"*. This is mandatory if you sell anything |
-| 10 | **Yapping** | Unscripted or semi-scripted talk, raw edit, subtitles only | Low edit / high skill | People who talk well naturally | Feels closest to the audience. Kadev admits that when he yaps his points wander and a 1-minute video becomes 2, so he writes bullet points first |
+| 10 | **Yapping** | Unscripted or semi-scripted talk, raw edit, subtitles only | Low edit / high skill | People who talk well naturally | Feels closest to the audience. The founder admits that when he yaps his points wander and a 1-minute video becomes 2, so he writes bullet points first |
 | 11 | **Comparison** | *"Ini fokus orang biasa. Ini fokus orang kaya. Ini fokus konglomerat."* | Low | Any niche with levels (pemula / pro / advanced) | Viewers self-classify |
 | 12 | **7-second storytelling (text + music)** | Under 10–15s, one intriguing visual, text says *"baca caption"* | Very low | Reach | Full watch plus replays while people read the caption means a huge completion rate. That's why these get big views |
 | 13 | **Motivational** | Deep lines over a song or beat | Low | Self-development niches only | |
@@ -115,7 +115,7 @@ Worked example (Bu Nining → health insurance):
 | **Turning point** | Her finger gets caught in the machine. She can't sew for two weeks, and the treatment is expensive |
 | **Lesson** | The danger was never losing customers. It was losing the ability to work |
 
-The lesson is where the product can sit. This is the same arc as the 5-beat Storytelling Hack in `kadev-script-formulas.md` §3, compressed to four beats.
+The lesson is where the product can sit. This is the same arc as the 5-beat Storytelling Hack in `academy-script-formulas.md` §3, compressed to four beats.
 
 ### 2.5 The six elements used together in one script (insurance)
 
@@ -170,7 +170,7 @@ Each row is a real member question with the mentors' answer, reduced to the rule
 
 ## 4. Attention economy, algorithm and emotion (mentoring "Attention Economy", 21 Okt 2025)
 
-Speaker: Nadif, who also writes for Malaka Project. The Q&A is answered by Kadev, Rich and Kiki.
+Speaker: Nadif, who also writes for Malaka Project. The Q&A is answered by the founder, Rich and Kiki.
 
 ### 4.1 The model
 - Attention is the scarcest commodity. The average Indonesian attention span quoted is **8–10 seconds**. That's why every tip about hooks exists.
@@ -198,17 +198,17 @@ Direct charity-style sad content (going to poor people and filming the help) now
 
 For the agent: for educational or opinion scripts, write the thesis in one sentence and list the arguments **before** drafting any hook. If the user can't give a source for an argument, drop it. Don't invent one.
 
-### 4.4 Outer circle / inner circle (Kadev, whiteboard)
-- **Outer circle** (general): gets you known by many people. Kadev's is *self-development*.
-- **Inner circle** (specific): tells people what you are. Kadev's is *personal branding*.
-- Kadev's split is **50/50**. Creator friends run 70/30 or 40/60.
+### 4.4 Outer circle / inner circle (the founder, whiteboard)
+- **Outer circle** (general): gets you known by many people. The founder's is *self-development*.
+- **Inner circle** (specific): tells people what you are. The founder's is *personal branding*.
+- The founder's split is **50/50**. Creator friends run 70/30 or 40/60.
 - Example: an anime illustrator. Anime is the inner circle. Drawing and creativity in general is the outer circle.
 
-> Tension with the slide ratio **80/15/5** (`kadev-personal-branding.md` §6.4). They measure different things: 80/15/5 splits **superniche / adjacent / personal** posts, while outer/inner is **reach vs. specialisation** inside the niche side. Use 80/15/5 for the calendar. Use outer/inner to decide how wide each niche post's hook is. Kadev also mentions a **70/20/10** rule in a dialog-format example (§1 #3). That line comes from a character in a sketch and isn't taught as a rule.
+> Tension with the slide ratio **80/15/5** (`academy-personal-branding.md` §6.4). They measure different things: 80/15/5 splits **superniche / adjacent / personal** posts, while outer/inner is **reach vs. specialisation** inside the niche side. Use 80/15/5 for the calendar. Use outer/inner to decide how wide each niche post's hook is. The founder also mentions a **70/20/10** rule in a dialog-format example (§1 #3). That line comes from a character in a sketch and isn't taught as a rule.
 
 ### 4.5 Smaller rulings from the Q&A
-- **Posting time:** use Instagram *Professional dashboard → Followers → Active times* (TikTok has the same). Kadev's audience peaks at **18:00**, after work. *"Harus upload jam 1 malam"* is **hoax**: no algorithm theory says so.
-- **Agency accounts:** "good content" is subjective. Define the client (e.g. UMKM or startups that want cheap web development), then post what that client needs (cheap tips for UMKM). Research what works for that client, not for Kadev.
+- **Posting time:** use Instagram *Professional dashboard → Followers → Active times* (TikTok has the same). The founder's audience peaks at **18:00**, after work. *"Harus upload jam 1 malam"* is **hoax**: no algorithm theory says so.
+- **Agency accounts:** "good content" is subjective. Define the client (e.g. UMKM or startups that want cheap web development), then post what that client needs (cheap tips for UMKM). Research what works for that client, not for the founder.
 - **Winning content, again:** a member's business account had most videos in the tens of thousands and a few at 800k–1M. That came from replicating one winner. *"Quality is subjective. What we can control is consistency until we find the winner, then replicate until it's no longer fun."*
 - **Teaching tools to others (UMKM mothers):** check their intent first. Sell the outcome (*"kalau bisa Canva, kamu bisa menghasilkan"*), not the tool (*"kamu harus bisa Canva"*).
 
@@ -216,12 +216,12 @@ For the agent: for educational or opinion scripts, write the thesis in one sente
 
 ## 5. Content & marketing funnel (mentoring, 17 Maret 2026)
 
-Speaker: Kadev, with Rich. **A funnel is the audience's journey from not knowing you, to trusting you, to buying or becoming loyal.** Kadev's principle: *"Mending punya 10 audiens loyal daripada 1.000 yang cuma follow."* The contrast drawn: Willy Salim has a bigger following, but Ferry Irwandi's audience buys.
+Speaker: The founder, with Rich. **A funnel is the audience's journey from not knowing you, to trusting you, to buying or becoming loyal.** the founder's principle: *"Mending punya 10 audiens loyal daripada 1.000 yang cuma follow."* The contrast drawn: Willy Salim has a bigger following, but Ferry Irwandi's audience buys.
 
 ### 5.1 The three stages
 | Stage | Viewer goes from → to | Content | Question it answers | Expected numbers |
 |---|---|---|---|---|
-| **TOFU** (top) | nggak tahu → **tahu** | Light, general, relatable. Doesn't need to teach a framework. Kadev's example: *"dari YouTuber jadi musisi… dari videografer jadi personal branding"*. It rides famous names so people ask "who's this?" | **Why** should I care? | Highest views |
+| **TOFU** (top) | nggak tahu → **tahu** | Light, general, relatable. Doesn't need to teach a framework. The founder's example: *"dari YouTuber jadi musisi… dari videografer jadi personal branding"*. It rides famous names so people ask "who's this?" | **Why** should I care? | Highest views |
 | **MOFU** (middle) | tahu → **mau** | Show your expertise (a law graduate breaks down a case) or the product in use | **What / how** | Mid, e.g. 30k |
 | **BOFU** (bottom) | mau → **follow / beli** | Offer, testimonial, *"klik nomor di bawah"*, ebook, bootcamp | **Action** | Low views, e.g. 3k, but that's not bad |
 
@@ -254,14 +254,14 @@ For the agent: every ledger entry gets a `funnel` field (`tofu`, `mofu` or `bofu
 
 ## 6. Trial Reels and Link Reels (mentoring "Trial Reels & Link a Reel", Jan 2026)
 
-Speakers: Nadif (ran the test on his own account for about 30 days) and Kadev. **Both say plainly that the pattern isn't final.** Treat it as a working method, not a law.
+Speakers: Nadif (ran the test on his own account for about 30 days) and the founder. **Both say plainly that the pattern isn't final.** Treat it as a working method, not a law.
 
 ### 6.1 Trial Reels: a lab that only non-followers see
 - Instagram shows a Trial Reel **only to non-followers**, and it doesn't appear on your grid. In Nadif's test, **82% of the reach came from non-followers**, and one faceless text reel reached 1.5M views.
 - So it's where you test hooks, formats, and new topics without cluttering your main feed. It also suits people who are shy about friends seeing their content.
 - It works on an old account **as long as you never bought followers or likes**.
 
-**The pattern (Kadev's whiteboard):**
+**The pattern (the founder's whiteboard):**
 1. **Pick a format you can make fast.** Trial Reels need volume, so a talking head that takes hours to produce doesn't fit. The usual pick is a **7-second, multi-scene reel where only the text changes**, or an X/Twitter-style text card.
 2. **Post volume.** **3–5 a day.** The platform allows up to 20, but Nadif stays at 5 or fewer because heavy volume might be read as spam, and Instagram's ban rules are unclear.
 3. **Find the winner by probability.** Out of 15 uploads, maybe 2 win.
@@ -282,7 +282,7 @@ Speakers: Nadif (ran the test on his own account for about 30 days) and Kadev. *
 - Link Reels chains one reel to the next (*"Part 2"*), like a TikTok or YouTube playlist. A viewer who wants more taps through without opening your profile, and each episode feeds the others.
 - **The link can only be set at upload time.** Post episode 1, then attach it while uploading episode 2.
 - It needs **planned series writing**. Examples: a Canva series (layout, then fonts, then …) or a Ramadan series (bukber designs, amplop designs).
-- Kadev hadn't measured results yet when this was recorded.
+- The founder hadn't measured results yet when this was recorded.
 
 For the agent: when the user plans a series, log every episode with the same `--theme series:<name>` and put the previous episode's id in `notes`. `ledger check` **will** flag part 2 as close to part 1, because it has no series exemption. That warning is expected. Confirm with the user that it's a planned episode, and check that the new episode's angle really is different (fonts, not layout again).
 
@@ -290,16 +290,16 @@ For the agent: when the user plans a series, log every episode with the same `--
 
 ## 7. "The niche is you" and the six income streams (mentoring "2026 Algorithm & Strategy", 13 Des 2025)
 
-Speakers: Kadev (niche), Rich (monetisation). This is Kadev's most recent position on niche. He calls it forecast plus pattern-reading, *"nggak bisa bilang 100% benar"*.
+Speakers: The founder (niche), Rich (monetisation). This is the founder's most recent position on niche. He calls it forecast plus pattern-reading, *"nggak bisa bilang 100% benar"*.
 
 ### 7.1 Niche isn't the most important thing. You are.
 *"Niche itu gak penting"* is shorthand for *niche matters, but it isn't the most important thing.* Two dangers of a niche-only account:
-1. **People follow the topic, not the person.** If you ever shift topics (Kadev went from videography to personal branding), a topic-loyal audience leaves. Kadev survived his shift only because he had always told his own story, in posts and in Stories.
+1. **People follow the topic, not the person.** If you ever shift topics (the founder went from videography to personal branding), a topic-loyal audience leaves. The founder survived his shift only because he had always told his own story, in posts and in Stories.
 2. **It limits authenticity.** You leave out the unique things that don't fit the niche label, and those are exactly what set you apart. Plenty of people talk about agencies, but not many run one at 17. That member's post reached 2M views. Timothy Ronald stands out in finance for his **personal opinions and experiences**, not his tips.
 
 > *"Kita bukan creator lifestyle, gaming, bisnis… Kita adalah niche-nya."*
 
-**Reconciling with the slides.** `kadev-personal-branding.md` §6.2 says *"niche bukan topik, tapi siapa secara spesifik"* and teaches the superniche ladder. Both hold: keep an **umbrella** (a message plus 1–2 pillars) and a specific audience, but define yourself by a **message**, not a topic label, and always include a **story pillar**. The agent should never refuse an idea just because it's outside the topic label, as long as it serves the message.
+**Reconciling with the slides.** `academy-personal-branding.md` §6.2 says *"niche bukan topik, tapi siapa secara spesifik"* and teaches the superniche ladder. Both hold: keep an **umbrella** (a message plus 1–2 pillars) and a specific audience, but define yourself by a **message**, not a topic label, and always include a **story pillar**. The agent should never refuse an idea just because it's outside the topic label, as long as it serves the message.
 
 ### 7.2 Step 1: write your message (pesan)
 Replace *"I'm a gaming creator"* with *"I help people earn extra income from their hobby"*. Then *"I made two digits from Mobile Legends jockeying"* becomes on-message. Four questions:
@@ -308,33 +308,33 @@ Replace *"I'm a gaming creator"* with *"I help people earn extra income from the
 3. What **values** do I live by?
 4. What do people **already ask me for help with**? Check DMs and friends.
 
-Kadev's own: *help people who, like him, had potential but were too shy to show it, learn to make content and earn from it, so they get opportunities.* His pillars are **personal-branding education + self-development + story in almost everything.** *"Percuma bangun personal branding kalau pilarnya edukasi terus — orang peduli sama kontennya, bukan sama kita."*
+The founder's own: *help people who, like him, had potential but were too shy to show it, learn to make content and earn from it, so they get opportunities.* His pillars are **personal-branding education + self-development + story in almost everything.** *"Percuma bangun personal branding kalau pilarnya edukasi terus — orang peduli sama kontennya, bukan sama kita."*
 
 ### 7.3 Three mistakes (Rich)
 1. **Copying exactly** (*plek ketiplek*). It may work, but the identity belongs to someone else. ATM (amati, tiru, modifikasi) means modify.
 2. **Chasing trends and news.** It's exhausting and the person disappears behind the news.
 3. **Looking too far.** Benchmarking the biggest or foreign creators when the material is in your own story.
 
-### 7.4 The six income streams (validated by Kadev's team)
+### 7.4 The six income streams (validated by the academy team)
 | # | Stream | What it is | Rule |
 |---|---|---|---|
-| 1 | **Digital / info products** | Ebook, mini ebook, templates, Notion systems, mini course, LMS (Kadev Academy itself) | About 99% margin. The only cost is marketing. Pick whatever fits your brand best |
+| 1 | **Digital / info products** | Ebook, mini ebook, templates, Notion systems, mini course, LMS (SpliceCraft Academy itself) | About 99% margin. The only cost is marketing. Pick whatever fits your brand best |
 | 2 | **Services / freelance / consulting** | Editing, AI automation (n8n, Telegram bots), social media management, copywriting | Easiest start: needs skill, not capital. **Sell your core hard skill**, not the trending one you don't have |
 | 3 | **Sponsored content / ads** | Endorsements, placement | Brands now put more budget into small **KOL/UGC** creators than into ads, because unknown faces feel more trustworthy. Make your format **brand-friendly**: leave a natural slot for a product (a *"POV beli sarapan di McD"* style) |
 | 4 | **Subscription / membership** | Paid live chat, memberships (the BigMo live-streaming model) | Live-first |
 | 5 | **Affiliate / resell** | Mostly TikTok (Instagram's yellow basket hasn't taken off in Indonesia) | **Only products in your own field**, where your view is credible. Check the commission percentage before you commit |
 | 6 | **Leverage an offline business** | Your personal account carries your own brand's campaigns | Cheaper than a brand ambassador, which can cost hundreds of millions. Example: a "New Year, New Me" resolution story in which your speaker brand solves your focus problem |
 
-This extends the five doors on the slides (`kadev-personal-branding.md` §12.2: product, speaker, partnership, mentorship, affiliate). Speaker and mentorship fall under *services*. Subscription and offline leverage are new.
+This extends the five doors on the slides (`academy-personal-branding.md` §12.2: product, speaker, partnership, mentorship, affiliate). Speaker and mentorship fall under *services*. Subscription and offline leverage are new.
 
 ---
 
 ## 8. The Art of Yapping: sounding like a person on camera (mentoring, 27 Mei 2026)
 
-Speaker: Kadev (10 years on camera), with Nadif on editing. This is the delivery half of anti-AI-ish. A clean script read badly still sounds AI-made. *"Audience itu paham: ini baca script doang, ini dari AI."*
+Speaker: The founder (10 years on camera), with Nadif on editing. This is the delivery half of anti-AI-ish. A clean script read badly still sounds AI-made. *"Audience itu paham: ini baca script doang, ini dari AI."*
 
 ### 8.1 Why people go stiff on camera
-1. **Reading the script word for word.** Fluent, but obviously memorised. Fix: read and understand it, then **say it your way**. Swap words that aren't yours. Kadev's scripted *"90% personal branding di Indonesia salah arah"* comes out as *"90% orang yang bangun personal branding di Indonesia itu salah arah. Kenapa? Yuk kita bahas."* Same meaning, his wording.
+1. **Reading the script word for word.** Fluent, but obviously memorised. Fix: read and understand it, then **say it your way**. Swap words that aren't yours. The founder's scripted *"90% personal branding di Indonesia salah arah"* comes out as *"90% orang yang bangun personal branding di Indonesia itu salah arah. Kenapa? Yuk kita bahas."* Same meaning, his wording.
 2. **A fake "content creator voice"**: *"Hai guys, welcome back to my channel."* Ten years out of date.
 3. **Asking permission to start**: *"Halo guys, izinin aku share sedikit hari ini."* If it's there at all, it must sound spoken, not read.
 
@@ -358,7 +358,7 @@ Talking formats build **closer audiences** than text-only formats, even when tex
 ### 8.4 Editing notes (Nadif)
 - **B-roll**: screenshots and images that match each script line. Stock footage from YouTube works for personal-branding topics.
 - **Sound design is what holds attention.** A voice alone sounds monotone and gets skipped. Layer a **backsound** under it, then **SFX**: clicks, minor hits, **whoosh** on transitions, **riser** into the key line. Mute everything and play it back to hear the difference.
-- **Curate an asset library**: music by category, collected from viral FYP content. The edit goes fast once the library exists. Kadev Academy ships its own music and SFX packs (`ASSET MUSIC…zip`, `ASSET SOUND FX VIRAL…zip` in the course folder).
+- **Curate an asset library**: music by category, collected from viral FYP content. The edit goes fast once the library exists. SpliceCraft Academy ships its own music and SFX packs (`ASSET MUSIC…zip`, `ASSET SOUND FX VIRAL…zip` in the course folder).
 - Several timelines per project file are fine.
 
 For the agent: when writing a script meant to be spoken, **use kamu/kita**. Mark lines the user should re-say in their own words rather than read. Never write *"hai guys / welcome back / izinin aku"* openers. When planning the edit, include a backsound bed plus whoosh/riser/click SFX cues (`references/audio.md`, `music-guide.md`).
@@ -367,7 +367,7 @@ For the agent: when writing a script meant to be spoken, **use kamu/kita**. Mark
 
 ## 9. Lesson videos: what the spoken lessons add to the slides
 
-The 36+ lesson videos mostly narrate the slides already in `kadev-personal-branding.md` and `kadev-script-formulas.md`. The storytelling hack, the four pillars and the idea template are repeated almost word for word. This section keeps only what the spoken lessons **add**.
+The 36+ lesson videos mostly narrate the slides already in `academy-personal-branding.md` and `academy-script-formulas.md`. The storytelling hack, the four pillars and the idea template are repeated almost word for word. This section keeps only what the spoken lessons **add**.
 
 ### 9.1 Success or failure: which to show? (lesson 1.3)
 **Both, naturally.** Personal branding is a process, not a destination, and the process is what makes you authentic.
@@ -377,7 +377,7 @@ The 36+ lesson videos mostly narrate the slides already in `kadev-personal-brand
 | **Proof of work** | **Inspiration**: "I failed too, here's what changed" |
 | **Motivation** for others to try | **Human touch**: nobody relates to a god |
 
-Only successes and the audience feels *"ini orang terlalu dewa, aku nggak bisa menjangkau dia"*. Only failures and they conclude there's no competence. Package failure as **a lesson or a growth step**, using the 5-beat Storytelling Hack (set the scene → the struggle → the lesson → success follow-up → a relatable message). Kadev's own worked example: *"dari desa kecil di Madura, tanpa koneksi…"* leads to *"170 ribu lebih pengikut"*.
+Only successes and the audience feels *"ini orang terlalu dewa, aku nggak bisa menjangkau dia"*. Only failures and they conclude there's no competence. Package failure as **a lesson or a growth step**, using the 5-beat Storytelling Hack (set the scene → the struggle → the lesson → success follow-up → a relatable message). The founder's own worked example: *"dari desa kecil di Madura, tanpa koneksi…"* leads to *"170 ribu lebih pengikut"*.
 
 ### 9.2 Personal branding without shouting "personal branding" (lesson 3.1.2)
 **Four wrong ways:** claiming *"aku jago ini"* with no proof · posting certificates or achievements **without context** · sharing results with no story or added value · making only tips and entertainment with no purpose.
@@ -390,7 +390,7 @@ Only successes and the audience feels *"ini orang terlalu dewa, aku nggak bisa m
 | Entertaining | closeness, feeling human |
 | Promotion | sales |
 
-**Premis × pillar = your "match branding".** Kadev's premis (*"from a mysterious Gen Z to earning from personal branding"*) becomes: education on how to start · inspiration from his mysterious past · entertainment about his old zero-post profile · promotion of a webinar for people who are still "mysterious".
+**Premis × pillar = your "match branding".** the founder's premis (*"from a mysterious Gen Z to earning from personal branding"*) becomes: education on how to start · inspiration from his mysterious past · entertainment about his old zero-post profile · promotion of a webinar for people who are still "mysterious".
 
 ### 9.3 LinkedIn, effortlessly (lesson 3.2.6, Arif "Kiki" Maliki)
 - LinkedIn distributes to **home feeds**, not an explore page. Early engagement in the **first 1–2 hours** decides whether a post reaches **second-degree connections** and keeps spreading.
@@ -402,7 +402,7 @@ Only successes and the audience feels *"ini orang terlalu dewa, aku nggak bisa m
   - *Cultivate*: check in every 2–4 weeks (*"lagi sibuk project apa?"*), follow up on an old topic, invite them to events.
   - Rules: don't sound like a template · keep it short and relevant · **give value before asking** · make it a chat, not an interview.
 
-### 9.4 Kadev's CapCut order (lesson 3.1.6)
+### 9.4 the founder's CapCut order (lesson 3.1.6)
 1. **Cut**: remove everything that isn't a point.
 2. **Auto-caption** (Text → Auto captions → language **Indonesian**), then apply one simple, tidy caption template.
 3. **Colour**: an Adjustment layer over everything. He mostly lowers *brilliance*, pulls back yellow and adds a little blue. No full grading for social content.
@@ -418,26 +418,26 @@ This matches SpliceCraft's own pipeline order (`SKILL.md` Steps 1–6) and its d
 - **Who it's for:** students and fresh graduates (competitiveness), professionals (workplace image), UMKM owners (be the face of the brand), creators and freelancers.
 - **Personal branding in two words: *jual diri*, in the positive sense.** You sell your **knowledge** (which earns trust), your **value** (which earns opportunity) and your **experience** (which earns strength).
 - **Why the rich keep posting** (Elon Musk, the Cleo owner): to keep influence and relevance, make business expansion easier, leave a legacy, and build trust for collaboration.
-- **Three claims** (Kadev cites Brand Builders Group): personal branding is the future, it's highly profitable, and it **accelerates trust**. *"Dua hal paling penting di dunia: waktu dan trust."*
-- **Offline vs online.** Offline (seminars, networking events) takes more time and money and reaches only your city. Online reaches the whole country and costs less. Kadev's analogy: introducing yourself to every table in every café in Malang is *"capek, dan freak banget."* **Ideal:** do online first, then add offline **speaker engagement** to build closeness. **Content is the key.**
+- **Three claims** (the founder cites Brand Builders Group): personal branding is the future, it's highly profitable, and it **accelerates trust**. *"Dua hal paling penting di dunia: waktu dan trust."*
+- **Offline vs online.** Offline (seminars, networking events) takes more time and money and reaches only your city. Online reaches the whole country and costs less. The founder's analogy: introducing yourself to every table in every café in Malang is *"capek, dan freak banget."* **Ideal:** do online first, then add offline **speaker engagement** to build closeness. **Content is the key.**
 - **Eight outcomes promised** (expected, not guaranteed): a 3-digit income or your first million · 100k followers · recognising your potential and confidence · understanding the strategy · a changed mindset · being trusted and respected, not just known · strategic connections · job and career opportunities.
 
 ### 9.6 Chapter 1 additions
 - **Ikigai, the quick route.** If the four circles feel abstract, answer: *What makes you happy and never bored? What skill do people often praise? What problem can you solve for others in your industry? How could it earn money?* **All four must be filled.** *"Ikigai = niche."* You don't need to be a master to write it down. The basics are enough.
 - **Premis, worked examples** (all from SWOT → premis):
-  - **Kadev:** mysterious, *gengsi* and shy → tried personal branding → active income, a known name, collaborations. The post built on it (*"Anak muda harus personal branding… sampai kapan jadi orang misterius?"*) got about 421k likes and **121k saves**.
+  - **The founder:** mysterious, *gengsi* and shy → tried personal branding → active income, a known name, collaborations. The post built on it (*"Anak muda harus personal branding… sampai kapan jadi orang misterius?"*) got about 421k likes and **121k saves**.
   - **Kak Anggun:** a village kid who couldn't continue to high school → initiator of *work from anywhere*, helping thousands earn online.
   - **"Kevin"** (illustrative): failed at business several times → mentor to UMKM on surviving. Monetised as a class, course, webinar or ebook.
   - **"Nadia"** (illustrative): afraid to speak in public → teaches confident speaking on camera.
   - *"Personal branding bukan pencitraan, tapi menyampaikan pesan yang berdampak."*
-- **50% art, 50% science** (lesson 1.4): there's no *1×1=2* formula. Goals and timelines differ (Kadev started in 2016–17 and only took off in 2023). **Art** is your delivery, dialect and style (Jerome Polin's *"mantappu jiwa"*, Gadgetin's funny reviews). **Science** is data and analytics. Kadev compares it to cooking fried rice: knowledge, reading, experience and your own art go into one pan. His "Rate Personal Branding" segment (moved from TikTok live to Reels) got **1.99M views and 27k comments**. The advice inside it: *"ubah mindset dari creating ke documenting."*
-- **Marathon, not sprint** (lesson 1.5): Kadev's mountain-climbing story. He rushed ahead at the first posts, burned out by the third, and was overtaken by the friend who walked steadily with a plan. Chasing virality isn't wrong. **Chasing it with no long-term strategy is.**
+- **50% art, 50% science** (lesson 1.4): there's no *1×1=2* formula. Goals and timelines differ (the founder started in 2016–17 and only took off in 2023). **Art** is your delivery, dialect and style (Jerome Polin's *"mantappu jiwa"*, Gadgetin's funny reviews). **Science** is data and analytics. The founder compares it to cooking fried rice: knowledge, reading, experience and your own art go into one pan. His "Rate Personal Branding" segment (moved from TikTok live to Reels) got **1.99M views and 27k comments**. The advice inside it: *"ubah mindset dari creating ke documenting."*
+- **Marathon, not sprint** (lesson 1.5): The founder's mountain-climbing story. He rushed ahead at the first posts, burned out by the third, and was overtaken by the friend who walked steadily with a plan. Chasing virality isn't wrong. **Chasing it with no long-term strategy is.**
 - **Perception vs persona** (lesson 1.6): don't manufacture a persona that isn't you (posing in front of a friend's Porsche to look rich). The persona must be true, and if you want the brand to look diligent, become diligent. Take criticism, ignore hate.
 
 ### 9.7 Chapter 2 additions
 - **Opportunity mapping by time frame + *Eat That Frog*** (Brian Tracy): do the hardest, highest-impact thing first. Map goals by **semester** (student → internship, exchange, organisation, volunteering → dream company) · **year** (F&B owner 2026–2029) · **quarter** (writer: ebook first, then raise the target) · **week** (freelance designer: week 1 portfolio, week 2 email prospects…). Personal branding runs through the **whole** journey, not only once the goal is reached.
 - **Goal → platform:** content creator → TikTok/Instagram · career and jobs → LinkedIn.
-- **Kadev's own "why", split in two.** *For himself:* industry credibility, wider career and business opportunities, monetising knowledge. *For others:* educating and inspiring young people, being a source of social change (*Gen Z punya potensi*), being useful however small. When consistency slips, he rereads his written why.
+- **The founder's own "why", split in two.** *For himself:* industry credibility, wider career and business opportunities, monetising knowledge. *For others:* educating and inspiring young people, being a source of social change (*Gen Z punya potensi*), being useful however small. When consistency slips, he rereads his written why.
 - **4K sweet spots, worked:**
   - productivity → *"cara stop prokrastinasi dalam 5 menit"*
   - personal finance → *"cara nabung tanpa ngerasa miskin"*, *"investasi mulai dari 10 ribu"*
@@ -446,17 +446,17 @@ This matches SpliceCraft's own pipeline order (`SKILL.md` Steps 1–6) and its d
 
 ### 9.8 Chapter 3.1 additions
 - **The algorithm as a snowball:** 1 → 5 → 20 → 100 → 1,000 viewers of the same kind, as long as each group engages. *"Pos jam 7 malam dijamin rame"* matters far less than content people interact with.
-- **A cautionary tale from Kadev's own account.** His media account *Skreatif* grew on a superniche (videography and editing on a smartphone). At about 100k followers he broadened it to Gen Z, finance and self-development, and **engagement dropped sharply: 157k fell to about 140k followers.** The algorithm and the audience both got confused.
-- **Changing niche:** Kadev made about **20 bridge posts** (editing × personal branding) before switching fully.
+- **A cautionary tale from the founder's own account.** His media account *Skreatif* grew on a superniche (videography and editing on a smartphone). At about 100k followers he broadened it to Gen Z, finance and self-development, and **engagement dropped sharply: 157k fell to about 140k followers.** The algorithm and the audience both got confused.
+- **Changing niche:** the founder made about **20 bridge posts** (editing × personal branding) before switching fully.
 - **Perfect niche = passion ∩ skill ∩ money-making potential.** Then narrow it: cooking → cooking for kos students / for housewives. The richest territory is **health, wealth, relationships**: timeless, always has a market, many ways to monetise.
-- **Quality audience over quantity.** Kak Anggun (31k followers) sells out products. Kadev's webinars sell out, and his engagement matches accounts with 500k followers.
+- **Quality audience over quantity.** Kak Anggun (31k followers) sells out products. The founder's webinars sell out, and his engagement matches accounts with 500k followers.
 - **Profile formula (8-second test):**
   - **Username** = your real name, not a brand.
-  - **Profile name** = name + niche, for search (*"Kadafi Devayana | Personal Branding"*).
+  - **Profile name** = name + niche, for search (*"Nama Kamu | Personal Branding"*).
   - **Bio = Value → You → CTA**, in that order (*"orang tidak peduli siapa kamu, mereka peduli apa yang bisa kamu berikan"*).
   - **Photo:** a clear, close face.
   - **Highlights** = raw portfolio (audience reposts from speaking gigs).
-  - **Feed:** one visual identity (Kadev: black and white, partly because his design skills are limited), a mix of formats, curiosity thumbnails.
+  - **Feed:** one visual identity (The founder: black and white, partly because his design skills are limited), a mix of formats, curiosity thumbnails.
 - **Documenting yourself** (lesson 3.1.5):
   - **Four content forms:** video (short form lives a week to a month; long form lives long) · writing (single post for quotes and micro-blogging, carousel for storytelling, Threads/X/LinkedIn) · Stories (connection) · live (engagement, monetisation).
   - **Shooting:** enough light (golden hour 07–08 or 15–17 if you have no lamp) · clear sound matters most (*"audio visual, bukan visual audio"*) · CapCut's teleprompter · record moments anywhere and voice them over later · vertical for social, horizontal for YouTube · simple edit (subtitles + music).
@@ -484,18 +484,18 @@ This matches SpliceCraft's own pipeline order (`SKILL.md` Steps 1–6) and its d
   - Turn on **job alerts** by field.
 
 ### 9.10 Chapter 4 additions
-- **Kadev's four lost years on YouTube (2016–2021):** unclear topic (videography, giveaways, parody interviews, apps) · posting in bursts · copying idols word for word (*"4 fakta menarik tentang…"* after Agung Hapsah) · waiting for proper gear and perfect results · refusing criticism.
+- **The founder's four lost years on YouTube (2016–2021):** unclear topic (videography, giveaways, parody interviews, apps) · posting in bursts · copying idols word for word (*"4 fakta menarik tentang…"* after Agung Hapsah) · waiting for proper gear and perfect results · refusing criticism.
   - The soto-seller analogy: soto one day, nothing the next, bubur ayam after that. Customers stop coming.
 - **Motivation starts you. Consistency keeps you going.** *"Konsisten itu nggak harus sehari sekali. Dua kali seminggu juga boleh, tapi minggu depannya tetap dua."* **Avoid over-claiming:** say *"aku masih belajar di bidang ini"*. Cut back on motivational content, and learn about consistency instead.
 - **Three kinds of criticism:** constructive (take it, even when it hurts) · careless (skip it) · hate comments (a sign you're becoming known). *"Kritik itu bahan bakar."* **Grit** = passion + commitment. Measure progress over **6 months**, not a week.
-- **Trend adaptation needs an output.** Kadev's *"halah foto sama satu sertif aja bangga"* trend showed credibility (21k likes). His *"rate IG"* trend added interaction (7k likes, 900 comments). A *jedag-jedug* of him on a 1,000-person stage signalled he's bookable. **Twist the trend with your own angle. The trend is a vehicle, not the destination.**
-- **Signature content:** Kadev's black-and-white gradient carousels, which others now copy · Jerome Polin's delivery · a creator whose signature is photobombing viral videos · a regional accent (*"jangan diubah jadi logat Jakarta"*). You find your signature by making a lot of content.
+- **Trend adaptation needs an output.** the founder's *"halah foto sama satu sertif aja bangga"* trend showed credibility (21k likes). His *"rate IG"* trend added interaction (7k likes, 900 comments). A *jedag-jedug* of him on a 1,000-person stage signalled he's bookable. **Twist the trend with your own angle. The trend is a vehicle, not the destination.**
+- **Signature content:** the founder's black-and-white gradient carousels, which others now copy · Jerome Polin's delivery · a creator whose signature is photobombing viral videos · a regional accent (*"jangan diubah jadi logat Jakarta"*). You find your signature by making a lot of content.
 - **Loyal audience:** reply to DMs and comments, discuss in Stories, give consistent value, build a small community (WhatsApp channel and group). *"If one person says you're great, it's subjective. If a hundred do, it's objective."*
 - **The sugar test** (lesson 4.3): if your name were a brand of sugar, would people say *sugar*, or *salt*? Ask **5 people** what they remember when they hear your name. Case: a UI/UX designer became known as a motivator after 6 months of mindset tips. Keep the tone consistent across platforms, with small adjustments for LinkedIn.
 
 ### 9.11 Chapter 5 additions
 - **Personal branding is an access card** to business, career (HR runs **background research** on your social media), relationships, collaboration and income.
-- **Knowledge gap = what you know that others want to know.** You build the bridge and charge a toll. Kadev's path: free editing tips (*"kulitnya doang"*) → paid workshops and classes → presets, templates and editing services. Speaker fee claimed: 1–2× the Jakarta minimum wage per 45–90 minutes.
+- **Knowledge gap = what you know that others want to know.** You build the bridge and charge a toll. The founder's path: free editing tips (*"kulitnya doang"*) → paid workshops and classes → presets, templates and editing services. Speaker fee claimed: 1–2× the Jakarta minimum wage per 45–90 minutes.
 - **Finding the gap:** data (comments, Google Trends) · people's problems (DMs, communities) · competitor benchmarking (what they haven't covered) · your own experience (what used to confuse you).
 - **Digital products** (lesson 5.3):
   - **Claims:** lifetime sales of about Rp 79 million on Lynk.id with little effort. Kak Anggun got Rp 100 million in under 3 months.
@@ -506,7 +506,7 @@ This matches SpliceCraft's own pipeline order (`SKILL.md` Steps 1–6) and its d
     - **ATM, never plagiarise.** *"Kredibilitas lebih mahal dari plagiasi."*
   - **Build:** outline first (AI may suggest; cut, keep, rewrite until it's yours) · Canva templates at Rp 30–50k (100 buyers × Rp 50k = Rp 5 million) · sell recordings of your webinars.
   - **Sell through the funnel:** TOFU content and community → MOFU free sample or free webinar plus testimonials → BOFU guarantee, limited-time discount, the platform checkout → scale up with bundles, new platforms, affiliates.
-- **Networking lesson (5.4):** Kadev's internship at Astra International (about 28k applicants, about 100 accepted) came after he polished his LinkedIn and messaged HR directly. *"Networking bukan soal berapa banyak orang yang kamu kenal, tapi berapa banyak yang pengen kenal kamu. Jangan datang dengan tangan kosong (pengalaman) dan otak kosong (ilmu)."*
+- **Networking lesson (5.4):** the founder's internship at Astra International (about 28k applicants, about 100 accepted) came after he polished his LinkedIn and messaged HR directly. *"Networking bukan soal berapa banyak orang yang kamu kenal, tapi berapa banyak yang pengen kenal kamu. Jangan datang dengan tangan kosong (pengalaman) dan otak kosong (ilmu)."*
 - **Collaboration = supply meets demand** (lesson 5.5): your skills and resources meet someone's problem. Personal branding makes your supply **visible**. Arif's PDF graphic-design portfolio on TikTok (287k views) brought his first **100 clients** that year, including one in Singapore. A pet-shop founder will hire the vet who is visible.
 
 <!-- journal 2026-09-24: §9.5–9.11 written after reading every lesson transcript end to end (34 lessons; 5.5 re-transcribed on Groq because the local run cut off after 54 words). Everything that merely restates the slides was left out; only additions are here. Numbers are the speaker's claims, shown on screen, not independently verified. -->
@@ -515,7 +515,7 @@ This matches SpliceCraft's own pipeline order (`SKILL.md` Steps 1–6) and its d
 
 ## 10. 10,000 followers in 3 weeks: Rich's own experiment (mentoring, 18 April 2026)
 
-Rich (a mentor who runs an AI company) grew a dormant personal account from **~1,400 to ~16,900 Instagram followers in about a month** using the Kadev framework, posting the same short videos to TikTok (~11.8k), Facebook (~7k), YouTube Shorts and Threads. His disclaimer: *"sesuaikan dengan kondisi, kapasitas dan kapabilitas masing-masing."*
+Rich (a mentor who runs an AI company) grew a dormant personal account from **~1,400 to ~16,900 Instagram followers in about a month** using the SpliceCraft Academy framework, posting the same short videos to TikTok (~11.8k), Facebook (~7k), YouTube Shorts and Threads. His disclaimer: *"sesuaikan dengan kondisi, kapasitas dan kapabilitas masing-masing."*
 
 ### 10.1 The ideal customer comes before any content
 - **ICP (ideal customer profile)**: business people and finance people (investors, traders), **not** people who want to learn AI. His goal is selling AI services to companies, so AI tutorials would attract the wrong crowd.
@@ -550,19 +550,19 @@ Rich (a mentor who runs an AI company) grew a dormant personal account from **~1
 Speaker: Rich, with Nadif. For members who own a business, or plan to monetise personal branding by building one.
 
 ### 11.1 Why a good product isn't enough
-- Claimed statistic: *"75% UMKM berhenti di tahun ketiga — bukan karena produknya jelek, tapi karena branding dan cerita."* It's attributed to Kadev's own team research, with **no public source given. Don't repeat it as fact.**
+- Claimed statistic: *"75% UMKM berhenti di tahun ketiga — bukan karena produknya jelek, tapi karena branding dan cerita."* It's attributed to the founder's own team research, with **no public source given. Don't repeat it as fact.**
 - Branding isn't logo, tagline, font and colour. It's **trust**, which does four jobs: **assurance** (it's reliable) · **safety** (a known brand over an unknown one) · **difference** (Apple's clean design against LED gimmicks) · **value** (premium, affordable…).
 - **Mispositioning kills sales.** A Rp15k ramen dressed as premium (gold logo, English-only copy, luxury storefront) scares off exactly the people who can afford Rp15k.
 - **Storytelling matters most for high-involvement products** (cars, holidays, iPhones). Nobody buys a car from one post. Apple sells the story while the iPhone 14 and 16 look alike. The product decides whether people **buy again**. Branding decides whether they **try it the first time**.
 
 ### 11.2 The founder is the face
-- Examples: Iben for Sambal Bakar · Hermanto Tanoko (Cleo, Avian) with his own podcast · Elon Musk as the face of X (Jack Dorsey founded it but built less of a personal brand) · Agni, a Kadev member who is the face of her own risol business.
+- Examples: Iben for Sambal Bakar · Hermanto Tanoko (Cleo, Avian) with his own podcast · Elon Musk as the face of X (Jack Dorsey founded it but built less of a personal brand) · Agni, a academy member who is the face of her own risol business.
 - **Hired talent is a risk.** The face leaves, or appears in other brands' content. *"People trust people, not logos."* People ask friends for recommendations before they trust brands.
 
 ### 11.3 From story to brand: three steps and three questions
 **Steps:** framework story → frame it as the brand (the founder as the face) → marketing.
 **Three questions:**
-1. What is the **core value**? (Kadev: spreading personal-branding knowledge.)
+1. What is the **core value**? (The founder: spreading personal-branding knowledge.)
 2. What **problem** do you solve for customers? (People start without direction and learn better with guidance.)
 3. What **feeling** should every interaction leave?
 
@@ -579,7 +579,7 @@ Speaker: Rich, with Nadif. For members who own a business, or plan to monetise p
 
 ## 12. Networking in practice (mentoring "Networking Strategy", 21 Okt 2025)
 
-Speaker: Kiki (Arif Maliki), a student when he started. PING itself is on the slides (`kadev-personal-branding.md` §13.1). This section keeps only what the talk adds.
+Speaker: Kiki (Arif Maliki), a student when he started. PING itself is on the slides (`academy-personal-branding.md` §13.1). This section keeps only what the talk adds.
 
 - **For a student, personal branding means *pamer*: showing experience, value and insight.** Kiki's LinkedIn in 2022 was empty. By 2024 it brought HR outreach, multinational projects, and organisations inviting him straight in without selection.
 - **Post rejections as positive content.** He was rejected from **60+ internships** (*"rejection is a routine"*) and posted about it. Connections who saw it offered feedback and referrals.
@@ -598,7 +598,7 @@ Speaker: Kiki (Arif Maliki), a student when he started. PING itself is on the sl
 
 ## 13. Anatomy of a viral format (mentoring, 30 Juni 2026)
 
-Speakers: Nadif and Iqbal (the person behind Kadev's own content and modules).
+Speakers: Nadif and Iqbal (the person behind the founder's own content and modules).
 
 - *"There's no new editing hack."* Everyone already posts consistently, learns editing and follows trends. What separates accounts now is a **distinctive format**: a way of presenting that is recognisably yours.
 - Nadif's own before/after: an idealistic, self-centred cinematic edit flopped. A simple, relatable **10×10** with memes and a daily-life topic got saved and reposted.
@@ -644,20 +644,20 @@ Not every video needs every element. An eye-to-eye talking head may need no B-ro
 
 | Section | Source | Speaker |
 |---|---|---|
-| §1 | `22 Juli 2026 - Live Mentoring VIP Member Kadev Academy - Topik Format Winning` (7,687 s) | Kadafi Devayana |
-| §2 | `27 Agustus 2026 - Live Mentoring VIP Member Kadev Academy - Formula Script Viral & Jualan` (7,233 s) | Nadif (mentor), hosted by Kadafi Devayana |
-| §3 | Q&A sections of both recordings | Kadev, Nadif, Rich |
-| §5 | `[17 Maret 2026] Kadev Academy - Mentoring VIP - Content & Marketing Funnel` (7,177 s, Groq whisper-large-v3) | Kadev, Rich |
-| §6 | `[16 Jan 2065] Mentoring - Trial Reels & Link a Reel` (6,765 s, Groq; the year in the filename is a typo for 2026) | Nadif, Kadev |
-| §7 | `[13 Des 2025] Mentoring - 2026 Algorthm & Strategt (1)` (8,135 s, Groq) | Kadev, Rich |
-| §8 | `[27 Mei 2026] Kadev Academy - Mentoring VIP - The Art of Yapping` (6,685 s, Groq) | Kadev, Nadif, Rich |
-| §9 | All 34 lesson videos, chapters 0–5 (local faster-whisper; 5.5 re-done on Groq) | Kadev, Arif Maliki |
-| §10 | `[18 April 2026] Kadev Academy - Mentoring VIP - Dapetin 10K Followers dalam 3 Minggu` (7,522 s, Groq) | Rich, Kadev |
-| §11 | `Kadev Academy - VIP Mentoring - February 21, 2026` (6,194 s, Groq) | Rich, Nadif |
+| §1 | `22 Juli 2026 - Live Mentoring VIP Member SpliceCraft Academy - Topik Format Winning` (7,687 s) | The SpliceCraft Academy founder |
+| §2 | `27 Agustus 2026 - Live Mentoring VIP Member SpliceCraft Academy - Formula Script Viral & Jualan` (7,233 s) | Nadif (mentor), hosted by the SpliceCraft Academy founder |
+| §3 | Q&A sections of both recordings | The founder, Nadif, Rich |
+| §5 | `[17 Maret 2026] SpliceCraft Academy - Mentoring VIP - Content & Marketing Funnel` (7,177 s, Groq whisper-large-v3) | The founder, Rich |
+| §6 | `[16 Jan 2065] Mentoring - Trial Reels & Link a Reel` (6,765 s, Groq; the year in the filename is a typo for 2026) | Nadif, the founder |
+| §7 | `[13 Des 2025] Mentoring - 2026 Algorthm & Strategt (1)` (8,135 s, Groq) | The founder, Rich |
+| §8 | `[27 Mei 2026] SpliceCraft Academy - Mentoring VIP - The Art of Yapping` (6,685 s, Groq) | The founder, Nadif, Rich |
+| §9 | All 34 lesson videos, chapters 0–5 (local faster-whisper; 5.5 re-done on Groq) | The founder, Arif Maliki |
+| §10 | `[18 April 2026] SpliceCraft Academy - Mentoring VIP - Dapetin 10K Followers dalam 3 Minggu` (7,522 s, Groq) | Rich, the founder |
+| §11 | `SpliceCraft Academy - VIP Mentoring - February 21, 2026` (6,194 s, Groq) | Rich, Nadif |
 | §12 | `[21 Okt 2025] Mentoring - Networking Strategy` (5,804 s, local) | Kiki (Arif Maliki), Hardy |
-| §13 | `[30 Juni 2026] Kadev Academy - Mentoring VIP - Anatomi Format Viral` (7,284 s, Groq) | Nadif, Iqbal, Kadev |
-| §4 | `[21 Okt 2025] Mentoring - Attention Economy` (4,312 s) | Nadif, Kadev, Rich, Kiki |
+| §13 | `[30 Juni 2026] SpliceCraft Academy - Mentoring VIP - Anatomi Format Viral` (7,284 s, Groq) | Nadif, Iqbal, the founder |
+| §4 | `[21 Okt 2025] Mentoring - Attention Economy` (4,312 s) | Nadif, the founder, Rich, Kiki |
 
-Transcribed locally with faster-whisper `small` (int8). Transcripts are in `transcripts/kadev/`. Whisper mishears names (*"Bruno Nadif"* = *"Bro Nadif"*, *"persemblending"* = *"personal branding"*). Numbers were checked against context. The 118k views figure and the 3.3M reference are spoken claims shown on screen, not verified.
+Transcribed locally with faster-whisper `small` (int8). Transcripts are in `transcripts/academy/`. Whisper mishears names (*"Bruno Nadif"* = *"Bro Nadif"*, *"persemblending"* = *"personal branding"*). Numbers were checked against context. The 118k views figure and the 3.3M reference are spoken claims shown on screen, not verified.
 
-<!-- journal 2026-09-24: first file built from transcripts rather than slides. The six-element order spoken by Nadif is pain / number / promise / opinion / urgency / interaction; the slide order puts urgency 4th and opinion/story 5th. Same six, different order — the slide says order doesn't matter, so no change to kadev-script-formulas.md. Edit freely; keep the provenance table in sync. -->
+<!-- journal 2026-09-24: first file built from transcripts rather than slides. The six-element order spoken by Nadif is pain / number / promise / opinion / urgency / interaction; the slide order puts urgency 4th and opinion/story 5th. Same six, different order — the slide says order doesn't matter, so no change to academy-script-formulas.md. Edit freely; keep the provenance table in sync. -->

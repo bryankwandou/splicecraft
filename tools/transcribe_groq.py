@@ -12,7 +12,7 @@ def ts(s):
 
 src, outd = sys.argv[1], sys.argv[2]
 KEY = os.environ["GROQ_API_KEY"]
-PROMPT = ("Kadev Academy, Kadafi Devayana, personal branding, konten, content creator, hook, CTA, "
+PROMPT = ("SpliceCraft Academy, the SpliceCraft Academy founder, personal branding, konten, content creator, hook, CTA, "
           "TikTok, Instagram, Reels, LinkedIn, superniche, premis, storytelling, algoritma, followers, engagement.")
 seen, uniq = set(), []
 for f in sorted(glob.glob(os.path.join(src, "*.mp4"))):

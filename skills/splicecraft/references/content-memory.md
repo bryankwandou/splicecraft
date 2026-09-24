@@ -113,10 +113,10 @@ Every field except the topic is optional, but the ones that matter most for futu
 | `niche` | the superniche it serves |
 | `pillar` | `educate` / `inspiration` / `entertaining` / `promotion` |
 | `hook` | the actual hook line used |
-| `hook_template` | which of the 20 templates (`kadev-script-formulas.md` §4) |
+| `hook_template` | which of the 20 templates (`academy-script-formulas.md` §4) |
 | `angle` | **what made this one different** |
 | `themes` | repeatable tags |
-| `premise` | the premis this serves (`kadev-personal-branding.md` §2.4) |
+| `premise` | the premis this serves (`academy-personal-branding.md` §2.4) |
 | `platform`, `format`, `seconds` | production facts |
 | `script_path`, `video_path` | where the artifacts live |
 | `status` | `idea` / `scripted` / `filmed` / `produced` / `published` |

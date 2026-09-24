@@ -1,11 +1,11 @@
-# Personal branding: the full Kadev Academy body of theory
+# Personal branding: the full SpliceCraft Academy body of theory
 
 > **Published:** 2026-09-23 · **Last reviewed:** 2026-09-23
-> **Source material:** Kadev Academy by Kadafi Devayana — 37 lesson videos, 64 slide screens (6 chapters / 36+ learning materials), and 5 ebooks/PDFs. Extracted 2026-09-23.
+> **Source material:** SpliceCraft Academy by the SpliceCraft Academy founder — 37 lesson videos, 64 slide screens (6 chapters / 36+ learning materials), and 5 ebooks/PDFs. Extracted 2026-09-23.
 > **Agent check:** compare this date with today. If more than 6 months have passed, re-check the platform claims here before relying on them. The *frameworks* below are the author's and do not expire; the *platform numbers* do.
 > **Editable:** this file is meant to be edited. Every section carries a `<!-- journal -->` note explaining where it came from and what is still thin, so a future editor knows what is safe to change. See `../JOURNAL.md`.
 
-This file is the theory. `kadev-script-formulas.md` is the execution layer (hooks, script structures, idea generation). `anti-ai-ish.md` is the quality gate. Read this one first: nearly every "AI-ish" script fails because the writer skipped straight to hooks without a premis, a niche, or a sweet spot.
+This file is the theory. `academy-script-formulas.md` is the execution layer (hooks, script structures, idea generation). `anti-ai-ish.md` is the quality gate. Read this one first: nearly every "AI-ish" script fails because the writer skipped straight to hooks without a premis, a niche, or a sweet spot.
 
 ---
 
@@ -31,20 +31,20 @@ This file is the theory. `kadev-script-formulas.md` is the execution layer (hook
 
 ## 0. The curriculum spine
 
-Kadev Academy is ordered as 6 chapters, 36+ learning materials, and the order is load-bearing — the author explicitly says *"urut satu per satu, jangan skip kecuali udah paham."*
+SpliceCraft Academy is ordered as 6 chapters, 36+ learning materials, and the order is load-bearing — the author explicitly says *"urut satu per satu, jangan skip kecuali udah paham."*
 
 | # | Chapter | What it settles | Covered in |
 |---|---|---|---|
 | 0 | Onboarding + *Lebih dekat dengan Personal Branding* | definition, benefit, why it is not "just posting" | §1 |
 | 1 | **Character Development** | who you are: Ikigai, Johari, SWOT, Premis, Selling Points | §2-§4 |
 | 2 | **Vision Plan** | where you are going: Why/Golden Circle, Opportunity Mapping, niche | §5-§6 |
-| 3 | **Execute & Show** | making it: algorithm, first impression, story, documentation, editing, design | §7-§9 + `kadev-script-formulas.md` |
+| 3 | **Execute & Show** | making it: algorithm, first impression, story, documentation, editing, design | §7-§9 + `academy-script-formulas.md` |
 | 4 | **Evaluate, Innovate & Growth** | surviving: consistency, crisis, trend, rebranding, evaluation | §10-§11 |
 | 5 | **Expand & Monetize** | income: knowledge gap, digital product, networking, collaboration | §12-§13 |
 
 **Why this matters to SpliceCraft.** A user who asks for a video edit usually arrives at chapter 3 with chapters 1 and 2 unanswered. That is the single largest cause of generic, AI-tasting scripts. Step 0.5 of `SKILL.md` exists to force chapters 1-2 to be answered before a word is written.
 
-<!-- journal: spine taken verbatim from the slide "Struktur Belajar di Kadev Academy" (icons: Character Development → Vision Plan → Execute & Show → Evaluate, Innovate → Expand & Monetize) and cross-checked against the lesson-video filenames, which are numbered (0 x), (1 x) … (5 x) in the same order. High confidence. -->
+<!-- journal: spine taken verbatim from the slide "Struktur Belajar di SpliceCraft Academy" (icons: Character Development → Vision Plan → Execute & Show → Evaluate, Innovate → Expand & Monetize) and cross-checked against the lesson-video filenames, which are numbered (0 x), (1 x) … (5 x) in the same order. High confidence. -->
 
 ---
 
@@ -78,7 +78,7 @@ The author's conclusion after surveying every definition on Google and ChatGPT:
 Supporting quotes he uses:
 - *"Be yourself; everyone else is already taken."* — Oscar Wilde
 - *"Menjadi diri sendiri adalah kunci untuk bisa berkarya dengan hati."* — Maudy Ayunda
-- *"Personal branding itu jadi diri sendiri bukan jadi orang lain."* — Kadafi Devayana
+- *"Personal branding itu jadi diri sendiri bukan jadi orang lain."* — the SpliceCraft Academy founder
 
 The worked examples are Jerome Polin (made a hated subject, mathematics, feel easy and fun — by not hiding his struggle) and Najwa Shihab (never imitated anyone, so she became the most trusted).
 
@@ -98,7 +98,7 @@ Two framings appear across the material.
 
 **The stats framing** (slide *"Personal Branding adalah Masa Depan?"*): 74% / 63% / 62% figures are cited for *is the future*, *highly profitable*, *a trust accelerator*.
 
-<!-- journal: the 74/63/62 percentages are printed on the slide but the slide does not name the study. Do NOT present them to a user as sourced fact — say "Kadev's slide cites" or drop them. Flagged as the weakest claim in this file. -->
+<!-- journal: the 74/63/62 percentages are printed on the slide but the slide does not name the study. Do NOT present them to a user as sourced fact — say "the founder's slide cites" or drop them. Flagged as the weakest claim in this file. -->
 
 ### 1.5 Personal branding is complex — but do not overcomplicate it
 
@@ -121,7 +121,7 @@ The metaphor used throughout: **Fondasi (Diri sendiri) → Istana (Proses Brandi
 
 **IKIGAI = NICHE.** This is the single most quotable line in chapter 1. Ikigai (生き甲斐, "iki" = hidup, "gai" = alasan) is four circles:
 
-| Circle | Question | Kadev's phrasing |
+| Circle | Question | The founder's phrasing |
 |---|---|---|
 | What You Love | Apa bidang yang kamu suka? | what you never get bored doing |
 | What You Are Good At | Apa bidang yang kamu bisa? | what others often praise you for |
@@ -138,7 +138,7 @@ The centre is **relate dan relevan**.
 
 **Why we need Ikigai** (slide *"Kenapa kita butuh cari IKIGAI?"*): because personal branding is a PROCESS; so you know your direction and focus; so you enjoy it and do it wholeheartedly; so what you do has impact and benefit; so it is relevant and pays; so your branding matches your actual self.
 
-> *"Ikigai bikin kamu tahu nilai kamu, personal branding bikin nilai itu bersinar di depan dunia."* — Kadafi Devayana
+> *"Ikigai bikin kamu tahu nilai kamu, personal branding bikin nilai itu bersinar di depan dunia."* — the SpliceCraft Academy founder
 
 ### 2.2 Johari Window
 
@@ -285,7 +285,7 @@ The answer is the Perception/Persona pair plus the Circle of Control above, and 
 
 ### 5.1 The Golden Circle (Simon Sinek)
 
-| Ring | Question | Kadev's Javanese gloss |
+| Ring | Question | The founder's Javanese gloss |
 |---|---|---|
 | **Why** — Your Purpose | What is your cause? What do you believe? | *lapo* — apa tujuan dan motivasi kamu? |
 | **How** — Your Process | Specific actions taken to realise your Why | *yaopo* — gimana cara kamu mencapai "kenapa" kamu dengan aksi spesifik? |
@@ -369,7 +369,7 @@ This one line fixes more bad content plans than anything else in the course.
 - Kalau topikmu terlalu luas atau sering berubah drastis, algoritma bingung → reach turun
 - Akun dengan niche jelas tumbuh lebih cepat karena algoritma tahu siapa target audiensnya
 
-### 6.3 How the algorithm actually works (Kadev's model)
+### 6.3 How the algorithm actually works (the founder's model)
 
 ```
 Bahas Video Editing di CapCut → Editor Pemula → Interaksi → Editor Pemula lain kena konten kamu
@@ -391,7 +391,7 @@ Second analogy, the food-stall one, which is the most memorable in the whole cou
 
 Even with a superniche you are allowed to talk about other things — in this proportion:
 
-| % | Topic layer | Example (Kadev's own account) |
+| % | Topic layer | Example (the founder's own account) |
 |---|---|---|
 | **80%** | the superniche itself | Personal branding untuk anak muda usia 18-24 tahun |
 | **15%** | the adjacent layer | Self Development untuk anak muda usia 18-24 tahun |
@@ -505,7 +505,7 @@ The slide poses it as: *Kenapa ada akun yang langsung bikin orang follow? Kenapa
 
 ### 7.3 The anatomy of a profile, annotated
 
-From the slide dissecting `@kadafidevayana`:
+From the slide dissecting `@the academy founder's account`:
 
 | Element | Rule |
 |---|---|
@@ -672,7 +672,7 @@ The chapter's own diagram — a hand reaching out of sand — with five icons:
 - ✅ Eksplorasi berbagai format → coba carousel, thread, short-form video, atau podcast
 - ✅ Pilih format yang paling nyaman & cocok → harus sustain dalam jangka panjang
 - ✅ Buat template atau pola khas → misalnya, selalu mulai dengan storytelling atau pakai font/style tertentu
-- Warna sebagai signature: `Kadafi → Hitam Putih`, `Uirofi → Orange`, `Kasisolusi → Biru`
+- Warna sebagai signature: `the founder → Hitam Putih`, `Uirofi → Orange`, `Kasisolusi → Biru`
 - 🚀 Biar gampang dikenali! Orang langsung ngeh, *"Oh ini kontennya si …"* tanpa harus lihat username dulu.
 - 🚀 Nggak pusing mikirin format baru tiap kali bikin konten. Udah ada pakemnya, tinggal eksekusi!
 - 🚀 Engagement naik! Karena audiens udah familiar dan tahu apa yang bakal mereka dapetin dari kontenmu.
@@ -769,7 +769,7 @@ The mountain-photo slide makes it personal: *ngerasa paling jago · awalnya ada 
 
 From the ebook. **Jadwal kerja yang seimbang** (tentukan jam kerja, pakai Pomodoro) · **Delegasi dan kolaborasi** (the author now has an editor and a social team) · **Self-care dan relaksasi** · **Cari dukungan** (mentor, komunitas kreator).
 
-> *"Konsistensi adalah bentuk kesetiaan kita kepada diri kita sendiri dan tujuan kita."* — Kadafi Devayana
+> *"Konsistensi adalah bentuk kesetiaan kita kepada diri kita sendiri dan tujuan kita."* — the SpliceCraft Academy founder
 
 ---
 
@@ -849,7 +849,7 @@ The Entrepreneur tree gives a second cut of the same thing: `Monetisasi (Communi
 
 ### 12.3 Digital Products — the 4-step build
 
-> **Karena Digital Product = Easy Money.** Cek portfolio Dafi · Belum lama coba tapi hasilnya lumayan · Side income, low effort maintenance.
+> **Karena Digital Product = Easy Money.** Cek portfolio the founder · Belum lama coba tapi hasilnya lumayan · Side income, low effort maintenance.
 
 ```
    1. Idea  →  2. Create the Product   |   3. Funnel  →  4. Scale Up!
@@ -983,7 +983,7 @@ A mapping so the agent knows which framework to reach for at which moment.
 | "bikinin script" and cannot say who it is for | §6.1-6.2 superniche, §6.6 4K Method | a script without a specific *siapa* is the #1 source of AI-ish copy |
 | "kontenku sepi" | §6.3 algorithm, §10.3 consistency, §6.4 80/15/5 | usually a focus problem, not an editing problem |
 | "aku gak pede" / "takut dibilang pamer" | §3 Perception/Persona, §3.1 Circle of Control, §4 | the block is emotional; do not answer it with editing tips |
-| "gak tau mau bikin konten apa" | §2.4 Premis → §8.2 Pillar → `kadev-script-formulas.md` Unlimited Idea | premis + pillar generates the queue |
+| "gak tau mau bikin konten apa" | §2.4 Premis → §8.2 Pillar → `academy-script-formulas.md` Unlimited Idea | premis + pillar generates the queue |
 | "mau jualan / monetisasi" | §12.1 Knowledge Gap, §12.2 five doors, §12.3 funnel | pick the door first, then write to that funnel stage |
 | "hasilnya masih AI banget" | §2.4 premis missing, §9.3 production errors, `anti-ai-ish.md` | almost always: no premis, no personal story, over-editing |
 | "mau ganti niche" | §6.10 bridge | never cut over abruptly |
@@ -993,7 +993,7 @@ A mapping so the agent knows which framework to reach for at which moment.
 
 ## 15. Quote bank
 
-For CTA lines, closing cards, and callbacks. All by Kadafi Devayana unless noted. **Attribute them** if you put them on screen.
+For CTA lines, closing cards, and callbacks. All by the SpliceCraft Academy founder unless noted. **Attribute them** if you put them on screen.
 
 - *"Konsistensi adalah bentuk kesetiaan kita kepada diri kita sendiri dan tujuan kita."*
 - *"Jadi dirimu sendiri, karena tidak ada orang lain yang bisa melakukannya lebih baik darimu."*
@@ -1017,11 +1017,11 @@ For CTA lines, closing cards, and callbacks. All by Kadafi Devayana unless noted
 
 | Source | What came from it |
 |---|---|
-| 64 slide screens, `E:\Download\SLIDE PPT KADEV` | §0, §2.4 (Premis/PMF), §6.2-6.7 (superniche, 80/15/5, Perfect Niche, 4K, Sweet Spot), §7, §8, §9, §10, §11, §12, §13 — the majority of this file |
+| 64 slide screens, `the SpliceCraft Academy slide folder` | §0, §2.4 (Premis/PMF), §6.2-6.7 (superniche, 80/15/5, Perfect Niche, 4K, Sweet Spot), §7, §8, §9, §10, §11, §12, §13 — the majority of this file |
 | `02 - Personal Branding Mengubahmu eBook.pdf` (100 pp) | §1.3, §2.1-2.2, §2.5, §3, §6.8-6.9, §8.3, §10.6 |
-| `04 - Content Creator Strategy.pdf` (53 pp) | §5.1-5.2, §6.8, §8.4 (Hirarki Konten), Idea Framework (in `kadev-script-formulas.md`) |
+| `04 - Content Creator Strategy.pdf` (53 pp) | §5.1-5.2, §6.8, §8.4 (Hirarki Konten), Idea Framework (in `academy-script-formulas.md`) |
 | `06 - Content Creator Blueprint.pdf` (8 pp) | §6.8, §10.6, audience/competitor analysis |
-| `03 - Content Cheat (Hook Writing).pdf` (9 pp) | all 20 hooks → `kadev-script-formulas.md` |
+| `03 - Content Cheat (Hook Writing).pdf` (9 pp) | all 20 hooks → `academy-script-formulas.md` |
 | 37 lesson video filenames | §0 chapter ordering and topic list |
 
-**Not extracted:** the lesson videos' spoken content. No transcription backend was available in this session (`GROQ_API_KEY` unset, `faster-whisper` not installed), so the videos contributed their titles and ordering only. The slides and PDFs are the author's own written version of the same lessons, and the slide deck is the more complete of the two — but **if a future session gets a transcription key, re-run over `E:\Download\kadev academy\*.mp4` and reconcile.** Two live-mentoring recordings in that folder (`22 Juli 2026 — Topik Format Winning`, `27 Agustus 2026 — Formula Script Viral & Jualan`) are the highest-value un-mined assets.
+**Not extracted:** the lesson videos' spoken content. No transcription backend was available in this session (`GROQ_API_KEY` unset, `faster-whisper` not installed), so the videos contributed their titles and ordering only. The slides and PDFs are the author's own written version of the same lessons, and the slide deck is the more complete of the two — but **if a future session gets a transcription key, re-run over `the SpliceCraft Academy course folder\*.mp4` and reconcile.** Two live-mentoring recordings in that folder (`22 Juli 2026 — Topik Format Winning`, `27 Agustus 2026 — Formula Script Viral & Jualan`) are the highest-value un-mined assets.

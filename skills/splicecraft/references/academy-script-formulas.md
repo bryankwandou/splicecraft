@@ -1,10 +1,10 @@
-# Script formulas: hooks, structure, and idea generation (Kadev method)
+# Script formulas: hooks, structure, and idea generation (SpliceCraft Academy method)
 
 > **Published:** 2026-09-23 · **Last reviewed:** 2026-09-23
 > **Source:** `03 - Content Cheat (Hook Writing).pdf`, `04 - Content Creator Strategy.pdf`, `02 - Personal Branding Mengubahmu eBook.pdf`, and the *Viral-Writing* / *Content-Writing* / *Bikin Orang Gak Bisa Move On* slide chapters. Extracted 2026-09-23.
 > **Editable:** `<!-- journal -->` comments mark provenance and known gaps. See `../JOURNAL.md`.
 
-This is the execution layer. The theory it depends on is in `kadev-personal-branding.md` — especially **Premis** (§2.4), **superniche** (§6.2), and the **4K Method** (§6.6). The quality gate that rejects the output is `anti-ai-ish.md`.
+This is the execution layer. The theory it depends on is in `academy-personal-branding.md` — especially **Premis** (§2.4), **superniche** (§6.2), and the **4K Method** (§6.6). The quality gate that rejects the output is `anti-ai-ish.md`.
 
 Language note: everything here is written for **Indonesian-language scripts**. The phrasing is deliberately casual-Indonesian (*gue/aku*, *banget*, *nih*, *deh*) because that is the register of the source material and of the market. Do not translate the templates into formal Indonesian — that alone makes a script read as machine-written. For English scripts use `script-and-marketing.md` instead.
 
@@ -18,7 +18,7 @@ The slides are explicit about this, and it is the single most important correcti
 > Hook → Body → Call to Action (CTA) ❌
 > **"Jangan gunakan ini doang, tapi…"**
 
-Hook/Body/CTA is not *wrong*. It is not *enough*. It is a skeleton with no meat, and a skeleton is exactly what an LLM produces when you ask it for a script. The Kadev method layers two things on top:
+Hook/Body/CTA is not *wrong*. It is not *enough*. It is a skeleton with no meat, and a skeleton is exactly what an LLM produces when you ask it for a script. The SpliceCraft Academy method layers two things on top:
 
 ```
         ┌─────────────────────────────────────────┐
@@ -42,7 +42,7 @@ A script that has all three is hard to tell from a human's. A script with only t
 
 From the *Viral-Writing* slide. These are **elements**, not steps — they can appear in any order, but a viral-shaped script has all six.
 
-| # | Element | What it is | Kadev's own example line |
+| # | Element | What it is | The founder's own example line |
 |---|---|---|---|
 | 1 | **Pain Point** | the specific frustration of a specific person | *"Anak desa tanpa privilege tapi pengen sukses"* |
 | 2 | **Spesific Number** | a real, odd, countable number — not "beberapa" | *"3 Cara untuk melawan keterbatasan"* |
@@ -57,7 +57,7 @@ Each one blocks a distinct failure:
 
 | Element | Failure it prevents |
 |---|---|
-| Pain Point | writing to "everyone" — see superniche, `kadev-personal-branding.md` §6.2 |
+| Pain Point | writing to "everyone" — see superniche, `academy-personal-branding.md` §6.2 |
 | Spesific Number | vagueness; also gives the SpliceCraft planner a count-up card to animate |
 | Promise of transformation | a video that informs but does not move anyone |
 | Urgency Action | a video people enjoy and then do nothing about |
@@ -132,7 +132,7 @@ From `03 - Content Cheat (Hook Writing).pdf`. The author's framing:
 > Yes, kuncinya adalah **HOOK** alias kata-kata pancingan **3 detik pertama** video kamu.
 > Aku udah analisis ratusan kreator viral dan ribuan video rame. Ini 20 daftar HOOK yang sering mereka pakai.
 
-Reproduce these as **templates with the brackets filled from the 4K Method** (`kadev-personal-branding.md` §6.6). The bracket names below tell you which 4K bucket to draw from.
+Reproduce these as **templates with the brackets filled from the 4K Method** (`academy-personal-branding.md` §6.6). The bracket names below tell you which 4K bucket to draw from.
 
 | # | Template | Contoh |
 |---|---|---|
@@ -167,7 +167,7 @@ Reproduce these as **templates with the brackets filled from the 4K Method** (`k
 
 ### 4.2 Hook + first frame
 
-The hook is spoken *and* written. `kadev-personal-branding.md` §7.1: the viewer gives you **8 seconds**, and the slide on Feeds says the cover must be *catchy — pakai judul yang bikin penasaran*. SpliceCraft renders the hook as an on-screen title card at level 21+; make sure the card text is the hook, not a summary of the video.
+The hook is spoken *and* written. `academy-personal-branding.md` §7.1: the viewer gives you **8 seconds**, and the slide on Feeds says the cover must be *catchy — pakai judul yang bikin penasaran*. SpliceCraft renders the hook as an on-screen title card at level 21+; make sure the card text is the hook, not a summary of the video.
 
 ---
 
@@ -266,7 +266,7 @@ Buat daftar 100 ide konten yang jelas, actionable, dan mudah dipahami."
 
 **Riset Tren dan Topik Populer** · **Analisis Kompetitor** (*ambil inspirasi, ciptakan konten yang lebih baik atau sudut pandang berbeda*) · **Feedback dari Audiens** (polling, Q&A, komentar) · **Gunakan Kalender Konten** · **Personal Experience** (*audiens cenderung lebih tertarik dengan cerita nyata yang otentik*).
 
-And the four Knowledge Gap methods from `kadev-personal-branding.md` §12.1 — Data analytics / People Problem / Competitor Benchmark / Self Experience — are idea sources too, and better ones, because they start from a gap rather than from a topic.
+And the four Knowledge Gap methods from `academy-personal-branding.md` §12.1 — Data analytics / People Problem / Competitor Benchmark / Self Experience — are idea sources too, and better ones, because they start from a gap rather than from a topic.
 
 ---
 
@@ -281,7 +281,7 @@ Pick the pillar first; it determines the register before you touch a hook.
 | **Entertaining / Interaction** | Lebih dekat dan manusiawi | short, one idea, question CTA | #5, #8, #15 |
 | **Promotion** | Penjualan | problem → proof → offer | #1, #9, #10, #16, #20 |
 
-Ratio reminder: **80 / 15 / 5** (superniche / adjacent / personal life) — `kadev-personal-branding.md` §6.4. The ledger tracks pillar balance so the agent can tell a user *"the last nine scripts were all Educate; you are due a Story."*
+Ratio reminder: **80 / 15 / 5** (superniche / adjacent / personal life) — `academy-personal-branding.md` §6.4. The ledger tracks pillar balance so the agent can tell a user *"the last nine scripts were all Educate; you are due a Story."*
 
 ---
 

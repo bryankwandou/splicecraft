@@ -1,7 +1,7 @@
 # Viral edit teardown: what 82 reference videos actually do
 
 > **Published:** 2026-09-23 · **Last reviewed:** 2026-09-23
-> **Corpus:** all 82 `.mp4` files in `E:\Download\CONTOH INSPIRASI TEKNIK NGOTEN DAN EDITING VIDEO` — reference videos the user collected as examples of viral, well-made Indonesian short-form content. Creators: `bahasvideo`, `fitrisitisalma`, and `kadafidevayana` (the bulk).
+> **Corpus:** all 82 `.mp4` files in `E:\Download\CONTOH INSPIRASI TEKNIK NGOTEN DAN EDITING VIDEO` — reference videos the user collected as examples of viral, well-made Indonesian short-form content. Creators: `bahasvideo`, `fitrisitisalma`, and `the academy founder's account` (the bulk).
 > **Editable:** every number here is reproducible with the commands in §1. If you re-measure, update the numbers *and* the date.
 
 ## Why this file exists, and an honest note on method
@@ -63,7 +63,7 @@ Downscaling to 160 px wide before scene detection makes the pass fast and does n
 
 Two clusters — a quick hit at 20-30 s and a full story at 60-90 s — with a visible dip at 30-60 s between them.
 
-**What follows:** pick which of the two jobs you are doing before you write. Landing at 50 s is usually what happens when nobody decided. See `kadev-script-formulas.md` §8 for the matching word budgets.
+**What follows:** pick which of the two jobs you are doing before you write. Landing at 50 s is usually what happens when nobody decided. See `academy-script-formulas.md` §8 for the matching word budgets.
 
 ---
 
@@ -142,7 +142,7 @@ In absolute terms: first shot **2.22 s** median, against a typical shot of **1.3
 **What follows for the edit:**
 1. Give the hook shot roughly **1.5× your typical shot length**. Do not cut into it to seem energetic.
 2. Something should still *change* early — a zoom, a card, a movement. Held is not the same as static.
-3. The hook is spoken **and** on screen simultaneously. Many viewers start muted, and 8 seconds is the whole budget (`kadev-personal-branding.md` §7.1).
+3. The hook is spoken **and** on screen simultaneously. Many viewers start muted, and 8 seconds is the whole budget (`academy-personal-branding.md` §7.1).
 4. No logo animation, no intro card. The corpus has none.
 
 ---
@@ -173,7 +173,7 @@ In absolute terms: last shot **3.16 s** median, against a typical shot of **1.32
 **What follows for the edit:**
 1. Give the closing line its own shot and **hold it ~2.4× your typical shot length** — around 3 seconds in a fast edit.
 2. Stop cutting entirely for the last ~3 s. No flourish, no rapid montage over the CTA.
-3. That held shot is where the Storytelling Hack's beat ⑤ lands — the line that reverses the opening (`kadev-script-formulas.md` §3). It needs room to be heard, because it is what makes the video loop.
+3. That held shot is where the Storytelling Hack's beat ⑤ lands — the line that reverses the opening (`academy-script-formulas.md` §3). It needs room to be heard, because it is what makes the video loop.
 
 ### The shape, in one line
 
@@ -206,7 +206,7 @@ Be honest with users about the boundary. The following were **not** measured and
 - **Captions** — style, position, karaoke timing, font. Not detectable from scene cuts.
 - **Zooms, speed ramps, transitions** — invisible to scene detection. The claim in `anti-ai-ish.md` §C4 that "cuts are hard cuts and flashy transitions appear at topic changes" is **inference from the ASL distribution, not measurement.** Flagged as such there.
 - **Colour, grading, lighting** — most files are re-compressed 540×960; no valid conclusions available.
-- **What is actually said** — no transcripts. Everything about script content comes from the Kadev course material, not from these videos.
+- **What is actually said** — no transcripts. Everything about script content comes from the founder course material, not from these videos.
 - **Whether these videos actually performed well.** They are in a folder the user labelled as inspiring and viral. No view counts, no engagement data. Treat the corpus as "what this creator considers good", which is a real signal, not as verified top performers.
 
 ---
@@ -228,7 +228,7 @@ Wired into `SKILL.md` Step 4 (mode choice) and `anti-ai-ish.md` §C (the gate).
 
 ## 9. What they *say*: openings and closings from the transcripts
 
-§§2–8 measure the cutting. This section measures the words. All 80 reference videos were transcribed (faster-whisper `small`, `transcripts/reference/`). **76** have enough speech to count, i.e. 15+ words. Almost all are Kadafi Devayana's own shorts, so this describes **one successful creator's spoken grammar**, not Indonesian short-form in general. Median script length is **112 words** (p25 61, p75 200).
+§§2–8 measure the cutting. This section measures the words. All 80 reference videos were transcribed (faster-whisper `small`, `transcripts/reference/`). **76** have enough speech to count, i.e. 15+ words. Almost all are the SpliceCraft Academy founder's own shorts, so this describes **one successful creator's spoken grammar**, not Indonesian short-form in general. Median script length is **112 words** (p25 61, p75 200).
 
 ### 9.1 Counts
 
@@ -272,7 +272,7 @@ What's absent is as useful as what's there: no greeting, no *"pernahkah kamu"*, 
 The corpus shows a stable two-part close:
 
 1. **One engagement move**, which is the real CTA. Either a comment keyword that triggers a DM freebie (*"Ketik SOUND, nanti aku kirim list lengkapnya lewat DM"*) or a question with two defensible answers (*"Viral dulu atau cuan dulu? Yuk diskusi di komen."*, *"Sepakat gak?"*).
-2. **A fixed brand tagline**, the same words in every video: *"Repost kalau bermanfaat, dan follow untuk tips personal branding dan konten lainnya."* Sometimes it's an identity line instead: *"Aku Kadafi Devayana, teman kamu buat upgrade konten dan personal branding tiap hari."*
+2. **A fixed brand tagline**, the same words in every video: *"Repost kalau bermanfaat, dan follow untuk tips personal branding dan konten lainnya."* Sometimes it's an identity line instead: *"Aku the SpliceCraft Academy founder, teman kamu buat upgrade konten dan personal branding tiap hari."*
 
 Part 2 has two asks (repost and follow), but it doesn't work as a stack of CTAs. It's a **signature**, recognisable because it never changes, and it tells the viewer the topic to follow for. The fault `anti-ai-ish.md` §B5 names (*"like, comment, share, save, dan follow!"*) is different: five **new** asks invented for this video, none of them tied to a topic.
 

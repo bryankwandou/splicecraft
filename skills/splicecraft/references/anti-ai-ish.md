@@ -7,7 +7,7 @@
 "AI-ish" is not a vibe. It is a short list of specific, nameable habits. Each one below is a habit, the reason it reads as machine-made, and the fix.
 
 Two sources feed this file:
-1. The course's own *"Contoh yang Salah"* and *"Yang Banyak Orang Lakukan"* slides (`kadev-personal-branding.md` §9.3, §8.1).
+1. The course's own *"Contoh yang Salah"* and *"Yang Banyak Orang Lakukan"* slides (`academy-personal-branding.md` §9.3, §8.1).
 2. **Measurement of 82 real, well-performing reference videos** in `E:\Download\CONTOH INSPIRASI TEKNIK NGOTEN DAN EDITING VIDEO` — see `viral-edit-teardown.md` for the full numbers.
 
 ---
@@ -66,7 +66,7 @@ The source material is written in casual Indonesian and so is the market. Formal
 
 Exception: a B2B or LinkedIn brief may legitimately want formal register. The brief decides. The *default* is spoken.
 
-**"Kalian" → "kamu" / "kita".** Kadev's rule for spoken scripts (`kadev-live-mentoring.md` §8.2): *kalian* sounds like a teacher addressing a class, and a Gen Z viewer feels judged. Speak to one person. *Kalian* is acceptable only when an older speaker deliberately addresses a younger group.
+**"Kalian" → "kamu" / "kita".** the founder's rule for spoken scripts (`academy-live-mentoring.md` §8.2): *kalian* sounds like a teacher addressing a class, and a Gen Z viewer feels judged. Speak to one person. *Kalian* is acceptable only when an older speaker deliberately addresses a younger group.
 
 ### B4. LLM sentence architecture
 
@@ -222,7 +222,7 @@ The failure: an AI asked for "content ideas about personal branding" produces th
 
 > **Niche bukan topik, tapi siapa secara spesifik.**
 
-A script addressed to "content creators" is AI-ish. A script addressed to *"editor pemula yang baru pake CapCut dan videonya masih sepi"* is not. The 4K Method (`kadev-personal-branding.md` §6.6) exists to produce that sentence.
+A script addressed to "content creators" is AI-ish. A script addressed to *"editor pemula yang baru pake CapCut dan videonya masih sepi"* is not. The 4K Method (`academy-personal-branding.md` §6.6) exists to produce that sentence.
 
 ### D3. Pillar monoculture
 

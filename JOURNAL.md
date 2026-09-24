@@ -9,13 +9,13 @@ Newest entry first.
 ## 2026-09-24: all videos transcribed; mentoring layer added; spoken-grammar measured
 
 ### Transcription (open item 1 from 2026-09-23, closed)
-- **Kadev folder:** 49 video files, 4 of them byte-identical duplicates, so **45 unique**, and all 45 are transcribed. The 38 lessons and short videos ran locally (faster-whisper `small`, int8, CPU). The 7 long VIP mentoring recordings (1h40–2h15 each) went to **Groq whisper-large-v3**. Each one took 2–4 minutes on Groq, against 1–5 hours locally.
+- **Academy course folder:** 49 video files, 4 of them byte-identical duplicates, so **45 unique**, and all 45 are transcribed. The 38 lessons and short videos ran locally (faster-whisper `small`, int8, CPU). The 7 long VIP mentoring recordings (1h40–2h15 each) went to **Groq whisper-large-v3**. Each one took 2–4 minutes on Groq, against 1–5 hours locally.
 - **Reference folder:** 80 of 82 transcribed. 76 have 15+ words of speech. The rest are music-only.
 - `tools/transcribe_groq.py` now cuts audio into **20-minute chunks** before upload, because Groq rejects files over 25 MB and a 2-hour mp3 at 32 kbps is about 29 MB. Segment timestamps are offset per chunk. It needs `GROQ_API_KEY` set in the environment. The key is never written to the repo.
 - Two local workers had been started on the same folder by accident. One was killed.
 - Local faster-whisper **looped for hours** on two lessons, `(3.2 6)` at 19,967 s and `(4 2) (1)` at 14,072 s, even with the time-budget guard. The guard checks elapsed time between segments, not inside a hung segment. For long files, use Groq.
 
-### New: `references/kadev-live-mentoring.md` (~580 lines)
+### New: `references/academy-live-mentoring.md` (~580 lines)
 It's built from transcripts, not slides, and has 14 sections: the 16 formats, PAS + Storytelling Arc with worked sales scripts, a table of 14 real account diagnoses, attention economy / six emotions / thesis+arguments / outer-inner circle, TOFU-MOFU-BOFU and test→win→replicate, Trial Reels and Link Reels, "the niche is you" plus six income streams, the Art of Yapping, lesson-only additions (success vs failure, LinkedIn, the CapCut order), Rich's 10k-in-3-weeks experiment, business branding and archetypes, networking, the anatomy of a viral format (with an SFX map), and agent rules. The provenance table maps each section to its recording.
 
 **Tensions recorded, not hidden:**
@@ -31,7 +31,7 @@ The skill measured how the 82 references **cut**, but not what they **say**. Now
 - The close has two parts: **one** engagement move (26% comment keyword → DM, 22% question), then a **fixed brand tagline** (46% ask for a follow, 37% for a repost).
 - Caveat stated in the file: this corpus is essentially one creator's style.
 
-**This contradicted the site checker**, which flagged any script with 2+ distinct CTA words, so Kadev's own sign-off failed it. The checker now counts *engagement moves* (keyword→DM, question, save, tag-a-friend) and flags 2+ moves or 4+ CTA words. `anti-ai-ish.md` §B5 got the same refinement.
+**This contradicted the site checker**, which flagged any script with 2+ distinct CTA words, so the founder's own sign-off failed it. The checker now counts *engagement moves* (keyword→DM, question, save, tag-a-friend) and flags 2+ moves or 4+ CTA words. `anti-ai-ish.md` §B5 got the same refinement.
 
 ### New rules wired in
 - `anti-ai-ish.md` §B3: **"kalian" → "kamu/kita"** (Art of Yapping: Gen Z hears *kalian* as being lectured). Also added to the site checker, along with a *welcome back / izinin aku* rule.
@@ -45,12 +45,12 @@ The skill measured how the 82 references **cut**, but not what they **say**. Now
 - Playwright against a local server: tells 8 → 0 on the human sample, ledger 90/33/0%, 6 hack cards, range slider, Indonesian toggle, no horizontal scroll at 375 px, no JS errors.
 
 ### Not done, and why
-- **Nothing was pushed or deployed this session.** The course folder contains `Copyright - Hak Cipta © 2025 Kadev Academy.docx`: *"Dilarang keras untuk menduplikasi, mendistribusikan… Produk ini hanya untuk penggunaan pribadi pembeli yang sah."* The GitHub repo is **public**, and commit `ad2b9f3` already published `site/MEGA-SKILL.md` with the Kadev extracts, served at splicecraft.vercel.app/MEGA-SKILL.md. Publishing more of it needs the owner's decision. Options are listed in the chat record for 2026-09-24.
-- **Later the same day:** all 34 lesson transcripts were read end to end. Lesson 5.5 had failed locally (54 words) and was re-transcribed on Groq (667 words). Everything the lessons add beyond the slides is in `kadev-live-mentoring.md` §9.5–9.11, chapter by chapter. Most lessons narrate the slides almost word for word. The additions are worked examples, Kadev's own numbers and cautionary stories, the LinkedIn mechanics, the Canva cover recipe, and the product-research method.
+- **Nothing was pushed or deployed this session.** The course folder contains `Copyright - Hak Cipta © 2025 SpliceCraft Academy.docx`: *"Dilarang keras untuk menduplikasi, mendistribusikan… Produk ini hanya untuk penggunaan pribadi pembeli yang sah."* The GitHub repo is **public**, and commit `ad2b9f3` already published `site/MEGA-SKILL.md` with the founder extracts, served at splicecraft.vercel.app/MEGA-SKILL.md. Publishing more of it needs the owner's decision. Options are listed in the chat record for 2026-09-24.
+- **Later the same day:** all 34 lesson transcripts were read end to end. Lesson 5.5 had failed locally (54 words) and was re-transcribed on Groq (667 words). Everything the lessons add beyond the slides is in `academy-live-mentoring.md` §9.5–9.11, chapter by chapter. Most lessons narrate the slides almost word for word. The additions are worked examples, the founder's own numbers and cautionary stories, the LinkedIn mechanics, the Canva cover recipe, and the product-research method.
 - The ledger thresholds still haven't been tuned against a real 50+ entry ledger.
 
 ### Open items
-1. Owner decision on public vs private for the Kadev-derived material (see above).
+1. Owner decision on public vs private for the founder-derived material (see above).
 2. Tune `WARN_AT`/`BLOCK_AT` against a real ledger.
 3. Wire `ledger check` into `splicecraft.py script` so an agent can't skip it.
 4. Series awareness in `ledger check`: currently a planned part 2 is flagged like a repeat.
@@ -79,7 +79,7 @@ Fix: `theme_coverage()` in `ledger.py` — the stored entry's theme tags are mat
 ### Doc fixes from the critiques
 - SKILL.md 0.5a: always pass `--theme` on `check`; a blocked idea is still logged `--status idea` (Sonnet found this only in a different section).
 - SKILL.md Step 4: the 1.58×/2.42× ratios are for cut-driven mode; do not add cuts to a talking head to manufacture the shape (Haiku's error).
-- kadev-personal-branding.md: jump table at the top so small models read one section, not 1,000 lines (Sonnet's cost complaint).
+- academy-personal-branding.md: jump table at the top so small models read one section, not 1,000 lines (Sonnet's cost complaint).
 
 ### Not fixed, noted
 - Step 1's genre detection needs a transcript before the transcription step (Sonnet: circular for small models).
@@ -90,13 +90,13 @@ The main gap from the entry below is being closed offline: `tools/transcribe_loc
 
 ---
 
-## 2026-09-23 — Kadev Academy extraction, anti-AI-ish gate, content ledger
+## 2026-09-23 — SpliceCraft Academy extraction, anti-AI-ish gate, content ledger
 
 ### What was asked
 
 Four things:
-1. Extract *all* of `E:\Download\kadev academy` into executable skill documentation, with complete personal-branding theory.
-2. Also extract `E:\Download\SLIDE PPT KADEV` — noted by the user as containing the more complete core material than the videos.
+1. Extract *all* of `the SpliceCraft Academy course folder` into executable skill documentation, with complete personal-branding theory.
+2. Also extract `the SpliceCraft Academy slide folder` — noted by the user as containing the more complete core material than the videos.
 3. Learn editing, opening and closing technique from `E:\Download\CONTOH INSPIRASI TEKNIK NGOTEN DAN EDITING VIDEO`, so community users stop reporting that scripts and edits feel AI-ish.
 4. Give SpliceCraft a persistent local memory of scripts, niches and themes already produced, so the AI stops repeating itself.
 
@@ -104,8 +104,8 @@ Four things:
 
 | File | What it is |
 |---|---|
-| `references/kadev-personal-branding.md` | the full theory: 6-chapter curriculum, Ikigai, Johari, SWOT→Premis→PMF, Perception/Persona, Circle of Control, Golden Circle, Opportunity Mapping, superniche, 80/15/5, Perfect Niche, 4K Method, Sweet Spot, First Impression, Brand Pillar, Hirarki Konten, documentation, survival, evaluation, monetisation, PING, LinkedIn |
-| `references/kadev-script-formulas.md` | 20 hooks, 6 Script Hack Elements, Storytelling Hack, Hook/Body/CTA, Content Idea Framework, length budgets, writing pass |
+| `references/academy-personal-branding.md` | the full theory: 6-chapter curriculum, Ikigai, Johari, SWOT→Premis→PMF, Perception/Persona, Circle of Control, Golden Circle, Opportunity Mapping, superniche, 80/15/5, Perfect Niche, 4K Method, Sweet Spot, First Impression, Brand Pillar, Hirarki Konten, documentation, survival, evaluation, monetisation, PING, LinkedIn |
+| `references/academy-script-formulas.md` | 20 hooks, 6 Script Hack Elements, Storytelling Hack, Hook/Body/CTA, Content Idea Framework, length budgets, writing pass |
 | `references/anti-ai-ish.md` | the rejection list and the delivery gate |
 | `references/viral-edit-teardown.md` | measurements from all 82 reference videos |
 | `references/content-memory.md` | how the ledger works |
@@ -116,20 +116,20 @@ Four things:
 
 ### What was actually extracted, and what was not
 
-**Fully extracted.** All 64 slide screens in `SLIDE PPT KADEV`, read individually. Each screen holds roughly 6 slides, so this is on the order of 380 slides. This was the highest-yield source by a wide margin and the user was right that it is more complete than the videos — several core frameworks (**Premis / Personal Market Fit**, the **4K Method**, the **6 Script Hack Elements**, **80/15/5**, **Perfect Niche**, **Money Making Potential**, the **superniche ladder**) appear *only* in the slides and in none of the PDFs.
+**Fully extracted.** All 64 slide screens in `SpliceCraft Academy slides`, read individually. Each screen holds roughly 6 slides, so this is on the order of 380 slides. This was the highest-yield source by a wide margin and the user was right that it is more complete than the videos — several core frameworks (**Premis / Personal Market Fit**, the **4K Method**, the **6 Script Hack Elements**, **80/15/5**, **Perfect Niche**, **Money Making Potential**, the **superniche ladder**) appear *only* in the slides and in none of the PDFs.
 
-**Fully extracted.** The text-bearing PDFs in `kadev academy`:
+**Fully extracted.** The text-bearing PDFs in the SpliceCraft Academy course folder:
 - `02 - Personal Branding Mengubahmu eBook.pdf` — 100 pp
 - `04 - Content Creator Strategy.pdf` — 53 pp
 - `03 - Content Cheat (Hook Writing).pdf` — 9 pp, all 20 hooks verbatim
 - `06 - Content Creator Blueprint.pdf` — 8 pp
 - plus the CV / cover-letter / student-leadership PDFs, which are out of scope for a video skill and were read but not incorporated
 
-**Not extracted — and this is the main gap.** The 37 lesson videos and 2 live-mentoring recordings in `kadev academy` contributed only their filenames, which fixed the chapter ordering. No transcription backend was available: `GROQ_API_KEY` was unset and `faster-whisper` was not installed. The slides and PDFs are the author's own written version of the same lessons, so the loss is smaller than it looks, but it is real.
+**Not extracted — and this is the main gap.** The 37 lesson videos and 2 live-mentoring recordings in the SpliceCraft Academy course folder contributed only their filenames, which fixed the chapter ordering. No transcription backend was available: `GROQ_API_KEY` was unset and `faster-whisper` was not installed. The slides and PDFs are the author's own written version of the same lessons, so the loss is smaller than it looks, but it is real.
 
-> **Next session, if a transcription key exists:** run over `E:\Download\kadev academy\*.mp4`. Prioritise the two live-mentoring files — `22 Juli 2026 - Topik Format Winning` and `27 Agustus 2026 - Formula Script Viral & Jualan` — because their titles suggest material that is in neither the slides nor the PDFs. Then reconcile against `kadev-personal-branding.md` and `kadev-script-formulas.md`.
+> **Next session, if a transcription key exists:** run over `the SpliceCraft Academy course folder\*.mp4`. Prioritise the two live-mentoring files — `22 Juli 2026 - Topik Format Winning` and `27 Agustus 2026 - Formula Script Viral & Jualan` — because their titles suggest material that is in neither the slides nor the PDFs. Then reconcile against `academy-personal-branding.md` and `academy-script-formulas.md`.
 
-**Four PDFs are link-only landing pages** with no content: `01 - Viral Script Generator`, `05 - 100+ Template Portfolio`, `07 - Personal Branding Builder V1`, `08 - Linkedin Post Generator`. Each is a cover plus a "Klik Disini" link to kadevacademy.com. Nothing was lost by not following the links, but note that the *Viral Script Generator* behind that link is likely a real tool worth looking at.
+**Four PDFs are link-only landing pages** with no content: `01 - Viral Script Generator`, `05 - 100+ Template Portfolio`, `07 - Personal Branding Builder V1`, `08 - Linkedin Post Generator`. Each is a cover plus a "Klik Disini" link to splicecraftacademy.com. Nothing was lost by not following the links, but note that the *Viral Script Generator* behind that link is likely a real tool worth looking at.
 
 ### The reference videos were measured, not watched
 
@@ -165,15 +165,15 @@ Worth recording plainly: the wrong versions were written from general convention
 
 ### Decisions worth recording
 
-**The theory file is long and stays long.** `kadev-personal-branding.md` is ~1,100 lines. The temptation is to compress it into a cheat sheet. Resisted: the user asked for *selengkap mungkin*, and the premis examples in §2.4 in particular lose their usefulness when paraphrased — their value is in the exact shape of the sentences. If it ever must be trimmed, cut §13.3 (LinkedIn) first; it is the least relevant to video.
+**The theory file is long and stays long.** `academy-personal-branding.md` is ~1,100 lines. The temptation is to compress it into a cheat sheet. Resisted: the user asked for *selengkap mungkin*, and the premis examples in §2.4 in particular lose their usefulness when paraphrased — their value is in the exact shape of the sentences. If it ever must be trimmed, cut §13.3 (LinkedIn) first; it is the least relevant to video.
 
-**Indonesian was kept verbatim.** Hooks, premis examples, 4K sweet spots and quotes are reproduced in the original casual Indonesian. Translating them into formal Indonesian or English would destroy the register, and register is half of what makes a script not read as machine-written. This is stated explicitly at the top of `kadev-script-formulas.md`.
+**Indonesian was kept verbatim.** Hooks, premis examples, 4K sweet spots and quotes are reproduced in the original casual Indonesian. Translating them into formal Indonesian or English would destroy the register, and register is half of what makes a script not read as machine-written. This is stated explicitly at the top of `academy-script-formulas.md`.
 
 **Hook/Body/CTA was demoted, not deleted.** One slide marks it with a red ❌ and says *"jangan gunakan ini doang"* — "don't use only this". It is a necessary skeleton, not a sufficient structure. The two frameworks layered on top are the 6 Script Hack Elements (what must be present) and the Storytelling Hack (what order it moves in).
 
 **Element 5 — Personal Opinion / Story — was promoted to the top rule.** It is the only one of the six an LLM cannot supply, because it requires having lived something. `anti-ai-ish.md` §A makes it rule zero, and `SKILL.md` makes "stop and ask rather than invent a story" a hard rule. This is the single highest-leverage change in the delivery.
 
-**The beat→element mapping table is inference, not source.** The two frameworks appear on adjacent slides and one slide shows both diagrams stacked, so they are clearly meant to be used together — but the explicit mapping and the second-column timings in `kadev-script-formulas.md` §3.2 are mine. Flagged inline so a future editor does not mistake it for the author's.
+**The beat→element mapping table is inference, not source.** The two frameworks appear on adjacent slides and one slide shows both diagrams stacked, so they are clearly meant to be used together — but the explicit mapping and the second-column timings in `academy-script-formulas.md` §3.2 are mine. Flagged inline so a future editor does not mistake it for the author's.
 
 **The ledger is stdlib-only and offline.** Matches the existing `splicecraft.py` constraint. The cost is that similarity is lexical, not semantic: *"cara berhenti menunda pekerjaan"* and *"stop prokrastinasi"* mean the same thing and share no tokens. The `--theme` tags bridge this, which is why `SKILL.md` tells the agent to always pass themes. An embedding check would fix it properly and is the first thing to upgrade if the offline constraint is ever relaxed.
 
@@ -218,13 +218,13 @@ Fixed with an `EDITABLE_FIELDS` allowlist that rejects unknown keys and names th
 
 ### One more change: bundle ordering
 
-`tools/build_mega.py` auto-appends any reference not listed in `ORDER`, so the five new files would have landed at the very end, after the codec notes. Moved them to the front of `ORDER` instead — `anti-ai-ish.md` first, then the two Kadev files, the teardown, and the ledger guide. A reader who stops partway through the bundle should have read the layer that decides whether the script is any good, not the troubleshooting appendix.
+`tools/build_mega.py` auto-appends any reference not listed in `ORDER`, so the five new files would have landed at the very end, after the codec notes. Moved them to the front of `ORDER` instead — `anti-ai-ish.md` first, then the two the founder files, the teardown, and the ledger guide. A reader who stops partway through the bundle should have read the layer that decides whether the script is any good, not the troubleshooting appendix.
 
 ### Not verified
 
 - The ledger has never been run against a real ledger with 50+ entries. `WARN_AT = 0.45` and `BLOCK_AT = 0.62` are hand-set against three constructed cases. Both constants sit at the top of `ledger.py` and are meant to be edited once real data exists.
 - No end-to-end run of the full pipeline (brief → script → film → edit → QA → ledger) was performed this session; the existing `splicecraft.py` was not modified and its own tests were not re-run.
-- The `74% / 63% / 62%` statistics quoted on one Kadev slide have **no named source on the slide**. Flagged in `kadev-personal-branding.md` §1.4 as the weakest claim in the file. Do not present them to a user as sourced fact.
+- The `74% / 63% / 62%` statistics quoted on one course slide have **no named source on the slide**. Flagged in `academy-personal-branding.md` §1.4 as the weakest claim in the file. Do not present them to a user as sourced fact.
 
 ### Open items, roughly in priority order
 

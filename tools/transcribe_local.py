@@ -28,7 +28,7 @@ for f in sorted(files):
     seen.add(sz); uniq.append(f)
 if a.order == "size":
     uniq.sort(key=os.path.getsize)
-PROMPT = ("Kadev Academy, Kadafi Devayana, personal branding, konten, content creator, hook, CTA, "
+PROMPT = ("SpliceCraft Academy, the SpliceCraft Academy founder, personal branding, konten, content creator, hook, CTA, "
           "TikTok, Instagram, Reels, LinkedIn, superniche, premis, storytelling, algoritma, followers, engagement.")
 model = WhisperModel(a.model, device="cpu", compute_type="int8", cpu_threads=os.cpu_count())
 for f in uniq:
