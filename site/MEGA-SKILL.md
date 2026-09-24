@@ -1,31 +1,36 @@
 ---
 name: splicecraft
-description: Edit a raw talking-head or face-to-camera video into a finished short with word-synced captions, animated info cards, punch-in zooms, a color grade, chroma key, music with ducking, and sound effects. Use when the user gives a video file and asks to "edit this video", "add subtitles/captions", "make it look professional", "add music", "make it cinematic", "remove the green screen", "turn this into a reel/short/TikTok", or wants an edit at a chosen intensity from 1 to 100. Runs locally with ffmpeg and Python; no paid editor needed.
+description: Edit a raw talking-head or face-to-camera video into a finished short with word-synced captions, animated info cards, punch-in zooms, a color grade, chroma key, music with ducking, and sound effects — and write the script and personal-branding strategy behind it. Use when the user gives a video file and asks to "edit this video", "add subtitles/captions", "make it look professional", "add music", "make it cinematic", "remove the green screen", "turn this into a reel/short/TikTok", or wants an edit at a chosen intensity from 1 to 100. Also use when the user asks for a content script, a hook, a content plan, a niche, or personal branding strategy, or complains that a script or edit "feels AI" / "masih AI-ish". Keeps a local ledger of everything already made so it never repeats a theme. Runs locally with ffmpeg and Python; no paid editor needed.
 license: MIT
 ---
 
-> **MEGA-SKILL.md** · SKILL.md + 14 references + presets in one file.
-> **Published:** 2026-09-15 · built from commit `3f5ced9` · rebuild with `python tools/build_mega.py`, never edit by hand.
+> **MEGA-SKILL.md** · SKILL.md + 19 references + presets in one file.
+> **Published:** 2026-09-23 · built from commit `fe50513` · rebuild with `python tools/build_mega.py`, never edit by hand.
 > **Agent check:** compare the published date with today. If more than 6 months have passed, re-research platform algorithms, lengths, safe zones, demographics and model names on the web before relying on them, tell the user what changed, and update the source files.
 
 ## Contents
 
 - Part 1. Main procedure (SKILL.md)
-- Part 2. script-and-marketing.md
-- Part 3. audience-and-market.md
-- Part 4. captions.md
-- Part 5. genres-and-variants.md
-- Part 6. music-guide.md
-- Part 7. beat-library.md
-- Part 8. edit-levels.md
-- Part 9. color-and-cinematic.md
-- Part 10. audio.md
-- Part 11. baseline-teardown.md
-- Part 12. design-secrets-glass.md
-- Part 13. edl-schema.md
-- Part 14. agent-prompts.md
-- Part 15. troubleshooting.md
-- Part 16. Presets (levels, styles, genres, music)
+- Part 2. anti-ai-ish.md
+- Part 3. kadev-personal-branding.md
+- Part 4. kadev-script-formulas.md
+- Part 5. viral-edit-teardown.md
+- Part 6. content-memory.md
+- Part 7. script-and-marketing.md
+- Part 8. audience-and-market.md
+- Part 9. captions.md
+- Part 10. genres-and-variants.md
+- Part 11. music-guide.md
+- Part 12. beat-library.md
+- Part 13. edit-levels.md
+- Part 14. color-and-cinematic.md
+- Part 15. audio.md
+- Part 16. baseline-teardown.md
+- Part 17. design-secrets-glass.md
+- Part 18. edl-schema.md
+- Part 19. agent-prompts.md
+- Part 20. troubleshooting.md
+- Part 21. Presets (levels, styles, genres, music)
 
 When this file says `references/<name>.md`, that section is included below under the same name.
 
@@ -33,8 +38,9 @@ When this file says `references/<name>.md`, that section is included below under
 
 # splicecraft
 
-> **Published:** 2026-09-15 · **Last reviewed:** 2026-09-15
+> **Published:** 2026-09-15 · **Last reviewed:** 2026-09-23
 > **Agent check:** compare this date with today. If more than 6 months have passed, or a platform, model, or tool named here has changed, research the current facts on the web before relying on them, tell the user what changed, and update this skill.
+> **Journal:** every design decision, measurement and known gap is recorded in `../../JOURNAL.md`. Read it before changing anything here.
 
 
 You are the editor. The user hands you a raw clip. You hand back a finished MP4 plus proof that it passed quality checks.
@@ -72,25 +78,85 @@ Set a variable for the script path so later commands are short. The skill folder
 
 ```bash
 SC="python <skill-folder>/scripts/splicecraft.py"
+LEDGER="python <skill-folder>/scripts/ledger.py"
+```
+
+Create the content ledger once per machine. It is the memory of everything this user has already made:
+
+```bash
+$LEDGER init
 ```
 
 ---
 
-## Step 0.5. Brief and script (when the video is not filmed yet, or the user wants strategy)
+## Step 0.5. Strategy and script (when the video is not filmed yet, or the user wants strategy)
 
-1. Write `brief.json` with the user: platform, market, age, stage, funnel, niche, and if relevant TAM/SAM/SOM, price, revenue target. Field list and effects: `references/audience-and-market.md`. Run `$SC brief brief.json` and show the checks and revenue math. Never present the placeholder conversion rates as facts.
-2. Generate the script skeleton: `$SC script "<topic>" --genre <genre> --seconds <n> --brief brief.json --language <en|id> -o script.md`.
-3. Fill the "Your line" column with the user. Use only facts the user confirms. Risky hooks only with a provable claim (`references/script-and-marketing.md`).
-4. Give the user the script, titles, description and hashtags. Then the video gets filmed and you continue at Step 1 with `--brief brief.json` on every plan.
+This step is where "AI-ish" is won or lost. A flat script cannot be rescued by editing.
 
-If the footage already exists, skip to Step 1 but still ask for the brief fields in question 1c.
+**0.5a — Check the ledger first. Always.**
+
+```bash
+$LEDGER check "<the topic the user proposed>" --theme <tag> --theme <tag>
+```
+
+| Result | What you do |
+|---|---|
+| exit 0, under 45% | write it |
+| exit 0, 45-61% | allowed, but **say out loud what is new about this one**. If you cannot name it, treat it as a repeat. |
+| **exit 2**, 62%+ | **do not write it.** Change the angle, the pillar, or the audience segment, and check again. |
+
+Two rules the table does not show, both learned from cold-agent tests on 2026-09-23:
+
+- **Always pass `--theme` on `check`**, using the same tags you would log. Two agents phrasing the same subject differently must still collide; tags are what make that happen.
+- **A blocked idea is still logged:** `$LEDGER add "<topic>" --status idea --theme ...`. A rejected idea is worth remembering, so it is not proposed again next week.
+
+Run `$LEDGER stats` and `$LEDGER suggest` at the start of any strategy conversation. They tell you which pillar is overdue, which hook templates are burnt out, and whether the 80/15/5 ratio is holding. Full guide: `references/content-memory.md`.
+
+**0.5b — Settle the foundation before writing a word.** Most AI-ish scripts are AI-ish because these were skipped:
+
+| Must exist | Where it comes from |
+|---|---|
+| **Premis** — one paragraph turning a weakness into a message | `references/kadev-personal-branding.md` §2.4 |
+| **Superniche** — named as a *who*, not a topic | §6.2. *"Niche bukan topik, tapi siapa secara spesifik."* |
+| **4K** — Keresahan / Kebutuhan / Keinginan / Kebiasaan of that person | §6.6 |
+| **Pillar** — Educate / Inspiration / Entertaining / Promotion | §8.2 |
+
+If the user cannot answer these, walk them through the frameworks. Do not guess on their behalf.
+
+**0.5c — Brief.** Write `brief.json` with the user: platform, market, age, stage, funnel, niche, and if relevant TAM/SAM/SOM, price, revenue target. Field list and effects: `references/audience-and-market.md`. Run `$SC brief brief.json` and show the checks and revenue math. Never present the placeholder conversion rates as facts.
+
+**0.5d — Write.** Generate the skeleton: `$SC script "<topic>" --genre <genre> --seconds <n> --brief brief.json --language <en|id> -o script.md`. Then fill it using:
+
+- **Hook** — one of the 20 templates, brackets filled from the real 4K answers: `references/kadev-script-formulas.md` §4
+- **Elements** — all 6 Script Hack Elements present: §2
+- **Beats** — 5-beat Storytelling Hack, where beat ⑤ reverses beat ①: §3
+- **Length** — pick 20-30 s *or* 60-90 s deliberately, not 50 s by accident: §8
+
+Fill the "Your line" column *with* the user. Use only facts the user confirms.
+
+**0.5e — Gate.** Run the full checklist in `references/anti-ai-ish.md` §E before handing anything over.
+
+**0.5f — Log it.**
+
+```bash
+$LEDGER add "<topic>" --niche "<superniche>" --pillar <pillar> \
+  --hook-template <1-20> --angle "<what made THIS one different>" \
+  --theme <tag> --theme <tag> --status scripted --script-path script.md
+```
+
+Then the video gets filmed and you continue at Step 1 with `--brief brief.json` on every plan.
+
+If the footage already exists, skip to Step 1 but still run 0.5a and ask for the brief fields in question 1c.
 
 ## Hard rules (apply to every step)
 
 1. **Never change voice pitch.** No chipmunk, no robot. Only `references/audio.md` 'Voice pitch and speed' can allow it, and only for its listed reasons.
 2. **Never invent facts** in scripts, cards, titles or descriptions. Numbers must come from the user or a cited source.
-3. **Never use music, fonts, or footage the user has no rights to.**
-4. **Check dates.** If this skill's Published date is more than 6 months old, research platform facts again before advising on strategy.
+3. **Never invent a personal story.** The 6 Script Hack Elements require a Personal Opinion / Story, and it is the one element you cannot supply — it requires having lived something. If the user cannot give you a real story, a real number or a real opinion, **stop and ask**. A plausible invented anecdote is the worst failure this skill can produce: it is both AI-ish and dishonest. See `references/anti-ai-ish.md` §A.
+4. **Never use music, fonts, or footage the user has no rights to.**
+5. **Always check the ledger before writing and log after producing.** An agent that skips the log breaks the tool for every future session.
+6. **Name production faults honestly.** Bad light, bad audio, wrong aspect ratio — say so and recommend a reshoot. Hiding them under heavy grading and zooms is itself an AI-ish move.
+7. **Check dates.** If this skill's Published date is more than 6 months old, research platform facts again before advising on strategy.
 
 ## Step 1. Ask before you cut (intake)
 
@@ -193,6 +259,33 @@ Open `work/words.json` and read the `segments`. Check:
 ---
 
 ## Step 4. Plan the edit
+
+**First, choose the cutting mode and commit to it.** This is the clearest finding from measuring 82 well-performing reference videos (`references/viral-edit-teardown.md`):
+
+> Real edits are bimodal. AI-ish edits are uniform.
+
+| Mode | Average shot length | Use when |
+|---|---|---|
+| **Cut-driven** | 0.5 - 2.5 s | voiceover over b-roll, a numbered list, a tutorial, documentation |
+| **Single-take** | 8 s to *no cuts at all* | talking head, one location, a personal story |
+
+28% of the reference videos sit in single-take mode and six of them have **zero** scene cuts across 18-46 seconds. They work. The failure mode is landing in the middle by default — a cut every 3-4 seconds regardless of what is being said — because that is the rhythm nobody chooses on purpose.
+
+Pick one. Do not average them. For single-take mode, keep the level low enough that pause removal is the only cutting that happens.
+
+**Then shape the opening and closing.** Also measured, and both are counterintuitive enough that the usual advice gets them backwards:
+
+| Position | What the reference set does |
+|---|---|
+| **Opening shot** | **held**, ~1.58× a typical shot (median 2.22 s). The first 3 s cut at **0.75×** the video's own rate — *slower*, not faster. The hook is held, not chopped. |
+| Middle | stays in the chosen mode (typical shot 1.32 s in cut-driven) |
+| **Closing shot** | **held**, ~2.42× a typical shot (median 3.16 s), in **75%** of cut-driven videos. The last 3 s cut at **0.21×** — cutting essentially stops. |
+
+> **Hold the open · chop the middle · hold the close.**
+
+**These ratios are for cut-driven mode.** In single-take mode there is no shot to "hold" — the whole video is one held shot. Do not add cuts to a talking head to create an opening or closing shape; the only cuts are removed sentences and long pauses. What still applies in single-take: the hook is spoken *and* on screen from frame one, and the last ~3 s after the closing line are kept, not trimmed.
+
+The held final shot is where the closing line lands — the one that reverses the opening (`references/kadev-script-formulas.md` §3). Do not trim it off as dead air; it is the beat that makes the video loop. Full numbers, method and limits: `references/viral-edit-teardown.md`.
 
 ```bash
 $SC plan work/words.json -o work/edl.json --level 60 --style auto --genre auto --brief brief.json --duration <duration from probe>
@@ -308,6 +401,28 @@ Send the user:
 
 Do not say "perfect" or "professional quality". Say what passed and what you checked.
 
+**Then run the anti-AI-ish gate and log the result.** Both are mandatory and neither is optional bookkeeping.
+
+Walk the checklist in `references/anti-ai-ish.md` §E. Report any ❌ plainly rather than quietly fixing or ignoring it — a production fault named honestly is worth more than a silently over-graded video.
+
+```bash
+$LEDGER add "<topic>" --niche "<superniche>" --pillar <pillar> \
+  --hook-template <1-20> --angle "<what made THIS one different>" \
+  --theme <tag> --theme <tag> \
+  --platform <tiktok|reels|shorts> --format <talking_head|voiceover|...> \
+  --seconds <final length> \
+  --script-path work/script.md --video-path work/edited.mp4 \
+  --status produced
+```
+
+If an entry already exists at `--status scripted` from Step 0.5f, update it instead of adding a second one:
+
+```bash
+$LEDGER edit <id> --set status=produced --set video_path=work/edited.mp4
+```
+
+An agent that skips the log breaks the tool for every future session. The ledger is the only memory that survives the end of this conversation.
+
 ---
 
 ## Rules that apply to every edit
@@ -327,6 +442,17 @@ Do not say "perfect" or "professional quality". Say what passed and what you che
 
 ## Going further
 
+**Strategy, script, and the anti-AI-ish gate** (the Kadev Academy body of work, Indonesian market):
+
+- The full personal branding theory — Ikigai, Johari, SWOT → **Premis** → Personal Market Fit, Perception vs Persona, Circle of Control, Golden Circle, Opportunity Mapping, the **superniche ladder**, **80/15/5**, Perfect Niche, the **4K Method**, Sweet Spot, First Impression, the four **Brand Pillars**, Hirarki Konten, self-documentation, survival, evaluation, monetisation, PING, LinkedIn: `references/kadev-personal-branding.md`
+- Writing the script — the **20 hooks**, the **6 Script Hack Elements**, the **5-beat Storytelling Hack**, Hook/Body/CTA, the Content Idea Framework, length budgets: `references/kadev-script-formulas.md`
+- **The rejection list and the delivery gate** — what "AI-ish" actually means, rule by rule, with the evidence behind each: `references/anti-ai-ish.md`
+- What 82 reference videos measurably do — cut rates, the bimodal finding, opening and closing shape, method and limits: `references/viral-edit-teardown.md`
+- The content ledger — how the local memory works, what it stores, how the similarity check scores: `references/content-memory.md`
+- Why every decision here is what it is, what was measured versus guessed, and what is still open: `../../JOURNAL.md`
+
+**Craft and technique:**
+
 - Cinematic looks, LUTs, relighting a flat shot, letterboxing, and chroma key tuning: `references/color-and-cinematic.md`
 - Caption styles and the typography rules behind them: `references/captions.md`
 - Music, ducking, loudness, sound effects: `references/audio.md`
@@ -345,7 +471,2116 @@ Do not say "perfect" or "professional quality". Say what passed and what you che
 
 ---
 
-# Part 2. script-and-marketing.md
+# Part 2. anti-ai-ish.md
+
+## Anti AI-ish: the rejection list
+
+> **Published:** 2026-09-23 · **Last reviewed:** 2026-09-23
+> **Why this file exists:** community users complained that SpliceCraft's scripts and edits still *"berasa AI"*. This is the gate that catches it. Run it before delivering anything.
+> **Editable:** every rule below carries its evidence. If you disagree with a rule, change it — but replace the evidence too. `<!-- journal -->` notes mark which rules are measured and which are judgement.
+
+"AI-ish" is not a vibe. It is a short list of specific, nameable habits. Each one below is a habit, the reason it reads as machine-made, and the fix.
+
+Two sources feed this file:
+1. The course's own *"Contoh yang Salah"* and *"Yang Banyak Orang Lakukan"* slides (`kadev-personal-branding.md` §9.3, §8.1).
+2. **Measurement of 82 real, well-performing reference videos** in `E:\Download\CONTOH INSPIRASI TEKNIK NGOTEN DAN EDITING VIDEO` — see `viral-edit-teardown.md` for the full numbers.
+
+---
+
+### A. The one that matters most
+
+> **A script with no personal story is AI-ish, and no amount of editing fixes it.**
+
+Element 5 of the 6 Script Hack Elements is *Personal Opinion / Story*. It is the only element a language model cannot supply, because it requires having lived something. Everything else in this file is secondary to it.
+
+**The test:** point at the sentence in the script that could only have been written by this specific person. If you cannot find one, the script is AI-ish regardless of how good the hooks are.
+
+**The rule for the agent:** if the user cannot give you a real story, a real number, or a real opinion — **stop and ask**. Do not write a plausible-sounding one. An invented anecdote is the worst possible failure here, because it is both AI-ish *and* dishonest.
+
+---
+
+### B. Script-level tells
+
+#### B1. The opening sentence
+
+| ❌ Reject | Why | ✅ Instead |
+|---|---|---|
+| *"Halo guys, balik lagi di channel aku"* | 2 seconds of nothing. The viewer gives you 8. | Start on the hook. No greeting at all. |
+| *"Di video kali ini aku akan membahas tentang…"* | Announcing the video instead of starting it. The single most AI-ish sentence in Indonesian video. | The hook *is* the first sentence. |
+| *"Pernahkah kamu bertanya-tanya…"* | Formal register nobody speaks in. | *"Pernah gak sih kamu…"* |
+| *"Sebelum kita mulai, jangan lupa follow"* | CTA before value. Trains people to scroll. | CTA at the end, once. |
+
+**Measured:** in the reference set the opening shot is **held** — median 2.22 s in cut-driven videos, which is 1.58× a typical shot in the same video. There is no greeting because the held shot is spending its time on the hook itself, not on a wind-up. See §C2.
+
+#### B2. Vagueness where a number belongs
+
+| ❌ | ✅ |
+|---|---|
+| "beberapa cara" | "3 cara" |
+| "cukup lama" | "4 tahun" |
+| "banyak orang" | "7 dari 10 orang" |
+| "hasilnya lumayan" | "12 juta di bulan pertama" |
+
+Vagueness is what a model produces when it does not know the fact. It is also what a person produces when they are hiding that they do not know. Both read the same. **If the number is not known, do not gesture at it — cut the claim.**
+
+Every example in the source PDF uses **3, 4, or 5**. Odd, small, specific.
+
+#### B3. Register drift into formal Indonesian
+
+The source material is written in casual Indonesian and so is the market. Formal Indonesian in a TikTok script is a machine tell.
+
+| ❌ Formal | ✅ Spoken |
+|---|---|
+| Anda | kamu / lu / kalian |
+| tidak | gak / nggak |
+| sangat penting | penting banget |
+| melakukan | ngelakuin |
+| memberikan | ngasih |
+| oleh karena itu | makanya |
+| dapat meningkatkan | bisa naikin |
+
+Exception: a B2B or LinkedIn brief may legitimately want formal register. The brief decides. The *default* is spoken.
+
+#### B4. LLM sentence architecture
+
+These are structural, not lexical, and they survive translation — which is why they are the hardest to spot.
+
+- **Adjective triads.** *"efektif, efisien, dan optimal"*. Real speech uses one adjective, or none.
+- **Balanced antithesis.** *"Bukan hanya X, tetapi juga Y."* Occasionally fine. Twice in one script is a tell.
+- **The summarising close.** *"Jadi, itulah beberapa tips yang bisa kamu terapkan."* Nobody says this out loud. Real closes reverse the opening instead (see §C3).
+- **Uniform sentence length.** Every sentence 12-18 words. Real speech alternates: a long one, then three words.
+- **Hedging stacks.** *"mungkin bisa jadi salah satu cara yang cukup membantu"*. Four hedges, zero claims.
+- **Listing without ranking.** Five items of equal weight and no opinion about which matters. The source material always says *"nomer 3 paling penting!"*
+
+<!-- journal: B4 is judgement, not measurement — derived from reading the source scripts against typical LLM output, not from a corpus study. It is the least evidenced section here and the most likely to need revision. If someone later transcribes the 82 reference videos, this section should be rewritten against that data. -->
+
+#### B5. The CTA
+
+| ❌ | Why | ✅ |
+|---|---|---|
+| *"Semoga bermanfaat ya!"* | a sign-off, not a call to action | ask something answerable |
+| *"Jangan lupa like, comment, share, save, dan follow!"* | five asks = zero asks | one ask |
+| *"Follow untuk konten menarik lainnya"* | no reason given | *"Follow kalau kamu lagi bangun personal branding dari nol"* — names the tribe |
+
+The course's own model CTA: *"Menurut kalian gimana? Kira-kira mic profesional bisa diganti sama AI ini? Beri tahu pendapat kalian di kolom komentar."* — a real question, with two defensible answers.
+
+Element 6 is **Interactions**. A CTA that cannot be answered in a comment is not a CTA.
+
+---
+
+### C. Edit-level tells
+
+This section is measured. All numbers come from the 82-video reference set; method and full distribution in `viral-edit-teardown.md`.
+
+#### C1. Uniform cutting is the giveaway
+
+The single clearest finding from the measurement:
+
+> **Real edits are bimodal. AI-ish edits are uniform.**
+
+| Mode | Average shot length | Share of the 82 videos | What it is |
+|---|---|---|---|
+| **Cut-driven** | 0.5 - 2.5 s | 32 videos (39%) | b-roll, documentation, voiceover, jedag-jedug |
+| *(the dead zone)* | 2.5 - 8 s | 27 videos (33%) | mixed / transitional |
+| **Single-take** | 8 s - no cuts at all | 23 videos (28%) | talking head, straight to camera |
+
+**Six of the 82 videos have zero scene cuts across 18-46 seconds.** They perform. They are not under-edited — they are a different grammar: one take, one person, captions and nothing else.
+
+The AI-ish failure is landing in the middle by default: a cut every 3-4 seconds for the whole video, regardless of what is being said. That is the rhythm nobody chooses on purpose. It is the rhythm you get when a tool applies a uniform rule.
+
+**The rule:** decide which mode the video is in *before* planning the edit, and commit.
+- Talking head, one location, personal story → **single-take mode**. Cuts only where a sentence is removed. Possibly zero cuts.
+- Voiceover over b-roll, a list, a tutorial → **cut-driven mode**. Median shot 1.5-2 s, and it stays there.
+
+Never average the two.
+
+<!-- journal: measured 2026-09-23 with ffmpeg scene detection (scale=160, select='gt(scene,0.3)') over all 82 files. Threshold 0.3 is conventional but not tuned; it will under-count cuts between visually similar shots (e.g. two angles of the same person against the same wall), so the single-take bucket may be slightly overstated. The bimodality is far too strong to be a threshold artifact. Raw per-file data in the session scratchpad, not committed. -->
+
+#### C2. Openings
+
+Measured on the reference set — and this one is **counterintuitive**, so read it before applying the usual advice:
+
+- Median time to the **first cut** in cut-driven videos: **2.22 s** (p25 0.80 s, p75 4.00 s).
+- Cuts landing in the first 3 s, against that video's own average rate: **0.75×**. The opening cuts **slower** than the video's baseline.
+- The **first shot is 1.58× longer** than a typical shot in the same video. 56% of cut-driven videos hold it more than 1.2× as long.
+- Median video length: **37.5 s**, bimodal — a cluster at **20-30 s** (24 videos) and a second at **60-90 s** (17 videos), with a dip between.
+
+> **The hook is held, not chopped.**
+
+This contradicts the common "chop the first three seconds to grab attention" instinct. The opening shot stays up long enough to read the on-screen hook and hear the spoken one, *then* the video starts moving.
+
+**What this means for the opening:**
+1. Give the hook shot about **1.5× your typical shot length**. Do not cut into it to seem energetic.
+2. Something should still *change* early — a zoom, a card, a movement. Held is not the same as static.
+3. The hook is *spoken* and *on screen* simultaneously. Many viewers start muted.
+4. No logo animation. No "intro". The reference set has none.
+
+#### C3. Closings
+
+The course's Storytelling Hack beat ⑤ is *"Wrap It Up with a Relatable Message"* — and in the worked example, beat ⑤ **reverses** beat ①:
+
+> ① *"Networking itu gila, bisa bikin kita sukses dan kaya raya"*
+> ⑤ *"networking bukan seberapa banyak orang yang kamu kenal, tapi seberapa banyak orang yang pengen kenal kamu."*
+
+That reversal is what makes a short loop: the viewer re-watches to check whether the opening already contained the ending. Rewatch and loop rate are ranking signals on every platform.
+
+**Measured — and this is the most consistent single behaviour in the whole corpus:**
+
+- Gap from the **last cut to the end**: median **3.16 s** in cut-driven videos.
+- Cuts in the final 3 s against that video's own rate: **0.21×**. The closing cuts at about **one fifth** of normal.
+- The **last shot is 2.42× longer** than a typical shot. **24 of 32 cut-driven videos (75%)** hold it more than 1.2× as long.
+
+> **The ending is a landing, not a stop.**
+
+The closing line gets its own held shot with the cutting switched off. That held shot is where beat ⑤ lands, and it needs room to be heard — it is what makes the video loop.
+
+| ❌ AI-ish close | ✅ |
+|---|---|
+| summarises what was just said | reverses or reframes the opening claim |
+| trails off | lands on a short sentence |
+| stacks five CTAs | one question |
+| keeps cutting over the CTA | stops cutting for the last ~3 s |
+| hard-stops on the last syllable | holds the final shot ~2.4× a typical shot |
+
+**Correction.** An earlier draft of this file said *"do not add a 2-second tail; the video ends on the last syllable."* The measurement says the opposite, and it has been corrected here. That advice is aimed at padded dead-air endings, which is a real fault — but in this style the held final shot is not dead air, it is the beat the closing line is delivered on. Cutting it off removes the loop. Full numbers and the correction record: `viral-edit-teardown.md` §5-6.
+
+#### C4. Over-editing
+
+Straight from the course's *"Contoh yang Salah"*:
+
+> 🚫 **Editing Berlebihan / Minim Editing**
+> - Terlalu banyak efek & transition, bikin pusing
+> - Nggak ada subtitle, orang nggak ngerti kalau nonton tanpa suara
+> - Musik terlalu kencang sampai nutupin suara
+
+SpliceCraft's existing guards already encode this and they should not be relaxed:
+- **breathing_room** gate: at least 35% of runtime with no card on screen.
+- **no_card_overlap**: never two cards at once.
+- **card_density** ceiling per level.
+- Music sits under the voice; if you can hear music over a word, it is too loud.
+
+Add one rule: **transitions are not decoration.** Use them at moments of *topic change*, not between every shot.
+
+<!-- journal: the transition rule is INFERENCE, not measurement. Scene detection cannot see transitions, speed ramps or zooms - it only reports cuts. The rule is derived from the ASL distribution plus the course's own "terlalu banyak efek & transition, bikin pusing" slide. Do not present it to a user as measured. See viral-edit-teardown.md §7. -->
+
+#### C5. Production faults that no edit repairs
+
+From *"Contoh yang Salah"* — check these on the source file before planning anything:
+
+| Fault | Check |
+|---|---|
+| **Cahaya buruk** — video gelap, wajah nggak kelihatan; backlight parah, muka jadi siluet | look at the contact sheet |
+| **Suara nggak jelas** — noise (angin, kendaraan, orang ngobrol); ngomong terlalu pelan / jauh dari mic | listen; check the transcript's confidence |
+| **Format salah** — horizontal footage for TikTok/Reels (terpotong); vertical for long YouTube | `$SC probe` reports orientation |
+| **Mata nggak fokus** — ngeliatin layar HP, bukan kamera | visible on the sheet |
+| **Kamera terlalu rendah** — double chin | visible on the sheet |
+
+If one of these is present, **say so plainly and recommend a reshoot.** Silently "fixing" bad footage with heavy grading and zooms is itself an AI-ish move — it produces a video that looks processed rather than shot.
+
+---
+
+### D. Content-level tells
+
+#### D1. Repetition across the account
+
+This is why the content ledger exists (`content-memory.md`).
+
+The failure: an AI asked for "content ideas about personal branding" produces the same twelve ideas every time. Over a month that becomes an account that says one thing twelve ways. The course names the symptom — *"orang gak inget dan gak percaya sama kamu"* — but blames inconsistency; the modern version of the problem is the opposite, **sameness**.
+
+**Rule:** run `ledger check` before writing. Exit code 2 means do not write it.
+
+#### D2. Writing to "everyone"
+
+> **Niche bukan topik, tapi siapa secara spesifik.**
+
+A script addressed to "content creators" is AI-ish. A script addressed to *"editor pemula yang baru pake CapCut dan videonya masih sepi"* is not. The 4K Method (`kadev-personal-branding.md` §6.6) exists to produce that sentence.
+
+#### D3. Pillar monoculture
+
+Four pillars: Educate, Inspiration, Entertaining, Promotion. An account that is 100% Educate reads like a knowledge base, not a person. `ledger stats` shows the balance; `ledger suggest` names what is due.
+
+Same for the **80/15/5** ratio — superniche / adjacent / personal life. *"Bahas yang lain agar terlihat manusiawi."*
+
+#### D4. Borrowed authority
+
+*"Cuma bilang 'Saya bisa ini, saya jago itu' tanpa bukti nyata"* · *"Upload sertifikat doang tanpa konteks"* · *"Pamer doang tanpa value"*.
+
+The fix from the same slide: **tunjukin proses kerja, bukan cuma hasil akhir.** Process footage is inherently un-fakeable, which is exactly why it reads as human.
+
+---
+
+### E. The gate
+
+Run this before delivering. Any ❌ blocks delivery until fixed or explicitly waived by the user.
+
+```
+SCRIPT
+  [ ] there is a sentence only this person could have written   (§A)
+  [ ] no greeting, no "di video kali ini"                        (§B1)
+  [ ] every vague quantity is either a real number or cut        (§B2)
+  [ ] register is spoken Indonesian, unless the brief says else  (§B3)
+  [ ] no adjective triads, no summarising close                  (§B4)
+  [ ] exactly one CTA, and it is answerable                      (§B5)
+  [ ] every factual claim confirmed by the user                  (§A)
+
+EDIT
+  [ ] mode chosen on purpose: cut-driven OR single-take          (§C1)
+  [ ] shot rhythm stays in that mode, no drift to the middle     (§C1)
+  [ ] opening shot HELD ~1.5x a typical shot                     (§C2)
+  [ ] hook is spoken AND on screen                               (§C2)
+  [ ] closing reverses the opening                               (§C3)
+  [ ] final shot HELD ~2.4x a typical shot, cutting stops        (§C3)
+  [ ] 9:16 vertical                                              (teardown §2)
+  [ ] duration is 20-30 s OR 60-90 s on purpose                  (teardown §2)
+  [ ] QA gates pass: breathing_room, no_card_overlap, density    (§C4)
+  [ ] production faults named honestly, not hidden               (§C5)
+
+CONTENT
+  [ ] ledger check run, exit code 0                              (§D1)
+  [ ] audience named as a specific WHO                           (§D2)
+  [ ] pillar chosen, and not the same as the last three          (§D3)
+  [ ] claims backed by process, not assertion                    (§D4)
+```
+
+---
+
+### F. What this file does not claim
+
+- These rules are tuned for **Indonesian short-form video** for a personal brand. A B2B English explainer wants different defaults; use `script-and-marketing.md`.
+- The C-section numbers describe **82 videos from one reference folder**, most of them from a single creator. They are a strong signal about *this* style, not a universal law of short video. Treat them as "what good looks like in this lane."
+- Nothing here guarantees reach. It removes the specific failure the community named. That is all.
+
+---
+
+# Part 3. kadev-personal-branding.md
+
+## Personal branding: the full Kadev Academy body of theory
+
+> **Published:** 2026-09-23 · **Last reviewed:** 2026-09-23
+> **Source material:** Kadev Academy by Kadafi Devayana — 37 lesson videos, 64 slide screens (6 chapters / 36+ learning materials), and 5 ebooks/PDFs. Extracted 2026-09-23.
+> **Agent check:** compare this date with today. If more than 6 months have passed, re-check the platform claims here before relying on them. The *frameworks* below are the author's and do not expire; the *platform numbers* do.
+> **Editable:** this file is meant to be edited. Every section carries a `<!-- journal -->` note explaining where it came from and what is still thin, so a future editor knows what is safe to change. See `../JOURNAL.md`.
+
+This file is the theory. `kadev-script-formulas.md` is the execution layer (hooks, script structures, idea generation). `anti-ai-ish.md` is the quality gate. Read this one first: nearly every "AI-ish" script fails because the writer skipped straight to hooks without a premis, a niche, or a sweet spot.
+
+---
+
+
+> **Jump table** — for agents: grep the heading `## <n>.` and read only the section you need.
+> - §0. The curriculum spine
+> - §1. What personal branding actually is
+> - §2. Chapter 1 — Know yourself (the foundation)
+> - §3. Perception vs Persona
+> - §4. "Ga Pede Personal Branding?" — the confidence block
+> - §5. Chapter 2 — Vision Plan: start with WHY
+> - §6. Niche, audience, and the algorithm
+> - §7. First Impression
+> - §8. Personal Brand Pillar
+> - §9. Seni Dokumentasi Diri (documenting yourself)
+> - §10. Chapter 4 — Survive Personal Branding
+> - §11. Chapter 4 — Evaluation
+> - §12. Chapter 5 — Expand & Monetize
+> - §13. Networking, collaboration, and LinkedIn
+> - §14. How SpliceCraft uses all of this
+> - §15. Quote bank
+> - §Provenance
+
+### 0. The curriculum spine
+
+Kadev Academy is ordered as 6 chapters, 36+ learning materials, and the order is load-bearing — the author explicitly says *"urut satu per satu, jangan skip kecuali udah paham."*
+
+| # | Chapter | What it settles | Covered in |
+|---|---|---|---|
+| 0 | Onboarding + *Lebih dekat dengan Personal Branding* | definition, benefit, why it is not "just posting" | §1 |
+| 1 | **Character Development** | who you are: Ikigai, Johari, SWOT, Premis, Selling Points | §2-§4 |
+| 2 | **Vision Plan** | where you are going: Why/Golden Circle, Opportunity Mapping, niche | §5-§6 |
+| 3 | **Execute & Show** | making it: algorithm, first impression, story, documentation, editing, design | §7-§9 + `kadev-script-formulas.md` |
+| 4 | **Evaluate, Innovate & Growth** | surviving: consistency, crisis, trend, rebranding, evaluation | §10-§11 |
+| 5 | **Expand & Monetize** | income: knowledge gap, digital product, networking, collaboration | §12-§13 |
+
+**Why this matters to SpliceCraft.** A user who asks for a video edit usually arrives at chapter 3 with chapters 1 and 2 unanswered. That is the single largest cause of generic, AI-tasting scripts. Step 0.5 of `SKILL.md` exists to force chapters 1-2 to be answered before a word is written.
+
+<!-- journal: spine taken verbatim from the slide "Struktur Belajar di Kadev Academy" (icons: Character Development → Vision Plan → Execute & Show → Evaluate, Innovate → Expand & Monetize) and cross-checked against the lesson-video filenames, which are numbered (0 x), (1 x) … (5 x) in the same order. High confidence. -->
+
+---
+
+### 1. What personal branding actually is
+
+#### 1.1 The definition the author uses
+
+> **Personal branding = "jual diri."** Not in the sleazy sense — it is how we package and market ourselves so other people are interested and get to know us better.
+
+The slides sharpen this into a formula:
+
+> **Jual Diri → Knowledge + Value + Experience → Kepercayaan, Kesempatan, Kekuatan.**
+
+You are not selling a persona. You are selling *what you know*, *what you are worth*, and *what you have lived through*, and what you get back is trust, opportunity, and leverage.
+
+#### 1.2 What it is NOT
+
+Slide *"Personal Branding bukan sekedar…"* lists the things people mistake it for:
+
+nama · logo · font · warna · tagline · konten · sosmed · followers · terkenal
+
+All of those are *outputs*. None of them is the thing. Related slide: **"Followers banyak ≠ personal branding kuat."**
+
+#### 1.3 The one word: OTENTIK
+
+The author's conclusion after surveying every definition on Google and ChatGPT:
+
+> Intinya ada satu kata yang mendefinisikan personal branding yaitu: **"OTENTIK"**.
+> Menjadi otentik artinya menjadi versi terbaik dari diri kita sendiri, tapi tetap jujur dan nyata.
+
+Supporting quotes he uses:
+- *"Be yourself; everyone else is already taken."* — Oscar Wilde
+- *"Menjadi diri sendiri adalah kunci untuk bisa berkarya dengan hati."* — Maudy Ayunda
+- *"Personal branding itu jadi diri sendiri bukan jadi orang lain."* — Kadafi Devayana
+
+The worked examples are Jerome Polin (made a hated subject, mathematics, feel easy and fun — by not hiding his struggle) and Najwa Shihab (never imitated anyone, so she became the most trusted).
+
+#### 1.4 Why bother
+
+Two framings appear across the material.
+
+**The doors framing** — *Personal Branding is Your Access Card.* Five doors open:
+
+| Door | What opens |
+|---|---|
+| **Bisnis** | people invest, buy, or partner more readily; the business is not only seen, it is *looked at* |
+| **Karir** | recruiters now read your digital trail, not only your CV |
+| **Relasi** | it forms a perception of who you are, so people with the same vision and energy find you |
+| **Kolaborasi** | a professional identity makes you easy to invite into projects and communities |
+| **Income** | paid jobs, freelance, speaking, partnership, affiliate, digital products |
+
+**The stats framing** (slide *"Personal Branding adalah Masa Depan?"*): 74% / 63% / 62% figures are cited for *is the future*, *highly profitable*, *a trust accelerator*.
+
+<!-- journal: the 74/63/62 percentages are printed on the slide but the slide does not name the study. Do NOT present them to a user as sourced fact — say "Kadev's slide cites" or drop them. Flagged as the weakest claim in this file. -->
+
+#### 1.5 Personal branding is complex — but do not overcomplicate it
+
+The author's own framing: *"Personal Branding itu Kompleks. Tapi jangan dibikin ribet, kamu akan menemukan jawaban seiring menyelesaikan materi demi materi dan coba untuk praktek."*
+
+---
+
+### 2. Chapter 1 — Know yourself (the foundation)
+
+> Bagaimana kita bisa jual diri positif jika kita belum benar-benar mengenal siapa kita?
+
+The metaphor used throughout: **Fondasi (Diri sendiri) → Istana (Proses Branding)**. When personal branding is not rooted in the actual self, four things happen, and the slides name them:
+
+- **Ga Otentik** — it looks made-up, people can smell it
+- **Gampang Goyah** — no anchor, so any criticism moves you
+- **Bingung sendiri** — you do not know what to post
+- **Sulit bertahan lama** — you burn out because you are performing
+
+#### 2.1 Ikigai — and the key equation
+
+**IKIGAI = NICHE.** This is the single most quotable line in chapter 1. Ikigai (生き甲斐, "iki" = hidup, "gai" = alasan) is four circles:
+
+| Circle | Question | Kadev's phrasing |
+|---|---|---|
+| What You Love | Apa bidang yang kamu suka? | what you never get bored doing |
+| What You Are Good At | Apa bidang yang kamu bisa? | what others often praise you for |
+| What The World Needs | Apakah bidang itu dibutuhkan orang lain? | whose problem do you solve |
+| What You Can Be Paid For | Apakah bidang itu bermanfaat untuk kamu? | how it becomes income |
+
+The centre is **relate dan relevan**.
+
+**The four questions to actually find it** (from the worksheet slide):
+1. Apa yang membuat kamu senang & gak bosan melakukannya?
+2. Skill apa yang sering dipuji orang lain dari kamu?
+3. Masalah apa yang bisa kamu bantu selesaikan untuk orang lain?
+4. Bagaimana caranya agar kamu bisa mendapatkan penghasilan dari ini?
+
+**Why we need Ikigai** (slide *"Kenapa kita butuh cari IKIGAI?"*): because personal branding is a PROCESS; so you know your direction and focus; so you enjoy it and do it wholeheartedly; so what you do has impact and benefit; so it is relevant and pays; so your branding matches your actual self.
+
+> *"Ikigai bikin kamu tahu nilai kamu, personal branding bikin nilai itu bersinar di depan dunia."* — Kadafi Devayana
+
+#### 2.2 Johari Window
+
+Developed by Joseph Luft and Harrington Ingham. In branding terms, "other people" = your audience.
+
+|  | Kamu Pahami | Tidak Kamu Pahami |
+|---|---|---|
+| **Orang Lain Pahami** | **Open Area** — your visible behaviour, skills, experience | **Blind Spot** — habits others see that you do not |
+| **Orang Lain Tidak Pahami** | **Hidden Area** — what you know but keep private | **Unknown** — latent potential neither side has seen |
+
+Practical use: your **Open Area** is your safest early content. Your **Blind Spot** is found by asking people (see the Chapter-4 challenge in §11.1). Your **Hidden Area** is the reservoir for vulnerability content. **Unknown** is unlocked by trying new things and asking for feedback.
+
+#### 2.3 SWOT for a person, and the "pesan diri"
+
+> Personal branding bukan sekedar pencet tombol "post" doang. Harus punya **"pesan diri" yang konsisten**.
+
+| SWOT | Pertanyaan untuk Diri Sendiri |
+|---|---|
+| **Strengths** (Kekuatan) | Apa yang kamu sudah kuasai? Apa yang membedakanmu dari orang lain? |
+| **Weaknesses** (Kelemahan) | Apa yang sering kamu anggap sebagai kekurangan? |
+| **Opportunities** (Peluang) | Tren atau peluang apa yang bisa kamu manfaatkan? Siapa yang bisa kamu jangkau? |
+| **Threats** (Ancaman) | Hambatan eksternal apa yang bisa menghambat perkembangan personal branding-mu? |
+
+> **Kunci utama: Kelemahan bisa jadi kekuatan dan pesan kalau kita tahu cara mengolahnya.**
+
+This is the hinge of the whole method. The lesson is literally titled *"Ubah Kelemahan Jadi Kekuatan: Temukan Premis Diri Sendiri."*
+
+#### 2.4 Premis and Personal Market Fit — the core original framework
+
+This is the framework that does not appear in any of the PDFs and only exists in the slides. It is the most operationally useful thing in the entire course.
+
+```
+        SWOT (S W / O T)
+               │
+               ▼
+           PREMIS         ← one paragraph: your weakness, turned, aimed at a group
+               │
+               ▼
+   PERSONAL MARKET FIT (PMF = Premis)
+               │
+               ▼
+      "Konten yang bakal dibikin"
+```
+
+**PMF = Premis.** Your market fit *is* your premise. If the premise is sharp, the content queue writes itself.
+
+The slides give four worked examples. Reproduce their shape, not their words:
+
+| S (strength) | W (weakness) | O (opportunity) | T (threat) | Premis |
+|---|---|---|---|---|
+| Praktisi dan ahli personal branding | Misterius, gengsi dan malu-malu | Buka kesempatan banyak dari personal branding | Pesaing banyak | *"Dari seorang misterius, gengsi dan malu buat mulai personal branding, akhirnya mencoba memulai dan mendapatkan banyak kesempatan baik dari Personal branding, mulai dari active income, nama dikenal, relasi dan kolaborasi."* |
+| Inisiator WFA dan praktisi | Anak desa, ga bisa lanjut SMA | Banyak kesempatan kerja dimana aja, tapi banyak orang gatau | Pesaing banyak | *"Dari anak desa yang tidak bisa lanjut SMA menjadi inisiator Work From Anywhere (WFA), membantu ribuan orang mendapatkan penghasilan dari mana saja. Saya percaya bahwa peluang kerja digital sangat luas, tetapi banyak yang belum mengetahuinya. Melalui pengalaman dan praktik langsung, saya ingin membuka wawasan dan membimbing lebih banyak orang untuk memanfaatkan peluang ini."* |
+| Punya pengalaman nyata dalam membangun bisnis | Pernah mengalami kegagalan bisnis | Banyak UMKM butuh mentor yang memahami tantangan mereka | Banyak pesaing di dunia bisnis dan mentor UMKM | *"Dari seseorang yang mengalami kegagalan bisnis berkali-kali, akhirnya belajar dari kesalahan dan sekarang membagikan strategi agar UMKM bisa bertahan dan berkembang."* |
+| Punya pemahaman mendalam tentang komunikasi efektif | Dulu takut berbicara di depan umum | Banyak orang butuh dan ingin belajar public speaking | Sudah banyak pembicara di luar sana | *"Dari seorang yang pendiam dan takut berbicara di depan umum, akhirnya belajar mengatasi ketakutan dan sekarang menjadi pembicara yang membahas cara percaya diri saat berbicara di depan kamera dan audiens."* |
+
+**The shape of a premis, extracted:**
+
+> "Dari **[kelemahan / titik terendah yang spesifik]**, akhirnya **[apa yang kamu lakukan]**, dan sekarang **[posisi kamu hari ini]** untuk **[siapa yang kamu bantu]**."
+
+**Action plan** (the slide closes chapter 1 with this):
+1. ✅ Buat SWOT pribadi kamu
+2. ✅ Tulis premis personal branding
+3. ✅ Terapkan dalam konten dan komunikasi
+> ➡ Kuncinya adalah **mengubah sudut pandang**.
+> *"Personal branding bukan tentang pencitraan, tapi tentang bagaimana kamu bisa menyampaikan pesan yang berdampak!"*
+
+<!-- journal: transcribed from six slide screens (Personal's Foundations ×4 + "Ubah Kelemahan Jadi Kekuatan" + ACTION PLAN). The premis paragraphs are quoted as printed, including their Indonesian phrasing. Two of the four examples had a blank/anonymous avatar, so the people are not identified — do not attribute them. This section is the highest-value part of the extraction and should NOT be shortened. -->
+
+#### 2.5 Selling Points via STAR
+
+Selling points = the unique, interesting aspects that make you stand out and — the author stresses — make you **remembered**, not merely seen.
+
+> *"Personal branding bukan hanya tentang menjadi terlihat, tetapi juga tentang menjadi diingat."*
+
+**STAR**, borrowed from interviews:
+
+| Letter | Question |
+|---|---|
+| **S**ituation | Gambarkan situasi atau konteks yang relevan |
+| **T**ask | Jelaskan tugas atau tantangan yang dihadapi |
+| **A**ction | Ceritakan tindakan yang diambil untuk menyelesaikan tantangan |
+| **R**esult | Sebutkan hasil yang diperoleh: pencapaian, pembelajaran, atau dampak |
+
+The worked example (Kemal, food reviewer) yields the selling points: *cinematic video style, professional cinematography and editing skill, ability to reach an audience that wants premium culinary experiences.* Note how the selling point is a **capability + an audience**, never an adjective.
+
+**Five rules for using selling points:** show them in profile and portfolio (easiest: make content about your work) · mention them when you speak or write about yourself · keep developing the skill behind them · stay honest, never inflate them · re-evaluate them periodically as the market and you change.
+
+STAR is reused later as the LinkedIn caption structure (§13.3).
+
+---
+
+### 3. Perception vs Persona
+
+Two concepts that decide whether branding stays honest.
+
+| | **Perception** | **Persona** |
+|---|---|---|
+| Definition | What everybody else thinks about you | What you want everyone to think about you |
+| Made of | opini · cara komunikasi · apa yang kita lakukan · penampilan | sukses · gagal · personal · nilai |
+| Note on the slide | *"kita ga bisa hidup tanpa presepsi"* | shown as "Di sosmed" vs "Aslinya" |
+
+**The two failure modes**, given as case studies:
+
+- **Dina** lives entirely for *perception* — follows every trend, wears what friends approve of, signs up for a yoga class she has no interest in, and waits anxiously for likes. She loses her sense of self and is unhappy.
+- **Rico** builds a false *persona* — borrows a sports car for photos, poses in front of a house that is not his, posts holidays he never took. He is financially struggling, exhausted from maintaining it, and people start to doubt him. Long-term reputation damage.
+
+**The balance:** integrate the two honestly. The author cites Law 25 of Robert Greene's *The 48 Laws of Power* — *"Re-create Yourself: Do not accept the roles that society foists on you…"* — and reads it as *create something compelling, but keep it authentic.*
+
+Closing slide: **"gak usah dibuat-buat · gak sesuai Ikigai · gak sesuai nilai diri"** → *hal yang menarik dari diri kita adalah "proses yang kita alami". Banyak orang yang menyerah personal branding karena ya capek ga jadi diri sendiri.*
+
+#### 3.1 The Circle of Control
+
+Answer to the DM: *"Bang, gimana sih kita tetap konsisten personal branding, tanpa dengerin omongan dan hujatan lingkungan sekitar?"*
+
+> **Aku akan fokus kepada hal yang bisa aku kontrol dan kendalikan.**
+
+| Bisa aku kendalikan | Tidak bisa aku kendalikan |
+|---|---|
+| Tindakanku — konten yang aku buat, cara aku berinteraksi | Perasaan orang lain tentang konten atau diriku |
+| Perkataanku — bagaimana aku menyampaikan pesan | Perlakuan orang lain terhadap kontenku |
+| Caraku memperlakukan orang lain — kolaborator, audiens, komunitas | Apa yang orang lain pikirkan / katakan |
+| Caraku mengelola perasaanku — stres, kegagalan, kritik | Tren yang muncul, algoritma sosial media |
+| Batasanku — waktu dan energi, agar tidak kelelahan | Keputusan orang lain, waktu & cuaca, hal-hal di masa lalu |
+| Belajar personal branding, bikin konten yang punya value, skill & pengetahuan yang dikembangkan, evaluasi | Presepsi orang, hate orang lain, dikatain alay/pamer/sombong |
+
+<!-- journal: two versions of this diagram exist in the material (one in the ebook, one in the slides, the slide version has more items and is the one tabulated here). Merged. -->
+
+---
+
+### 4. "Ga Pede Personal Branding?" — the confidence block
+
+The exact fear, quoted on the slide:
+
+> *"Aku udah mau mulai bangun personal branding, tapi takut di-hate, di-katain pamer, alay, haus validasi, sok-sok an, bla bla…."*
+
+The answer is the Perception/Persona pair plus the Circle of Control above, and one reframe that recurs across the course: **kritik itu bahan bakar, bukan penghambat** (see §11.2).
+
+---
+
+### 5. Chapter 2 — Vision Plan: start with WHY
+
+> **Tujuan Ga Jelas = Percuma Personal Branding.**
+> **Karena beda tujuan, beda juga cara bikin kontennya.**
+
+#### 5.1 The Golden Circle (Simon Sinek)
+
+| Ring | Question | Kadev's Javanese gloss |
+|---|---|---|
+| **Why** — Your Purpose | What is your cause? What do you believe? | *lapo* — apa tujuan dan motivasi kamu? |
+| **How** — Your Process | Specific actions taken to realise your Why | *yaopo* — gimana cara kamu mencapai "kenapa" kamu dengan aksi spesifik? |
+| **What** — Your Result / Proof | What do you do? The result of Why. Proof. | *opo* — apa hasil yang pengen kamu dapetin? |
+
+> *"Why" membantu kamu tetap konsisten dan fokus meski ada tantangan.*
+
+**Two worked examples:**
+
+| Why | How | What |
+|---|---|---|
+| Share portfolio dan skill biar dapet kerja | Bikin konten yang relevan dengan lowongan pekerjaan yang kamu cari | Dapet kerja yang sesuai |
+| Dapetin penghasilan dan bisa hidup dari konten | Bikin konten yang sesuai dengan kebutuhan pasar dan audiens | Bisa hidup dan kerja jadi konten kreator |
+
+**The author's own Why**, printed on a slide, as a template for how specific it should get:
+
+| Tujuan untuk diri sendiri | Tujuan untuk orang lain |
+|---|---|
+| Ningkatin kredibilitas di industri | Memberikan edukasi dan inspirasi khususnya untuk anak muda |
+| Memperluas peluang karir dan bisnis | Menjadi salah satu sumber perubahan sosial |
+| Ningkatin daya tarik kolaborasi dan networking | Intinya sering bangun personal branding, pengen bermanfaat aja sih, sekecil apapun itu |
+| Menjadi konten kreator dan monetisasi ilmu | |
+
+> Dari "WHY" kita bisa nentuin: **Strategi dan Vision Plan personal branding** — dan which platform (IG / TikTok / LinkedIn) you belong on. **Beda Tujuan, Beda Caranya.**
+
+#### 5.2 The menu of possible goals
+
+From *"Kenapa kamu personal branding?"* — pick and be honest:
+
+Share portfolio? · Jadi konten kreator? · Peluang kolaborasi? · Dipercaya orang? · Bangun networking? · Dapetin income? · Peluang karir dan pekerjaan? · Untuk validasi?
+
+<!-- journal: "untuk validasi kah?" appears in the Content Strategy ebook's list but not on the slides. Kept — it is the honest option and users pick it more often than they admit. -->
+
+#### 5.3 Opportunity Mapping
+
+Two ways to turn a Why into a queue of moves.
+
+**A. Based on Passion.** A tree: `Passion → Opportunity ×5 → Solution ×4 each`.
+- *Passion* = the field you know from Ikigai
+- *Opportunity* = the jobs/paths that come from that passion
+- *Solution* = the concrete things you can do to support each opportunity
+- The whole tree is bracketed as **PERSONAL BRANDING**
+
+Worked example: `Marketing → Consulting & Market Research | Product Management & Growth | Sales & Business Development | Digital Marketing & Advertising | Entrepreneurship & Startup`, each with its own column of concrete moves.
+
+**B. Based on Time Frame.** The same tree, but the spine is time: Tahun, Semester, Quarter, Bulan, or Minggu. Worked examples given for four different people:
+
+| POV | Spine | Example cells |
+|---|---|---|
+| Mahasiswa | Semester 1-8 | Scholarship, Competition, Volunteership, Organization → Short Exchange → MBKM → Company Development Program → Thesis / MT |
+| Entrepreneur F&B | 2026→2029 | akselerator F&B → daftar franchise/cloud kitchen → buka peluang investor → ekspansi ke kota tier 2 dan 3 |
+| Author / Penulis | Q1-Q4 | festival & konferensi → menawarkan buku ke penerbit → self-publishing & crowdfunding → drive festival internasional |
+| Graphic Design Freelancer | W1-W4 | update & kurasi portfolio → optimasi profil Upwork/Fiverr → buat konten Instagram/TikTok → evaluasi & sesuaikan pricing |
+
+Framing quote used: **Eat That Frog!** (Brian Tracy) — *"If it's your job to eat a frog, it's best to do it first thing in the morning. And if it's your job to eat two frogs, it's best to eat the biggest one first."*
+
+Also framed as answers to: *"Udah punya passion, tapi bingung mau jadi apa?"* and *"Punya banyak waktu kosong, tapi bingung mau ngapain?"*
+
+---
+
+### 6. Niche, audience, and the algorithm
+
+#### 6.1 The reframe
+
+> **Niche bukan topik, tapi SIAPA secara spesifik.**
+
+This one line fixes more bad content plans than anything else in the course.
+
+#### 6.2 The superniche ladder
+
+| Level | Example |
+|---|---|
+| General | Industri kreatif |
+| Niche | Video Editing |
+| **Superniche** | **Video Editing pakai CapCut** |
+
+> **Fokus satu superniche, jadi paling hebat dan top of mind.**
+
+**Why superniche wins** (the slide's three reasons):
+- Algoritma media sosial merekam siapa yang nonton & engage dengan konten terbaikmu
+- Kalau topikmu terlalu luas atau sering berubah drastis, algoritma bingung → reach turun
+- Akun dengan niche jelas tumbuh lebih cepat karena algoritma tahu siapa target audiensnya
+
+#### 6.3 How the algorithm actually works (Kadev's model)
+
+```
+Bahas Video Editing di CapCut → Editor Pemula → Interaksi → Editor Pemula lain kena konten kamu
+```
+versus the broken version:
+```
+Bahas Video Editing di CapCut + Bahas Politik/Finance → Editor Pemula → Gak Suka Kontennya → Algoritma membaca kontenmu gak punya value
+```
+
+Analogy given: the **Snowball Effect.**
+
+Second analogy, the food-stall one, which is the most memorable in the whole course:
+
+> *Hari ini jualan soto, besok gak jualan, lusa jualan bubur ayam.* ❌
+> *Lama-lama, aku jadi males beli karena gak tahu sebenarnya dia jualan apa.*
+> Sama kayak personal branding. Kalau hari ini bahas keuangan, besok gaming, lusa motivasi, orang bakal bingung kamu ini siapa. **Akhirnya, orang gak inget dan gak percaya sama kamu.**
+
+#### 6.4 The 80 / 15 / 5 content ratio
+
+Even with a superniche you are allowed to talk about other things — in this proportion:
+
+| % | Topic layer | Example (Kadev's own account) |
+|---|---|---|
+| **80%** | the superniche itself | Personal branding untuk anak muda usia 18-24 tahun |
+| **15%** | the adjacent layer | Self Development untuk anak muda usia 18-24 tahun |
+| **5%** | personal life | Kehidupan personal |
+
+> **Bahas yang lain agar terlihat manusiawi. Usahakan membahas topik lain yang masih sedikit beririsan.**
+
+This is the single most concrete anti-AI-ish rule in the course. A feed that is 100% niche reads like a content farm; a feed that is 40% personal reads like a diary. 80/15/5.
+
+#### 6.5 Perfect Niche and Money Making Potential
+
+**Perfect Niche** = the intersection of three circles: `Your Passion ∩ Your Skill ∩ Money Making Potential`.
+
+**Money Making Potential** ("Ga akan pernah mati") is a triangle whose centre is **Human Happiness**:
+
+| Vertex | Why it never dies |
+|---|---|
+| **Health** ❤️ | orang selalu mau hidup lebih sehat |
+| **Wealth** 💰 | orang selalu ingin lebih aman secara finansial |
+| **Relationship** 👨‍👩‍👧 | orang selalu ingin terhubung |
+
+Why this is a good strategy, per the slide: selalu relevan (topik ini timeless, selalu ada marketnya) · banyak model monetisasi (konten, jasa, kursus, coaching) · bisa disesuaikan dengan personal branding-mu.
+
+#### 6.6 The 4K Method — finding what the audience actually needs
+
+The audience-side counterpart of Ikigai. Diagram: `Your Persona ∩ Audience Needs = Sweet Spot`.
+
+| K | Meaning | What to look for |
+|---|---|---|
+| **Keresahan** | Pain Point | what frustrates them |
+| **Kebutuhan** | Needs | what they must have |
+| **Keinginan** | Wants | what they wish for |
+| **Kebiasaan** | Habits | what they already do |
+
+**Three worked examples, reproduced in full** because they are the best template in the material:
+
+**Niche: Produktivitas & Time Management**
+- Keresahan: *"Susah atur waktu, kerjaan numpuk, sering prokrastinasi."*
+- Kebutuhan: *"Tips simpel dan efektif buat lebih disiplin dan produktif."*
+- Keinginan: *"Mau bisa kerja lebih cepat, punya banyak waktu luang, dan tetap santai."*
+- Kebiasaan: *"Sering scroll sosmed cari tips, suka nonton video motivasi, pakai to-do list tapi sering gak kepake."*
+- 🎯 Sweet Spot: bikin konten time management simpel yang relatable buat orang yang sering menunda pekerjaan, misalnya *"Cara Stop Prokrastinasi dalam 5 Menit"* atau *"Trik Rahasia Biar Kerjaan Kelar Lebih Cepat"*.
+
+**Niche: Personal Finance untuk Anak Muda**
+- Keresahan: *"Gaji cepat habis, susah nabung, takut salah investasi."*
+- Kebutuhan: *"Panduan keuangan yang gampang dipahami tanpa ribet."*
+- Keinginan: *"Bisa nabung tanpa tersiksa, punya passive income, tetap bisa nongkrong."*
+- Kebiasaan: *"Suka belanja impulsif, sering lihat konten tentang kaya cepat, tapi bingung mulai dari mana."*
+- 🎯 Sweet Spot: konten tips keuangan santai & fun buat anak muda, misalnya *"Cara Nabung Tanpa Ngerasa Miskin"* atau *"Investasi Buat Pemula: Mulai dari 10 Ribu"*.
+
+**Niche: Kesehatan & Fitness untuk Pemula**
+- Keresahan: *"Mau mulai olahraga tapi males, bingung diet yang bener."*
+- Kebutuhan: *"Program diet dan workout yang gak ribet buat pemula."*
+- Keinginan: *"Bisa turun berat badan tanpa harus olahraga berat atau makan hambar."*
+- Kebiasaan: *"Sering coba-coba diet, gampang nyerah, lebih suka lihat tips cepat di TikTok/Instagram."*
+- 🎯 Sweet Spot: konten diet & olahraga simpel yang fun, misalnya *"5 Gerakan Pemalas Biar Berat Badan Turun"* atau *"Makan Enak Tapi Tetap Kurus, Gimana Caranya?"*.
+
+#### 6.7 The Sweet Spot, and what happens when you miss it
+
+| Only *Your Persona* | ✅ **Sweet Spot** | Only *Audience Needs* |
+|---|---|---|
+| gak relevan · low engagement · narsis · jangan cuma fokus ke persona · ga bermanfaat · ego · sulit ningkatin followers · kurang punya peluang · pamer | Konsisten tanpa paksaan · Relevan (untuk diri sendiri dan audience) · Audiens betah & engaged · Gak kehilangan jati diri · Bangun kredibilitas & bikin orang percaya · Gak cepat burnout atau bosan · Bangun komunitas yang loyal · Kesempatan karir dan bisnis · Lebih gampang monetisasi · Beda dari orang lain · Bikin Personal Brand kamu Sustainable | Kehilangan Identitas Diri · Ga punya karakter diri · Tidak Berkelanjutan (Cepat Bosan & Lelah) · Ga ada USP, susah bedain sama kompetitor · Ga punya kredibilitas · Orang cenderung mengikuti seseorang yang punya cerita dan pengalaman unik |
+
+#### 6.8 Buyer Persona
+
+From the ebook. Three steps: **Riset Audiensmu** (survey, interview, social analytics; easiest = IG Stories question box) → **Identifikasi Karakteristik Utama** (demografi: usia, gender, lokasi, pekerjaan, pendidikan; psikografi: minat, hobi, nilai, gaya hidup; perilaku: kebiasaan belanja, penggunaan sosmed, preferensi konten) → **Gunakan Persona untuk Strategi.**
+
+Worked example (food creator): *18-24, tinggal di kota yang punya universitas, mahasiswa; tertarik eksplorasi kuliner dan gaya hidup anak kos; mencari tempat makan viral dengan pengalaman unik dan estetis; aktif membagikan pengalaman kuliner di sosmed.*
+
+#### 6.9 Audience-Focused Content and the feedback loop
+
+Five moves: pahami kebutuhan dan minat audiens · berikan nilai tambah · libatkan audiens · dengarkan feedback · bangun komunitas.
+
+The author's own story is the proof: in 2023 his Instagram went quiet; a friend (Zaki) told him *"Aku suka banget kalau konten kreator yang aku follow itu membalas DM atau reply story aku."* He started replying to every DM and comment and running Stories Q&A. Engagement recovered.
+
+> Personal branding bukan hanya tentang konten yang kita buat, tetapi juga tentang **bagaimana kita berinteraksi dan memperlakukan audiens.**
+
+#### 6.10 Changing niche without wrecking the account
+
+> *"Aku udah mulai nih… tapi gak cocok sama niche-nya, gimana ya cara ngubahnya?"*
+> **Jangan TIBA-TIBA, Algoritma bakal kacau.** Contoh buruk: Health → Otomotif, Finance → Editing ❌
+
+**Solusi = Buat jembatan pelan-pelan.** Find the overlapping topic and walk across it.
+
+```
+Mobile Video Editing  ──[ topik yang beririsan keduanya ]──►  Personal Branding
+```
+Bridge content = content that belongs to both: *"3 akun editing video yang personal brandingnya bagus"*, *"Cara biar personal branding melekat yaitu dengan editing yang bagus"*.
+
+---
+
+### 7. First Impression
+
+#### 7.1 Human Attention Span
+
+| 2000 | 2024 | Goldfish |
+|---|---|---|
+| 12 seconds | **8 seconds** | 9 seconds |
+
+> *"Kamu cuma punya 8 detik buat bikin orang tertarik dengan profilmu! Kalau mereka nggak suka? Bye, langsung scroll lewat!"*
+
+The slide poses it as: *Kenapa ada akun yang langsung bikin orang follow? Kenapa ada yang di-skip meski kontennya bagus?* → **Jawabannya ada di FIRST IMPRESSION.** The three surfaces are **Photo Profile, Bio, Feeds**.
+
+#### 7.2 Why profile and first impression matter
+
+- **Time Waktu Penilaian Cuma 3 Detik** — orang butuh kurang dari 3 detik buat menentukan apakah mereka tertarik dengan profil kamu atau nggak
+- **Foto Profil = Kesan Pertama** — profil Instagram/TikTok itu kayak "pintu depan" kamu di dunia digital
+- **Bio = Elevator Pitch** — bio yang kuat bisa langsung menjelaskan siapa kamu, apa yang kamu tawarkan, dan kenapa orang harus follow kamu
+- **Feeds = Bukti Konsistensi** — orang nggak cuma lihat satu post, tapi juga feeds kamu secara keseluruhan
+- **Ningkatkan Kredibilitas & Trust** — kalau profil kamu terlihat profesional, orang lebih gampang percaya
+
+#### 7.3 The anatomy of a profile, annotated
+
+From the slide dissecting `@kadafidevayana`:
+
+| Element | Rule |
+|---|---|
+| **Username** | Nama asli (personalisasi) |
+| **Profile Name** | `Nama kamu + niche atau industri yang sedang kamu bahas` — *for SEO* |
+| **Bio line 1 (Misi)** | *"🎯 Misi Bantu 10.000 Orang Bangun Personal Branding"* → **Value:** nilai apa yang kamu tawarkan |
+| **Bio line 2 (Build / Peers)** | `Build @… | Founder @…` / `Peers @…` → **You:** siapa kamu, spesialisasi kamu dan proof |
+| **CP / link** | `lynk.id/…` → **Call to Action:** berupa link untuk tau lebih lanjut |
+
+**Profile photo:** ✅ clear face, natural light, friendly · ✅ clean formal headshot · ❌ a photo shot from behind / from far away · ❌ default blank avatar.
+
+#### 7.4 Feeds Tips
+
+- **Konsisten visual** → pakai tone warna atau style yang seragam supaya orang langsung kenal identitasmu
+- **Mix konten** → gabungkan edukasi, storytelling, viral content, dan promo supaya feed nggak monoton
+- **Thumbnail/video cover catchy** → pakai judul yang bikin penasaran, misalnya *"Kenapa konten kamu nggak FYP? Ini alasannya!"*
+- **Engagement tinggi** → posting dengan format yang memancing interaksi, seperti polling di story, carousel tips, atau video tanya-jawab
+
+#### 7.5 Highlights = RAW Portfolio
+
+Instagram/TikTok highlights are treated as a portfolio, grouped by proof type: `on stage` · `Astra 🔵` · `Bicara 🎤`. The point is that a highlight names the *kind of proof*, not the month.
+
+---
+
+### 8. Personal Brand Pillar
+
+> Personal Branding **Tanpa** Personal Branding. / Personal Branding **Tanpa Teriak** Personal Branding.
+
+The fear it answers: *banyak orang pengen bangun personal branding, tapi takut terlihat "jualan diri" atau terlalu memaksakan image tertentu.*
+
+#### 8.1 The anti-pattern list (memorise this)
+
+| 🚫 Yang Banyak Orang Lakukan | ✅ Yang Bener |
+|---|---|
+| Cuma bilang *"Saya bisa ini, saya jago itu"* tanpa bukti nyata | Tunjukin **proses kerja**, bukan cuma hasil akhir |
+| Upload sertifikat doang tanpa konteks | Ceritakan pengalaman, tantangan, dan solusi yang dipakai |
+| Share hasil kerja, tapi tanpa storytelling atau value tambahan | Gunakan format carousel, case study, atau before-after biar lebih engaging |
+| Pamer doang tanpa value | Bikin konten harus ada tujuannya |
+| Bikin konten sekedar bahas tips, trik, berita, hiburan | |
+
+> Caraku ngakalinnya… pakai **Personal Brand Pillar**.
+
+#### 8.2 The four pillars
+
+| Pillar | Produces |
+|---|---|
+| **Educate** | Kredibilitas |
+| **Inspiration / Story** | Diingat dan Disukai |
+| **Entertaining / Interaction** | Lebih dekat dan manusiawi |
+| **Promotion** | Penjualan |
+
+**Premis + Pillar = Match Branding.** Take the premis from §2.4, run it through the four pillars, and you have four content streams that all say the same thing in different registers. That is what "consistent" actually means — not posting at the same time, but four pillars pointing at one premis.
+
+#### 8.3 The content-type map (ebook version)
+
+| Edukasi | Inspirasi | Koneksi | Hiburan | Informasi |
+|---|---|---|---|---|
+| Tips dan Trik | Cerita gagal dan berhasil | Cerita pribadi | Ikut tren | Berita (news) |
+| Tutorial | Pelajaran yang diambil | Insight pribadi | Relatable | Mitos dan Fakta |
+| Nasihat | | Perjuangan pribadi | Aktivitas · Memes · Challenge | Pro dan Kontra |
+
+Simplified four-type version also used: **Edukasi · Hiburan · Inspirasi/Emosi · Promosi.**
+
+#### 8.4 Hirarki Konten (Mark Schaefer)
+
+Four levels, bottom to top. Climb them.
+
+| Level | Name | What you do |
+|---|---|---|
+| 1 | **Menjawab Pertanyaan** | answer the actual questions in your comments and DMs |
+| 2 | **Edukasi** | teach your niche |
+| 3 | **Emosional** | tell the struggle behind what you built |
+| 4 | **Inspirasi** | make people act |
+
+> Kalau konten kamu sudah sampai ada di titik menginspirasi, selamat… artinya **kamu sudah dikenal orang**.
+
+---
+
+### 9. Seni Dokumentasi Diri (documenting yourself)
+
+The bridge between strategy and the camera — and the chapter that hands off directly to SpliceCraft.
+
+#### 9.1 The format map
+
+```
+                       Content
+        ┌──────────┬──────────┬──────────┬───────────┐
+      Video      Writing    Stories   Live Stream
+   ┌────┴────┐  ┌───┴────┐
+Short-form  Long-form  Single/Carousel  Threads
+```
+
+| Kategori Konten | ✅ Plus | ❌ Minus | 🎯 Goals |
+|---|---|---|---|
+| **Short-form Video** | Gampang viral, nggak perlu lama bikin, interaksi tinggi | Umur konten pendek, harus sering upload | Biar lebih dikenal & menarik followers baru |
+| **Long-form Video** | Bisa jelasin lebih detail, bangun loyal audience | Bikin lama, butuh effort lebih | Bangun kredibilitas & bikin audiens loyal |
+| **Single Post / Carousel** | Cerita, edukasi atau inspirasi bisa simpel & padat | Harus bisa belajar nulis dan kreatif biar nggak tenggelam di algoritma | Share insight, edukasi, & bangun kredibilitas |
+| **Threads** | Bisa storytelling lebih panjang, enak buat diskusi | Harus pinter bikin hook biar orang lanjut baca | Bikin diskusi, share opini & ningkatin kredibilitas |
+| **Stories** | Lebih personal, enak buat storytelling | Cuma bertahan 24 jam, reach kadang nggak stabil | Bangun koneksi lebih dekat dengan audiens |
+| **Live Streaming** | Interaksi langsung, lebih otentik | Harus siapin materi, kalau kelamaan bisa bikin bosan | Naikin trust & bikin engagement real-time |
+
+Tips per format from the tree: Short-form → *Talking Head (video ngobrol langsung ke kamera)*, *Voice Over & Documentation (rekam aktivitas, narasi dibelakang)*, *Jedag-jedug / Trendy Edits (pengikut tren musik & transisi)*. Long-form → *Dokumenter perjalanan*, *Podcast video*, *Tutorial dan edukasi panjang*. Writing → *Kapan Pakai Single Post?* (kalau pesannya simpel & to the point; contoh: quotes, micro-blogging) vs *Kapan Pakai Carousel?* (untuk konten storytelling atau edukasi mendalam; contoh: studi kasus, step-by-step guides).
+
+#### 9.2 Roll & Action — the production checklist
+
+> ✅ Cahaya cukup, kalau bisa natural light atau ring light (Golden Hour)
+> ✅ Suara jelas, pakai mic eksternal kalau perlu
+> ✅ Teleprompter tips CapCut
+> ✅ Bisa dimana aja kapan aja
+> ✅ Gunakan format vertikal (9:16) buat Reels/TikTok, horizontal (16:9) buat YouTube
+> ✅ Edit simpel, tambahin subtitle & musik biar engaging
+>
+> **Next Materi, Editing!**
+
+#### 9.3 Contoh yang Salah — the production error list
+
+This is the checklist SpliceCraft should run against any footage a user hands over.
+
+| 🚫 Cahaya Buruk | 🚫 Suara Nggak Jelas | 🚫 Format Video Salah |
+|---|---|---|
+| Video gelap, wajah nggak kelihatan jelas | Banyak noise (suara angin, kendaraan, atau orang ngobrol) | Rekam horizontal buat TikTok/Reels (terpotong pas upload) |
+| Backlight parah, muka jadi siluet | Ngomong terlalu pelan atau terlalu jauh dari mic | Video vertikal buat YouTube panjang (nggak full screen) |
+
+| 🚫 Editing Berlebihan / Minim Editing | 🚫 Badan & Mata Nggak Fokus |
+|---|---|
+| Terlalu banyak efek & transition, bikin pusing | Ngeliatin layar HP, bukan kamera (kesannya nggak engage) |
+| Nggak ada subtitle, orang nggak ngerti kalau nonton tanpa suara | Posisi kamera terlalu rendah (double chin alert 😅) |
+| Musik terlalu kencang sampai nutupin suara | |
+
+<!-- journal: this table is the direct ancestor of anti-ai-ish.md §"Production". Keep them in sync — if you edit one, edit the other. -->
+
+---
+
+### 10. Chapter 4 — Survive Personal Branding
+
+#### 10.1 The number that frames the chapter
+
+> Kebanyakan orang cuma pengen **viral**. Berhasil viral. Tapi, **gak bisa bertahan.**
+> **7/10 orang gagal personal branding 6 bulan pertama.**
+
+The author includes himself: *"Aku termasuk dari 7/10 itu."* (Shown with a screenshot of his abandoned 2017 YouTube uploads.) *"Terus gimana caraku untuk menghidupkan kembali?"*
+
+**Ngejar Viral: cepat naiknya, cepat juga turunnya.**
+
+#### 10.2 The five survival levers
+
+The chapter's own diagram — a hand reaching out of sand — with five icons:
+
+| Lever | Core idea |
+|---|---|
+| **Trend Adaptation** | ride trends *your way* |
+| **Signature Content** | be instantly recognisable |
+| **Loyal Audience** | community over follower count |
+| **Personal Brand Crisis** | handle criticism without collapsing |
+| **Unrelevan = Rebranding** | evolve on purpose, not by accident |
+
+**Trend Adaptation — Rahasianya:**
+- **Pilih tren yang relevan** → jangan asal ikut, pilih yang bisa dikaitkan dengan niche-mu
+- **Gunakan tren sebagai kendaraan, bukan tujuan** → tren hanya alat untuk meningkatkan exposure
+- **Twist tren dengan gaya sendiri** → ambil tren, lalu ubah sesuai style atau sudut pandang khasmu
+- 🚫 Kesalahan banyak orang: ikut semua tren tanpa relevansi (branding jadi tidak jelas) · mengubah identitas hanya demi tren (malah bikin audiens bingung)
+
+**Signature Content** — *gaya khas dalam menyampaikan konten yang bikin kamu mudah dikenali. Bisa berupa format visual, tone, atau cara penyampaian konten.*
+- ✅ Eksplorasi berbagai format → coba carousel, thread, short-form video, atau podcast
+- ✅ Pilih format yang paling nyaman & cocok → harus sustain dalam jangka panjang
+- ✅ Buat template atau pola khas → misalnya, selalu mulai dengan storytelling atau pakai font/style tertentu
+- Warna sebagai signature: `Kadafi → Hitam Putih`, `Uirofi → Orange`, `Kasisolusi → Biru`
+- 🚀 Biar gampang dikenali! Orang langsung ngeh, *"Oh ini kontennya si …"* tanpa harus lihat username dulu.
+- 🚀 Nggak pusing mikirin format baru tiap kali bikin konten. Udah ada pakemnya, tinggal eksekusi!
+- 🚀 Engagement naik! Karena audiens udah familiar dan tahu apa yang bakal mereka dapetin dari kontenmu.
+
+**Loyal Audience** — *Followers banyak ≠ personal branding kuat. Yang lebih penting adalah membangun komunitas loyal yang engaged dengan kontenmu.*
+- ✅ Engage dengan audiens → balas komentar, DM, atau ajak diskusi
+- ✅ Kasih value secara konsisten → orang akan terus follow kalau merasa mendapat manfaat
+- ✅ Buat komunitas kecil → bisa lewat grup Telegram, Discord, atau membership
+- 🚫 Kesalahan yang harus dihindari: fokus ke angka followers tapi engagement rendah · gak bikin komunitas
+- Extra tips: **1. Jadi "Temen" Buat Audiens · 2. Autentik, Jangan Jadi "Karakter" · 3. Share kehidupan non branding · 4. Pahami Mereka, Jangan Asal Konten**
+
+**Personal Brand Crisis** — *Di dunia digital, kesalahan atau kritik bisa muncul kapan aja. Cara menanganinya akan menentukan apakah personal branding-mu akan tetap bertahan atau malah runtuh.*
+- ✅ Jangan defensif atau kabur → kalau ada kesalahan, akui dan tunjukkan solusi
+- ✅ Tanggapi dengan profesional → jangan emosional dalam menanggapi kritik
+- ✅ Gunakan kritik sebagai evaluasi → kalau bisa, jadikan bahan refleksi untuk memperkuat branding-mu
+
+**Unrelevan = Rebranding dengan Strategi** — *Kadang, personal branding perlu berkembang atau berubah arah. Tapi kalau dilakukan tanpa strategi, bisa bikin audiens bingung atau bahkan kehilangan engagement.*
+- ✅ Sisipin topik baru pelan-pelan → awalnya masih bahas editing, tapi mulai masuk ke personal branding
+- ✅ Manfaatin skill lama → masih pakai editing buat bikin konten personal branding yang powerful
+- ✅ Bangun kredibilitas di bidang baru → aktif sharing insight lewat konten, webinar, dan komunitas
+- ✅ Konsisten & kuatkan narasi → semua platform disesuaikan dengan branding baru tanpa kehilangan audiens lama
+- Contoh: *dulu fokus di self-development, sekarang mau masuk ke bisnis coaching* → bisa mulai dengan konten *"Self-development dalam Bisnis."* / *dulu bikin konten meme, sekarang mau lebih edukatif* → bisa mulai dengan *"Belajar dari Meme."*
+- 🚫 Kesalahan yang harus dihindari: berubah terlalu drastis tanpa persiapan (audiens kaget dan mungkin unfollow) · menghapus branding lama secara tiba-tiba (bisa kehilangan trust dari komunitas yang sudah ada)
+
+> **Conclusion: Survive personal branding bukan soal viral doang, tapi soal relevan, adaptif, dan tetap kasih value ke audiens.**
+
+#### 10.3 Why people are not consistent
+
+> **Kamu Gagal, karena kamu gak konsisten dan gak fokus.**
+> - Konsistensi = Kredibilitas → orang percaya karena kita terus muncul dengan pesan yang sama
+> - Algoritma juga suka yang konsisten → semakin sering muncul, semakin dikenal
+> - Tanpa konsistensi, kita jadi "random" → orang gak tahu kita sebenarnya siapa dan apa yang kita tawarkan
+
+**Faktor Kenapa Orang Gak Konsisten:**
+- **Niru Orang Lain** → akhirnya kehilangan identitas sendiri, jadi capek dan bosen sendiri
+- **Overclaim & Overpromising** → janji besar tapi gak bisa deliver, akhirnya malu sendiri
+- **Perfeksionisme** → pengen konten sempurna terus, malah jadi gak pernah posting
+- **Gak Punya Nilai yang Jelas** → branding-nya abu-abu, gak ada benang merah
+- **Kemakan Motivasi** → semangat di awal tanpa komitmen buat berjuang
+
+**Motivasi VS Konsistensi** — drawn as two graphs: motivation is tall spikes decaying to zero; consistency is a flat row of small even bumps that never stops.
+> *Motivasi bagus untuk triggering dan mulai, tapi jangan ke makan motivasi terus, harus bisa komit.*
+
+**Konsisten Personal Branding** splits into two halves:
+
+| Mindset & Value | Content & Technical |
+|---|---|
+| Punya Ikigai — *"Si Paling public speaking"*, *"Si Paling Matematika"* | Tentukan format konten yang bisa kamu jalani (long form vs short form, tulisan vs video) |
+| Punya SWOT - Premis | Buat sistem biar gak burnout → misal, jadwal posting yang realistis |
+| Punya komitmen | |
+
+Two more failure reasons the author confesses to from his own 4 lost years:
+- **niru orang lain** — *yang ditiru ✅ / Peniru ❌*
+- **alat harus proper dan hasil bagus** — *kalau jelek gak di-post. Padahal bagus itu subjektif.* (Illustrated with Avengers vs Barbie posters.) *Gas aja terus berproses, pelan-pelan dari jelek jadi ketemu titik bagusnya.*
+
+#### 10.4 Kritik, and Grit
+
+> **JANGAN SOK PINTER, terima kritik!** *Alasan 4 tahun aku gak growth, aku anti kritik.*
+> **Kritik itu bahan bakar, bukan penghambat.** Ada 3 jenis kritik:
+> - **Kritik membangun** → bisa jadi insight buat improve
+> - **Kritik asal-asalan** → gak relevan, bisa di-skip
+> - **Hate comment** → tanda bahwa kamu mulai dikenal (good sign!)
+>
+> **Cara mental kuat: Fokus ke yang bisa dikontrol.**
+
+> **Grit: Kunci Kuat Naik Turunnya Personal Branding.**
+> - **Grit = passion + komitmen action** → branding yang sukses butuh waktu
+> - Bukan yang paling berbakat yang menang, **tapi yang paling tahan banting**
+> - **Evaluasi terus** → lihat progress dalam **6 bulan**, bukan cuma dalam **1 minggu**
+
+#### 10.5 Marathon, not Sprint
+
+The chapter's closing metaphor, drawn as marathon runner vs sprinter:
+
+| Marathon ✅ | Sprint ❌ |
+|---|---|
+| Butuh napas panjang | Ga bertahan lama |
+| Strategi jangka panjang | Ga termotivasi |
+| Konsisten | Cari viral aja |
+| Sabar | Stamina cepat habis |
+| Pelan tapi pasti | Proses instant |
+| Percaya proses | Capek |
+| Bukan sekali hajar kemudian selesai | Sekali hajar |
+
+> - Hasil ga langsung kelihatan, butuh perjalanan panjang
+> - Konsisten adalah kunci terus berjalan dan maju
+> - Adaptasi adalah cara untuk ga cepat capek dan selalu termotivasi
+> - **Investasi waktu dan ilmu. Ga bisa instant, nikmatin prosesnya. Jadikan perjalanan untuk semakin kuat, berkembang dan relevan.**
+> - **Personal branding it's a process not a destination.**
+
+The mountain-photo slide makes it personal: *ngerasa paling jago · awalnya ada di barisan paling depan malah tertinggal paling belakang · lari pengen cepat puncak · ngga nikmatin perjalanan · capek dan akhirnya diem ditempat · di dahuluin sama temen yang santai jalan nikmatin prosesnya.*
+
+#### 10.6 Capek bikin konten / burnout
+
+From the ebook. **Jadwal kerja yang seimbang** (tentukan jam kerja, pakai Pomodoro) · **Delegasi dan kolaborasi** (the author now has an editor and a social team) · **Self-care dan relaksasi** · **Cari dukungan** (mentor, komunitas kreator).
+
+> *"Konsistensi adalah bentuk kesetiaan kita kepada diri kita sendiri dan tujuan kita."* — Kadafi Devayana
+
+---
+
+### 11. Chapter 4 — Evaluation
+
+Three questions, asked in this order:
+
+> **001 — Bagaimana orang lain mengenal kita?**
+> **002 — Apakah personal branding kita sudah sesuai dengan tujuan?**
+> **003 — Apa penyebab personal branding kita belum optimal?**
+
+#### 11.1 Bagaimana Orang Lain Mengenal Kamu?
+
+**Langkah Evaluasi:** tanyakan kepada orang-orang di sekitar kamu → *"Apa yang paling melekat dari diri saya?"*
+
+> **Konsistensi** dalam menyampaikan pesan adalah kunci agar orang lain mengenali kamu sesuai dengan branding yang kamu inginkan.
+
+💡 **Tantangan buat kamu:** *Coba tanyakan ke 5 orang di sekitar kamu, apa yang paling melekat dari diri kamu? Apakah jawaban mereka sesuai dengan branding yang ingin kamu bangun?*
+
+The salt-and-sugar illustration makes the point: sugar and salt look identical in a pile. What you *intend* to be and what people *taste* are different things until you check.
+
+#### 11.2 Apakah Sesuai dengan Tujuan?
+
+**Case study:** seorang desainer UI/UX ingin membangun branding sebagai expert di bidangnya. Namun, setelah 6 bulan aktif di media sosial, ia lebih dikenal sebagai motivator karena sering berbagi tips mindset.
+**Solusi:** ia perlu lebih banyak berbagi case study, pengalaman profesional, dan tips UI/UX agar brandingnya lebih sesuai dengan target.
+
+#### 11.3 Apa Penyebab Belum Optimal?
+
+| Penyebab | Diagnostic questions | Solusi |
+|---|---|---|
+| **WHY-nya tidak kuat** | Apakah kamu benar-benar tahu alasan di balik personal branding yang sedang dibangun? Jika kamu tidak yakin dengan "WHY" kamu, maka branding yang kamu bangun bisa terasa kosong dan kurang autentik. | kembali ke §5 |
+| **Pesan yang kamu sampaikan tidak konsisten** | Apakah topik yang kamu bahas sering berubah-ubah? Apakah tone dan gaya komunikasi kamu seragam di semua platform? | **Pastikan ada benang merah dalam setiap konten yang kamu buat. Fokus pada 1-3 tema utama agar audiens mudah mengingat branding kamu.** |
+| **Opportunity Mapping kurang optimal** | Apakah kamu sudah memanfaatkan semua peluang yang tersedia? Apakah kamu sudah aktif networking dan membangun koneksi dengan orang-orang di industri yang relevan? | **Buat daftar komunitas, event, dan platform yang bisa membantu kamu mendapatkan lebih banyak exposure dan kesempatan berkolaborasi.** |
+
+---
+
+### 12. Chapter 5 — Expand & Monetize
+
+#### 12.1 Knowledge Gap / Information Gap
+
+Two names for the same idea, both used in the material.
+
+> **Knowledge Gap: apa yang KAMU TAU tapi ORANG LAIN GAK TAU.**
+> Drawn as a chasm: `Orang gak tau` ——[ **Ilmu kamu** = the bridge ]—— `🏆`
+
+Ebook version: *Information Gap adalah ketidakcocokan antara apa yang seseorang tahu dan apa yang mereka ingin tahu. Sebagai konten kreator, tugas kita adalah mengisi celah ini.*
+
+**Why it matters:** Menarik Perhatian · Menjaga Ketertarikan · Membangun Kepercayaan. And: memberikan nilai tambah · membangun kepercayaan dan kredibilitas · menghasilkan pendapatan sesuai Ikigai.
+
+**Cari Knowledge Gap Kamu — gimana caranya?** Four methods:
+
+| Method | How |
+|---|---|
+| **Data analytics** | Google Trends. Pakai data dari insights media sosial, Google Trends, atau survei. Cari topik yang sering dicari tapi minim jawaban yang jelas. |
+| **People Problem** | Dengerin pertanyaan dan masalah yang sering dihadapi orang-orang di industri kamu. Cek komentar, DM, atau forum diskusi terkait niche kamu. |
+| **Competitor Benchmark** | Analisis kompetitor: Apa yang mereka bahas dan apa yang belum mereka bahas? Cari celah yang bisa kamu isi dengan perspektif unikmu. |
+| **Self Experience** | Curahkan pengalaman pribadi sebagai insight. Apa yang dulu kamu bingungin dan akhirnya kamu berhasil pecahkan? |
+
+**Worked case:** *"Aku jago ngedit, tapi banyak orang ga bisa ngedit dan pengen jago editing. Itu knowledge gap! Aku bisa isi gap itu dengan:* ✅ Ngajarin editing lewat konten gratis (kuncinya aja, orang penasaran) ✅ Bikin workshop atau kelas berbayar ✅ Jual preset, template, atau jasa editing (freelance).*
+> ✨ **Intinya: Carilah kebutuhan pasar yang bisa kita isi dengan keahlian kita!**
+
+**Ebook case studies:** the author's own *"Modal kopi 30 ribu jadi 12 Juta"* (Content Creator Blueprint, written in 2 hours, Rp12 juta in month one, settling to Rp4-8 juta/month after; 100% margin) and Timothy Ronald / Akademi Crypto (150+ modules, premium subscription up to Rp17 juta).
+
+#### 12.2 The five monetisation doors
+
+`Monetize → Product (Physical/Digital) · Speaker · Partnership/Collaboration · Mentorship · Affiliate`
+
+| Door | How to Start |
+|---|---|
+| **Speaker** | ✅ Bangun Kredibilitas (Ngonten + Post foto lagi speaker) ✅ Buat Portofolio Speaker (Gratis dulu aja!) ✅ Benchmark orang lain buat tau rate kamu.<br>*Rate cited: 1× jadi public speaker = 1-2× UMR Jakarta / 3-6× UMR Jogja, 45-90 menit, 4-8 kali per bulan.* |
+| **Partnership / Collaboration** | ✅ Bangun kredibilitas & engagement audiens ✅ Buat media kit & rate card ✅ Terima dan pitching ke brand yang relevan ✅ Tampilkan hasil kerja sama di portofolio |
+| **Digital Product** | ✅ Personal Branding ✅ Pilih produk (ebook, template, course) ✅ Buat produk menarik (Design, Editing dll) ✅ Pakai platform ✅ Digital marketing.<br>*Lifetime sales shown: IDR 78,401,429* |
+| **Mentorship** | ✅ Bangun kredibilitas dengan personal branding ✅ Tentuin spesialisasi & target mentee ✅ Benchmark rate mentoring ✅ Gunakan testimoni buat bangun kepercayaan ✅ Pakai platform yang pas (Zoom, Google Meet) |
+| **Affiliate** | ✅ Pilih program afiliasi yang sesuai ✅ Daftar & dapatkan link afiliasi ✅ Buat konten review atau tutorial ✅ Gunakan CTA biar ada yang beli |
+
+The Entrepreneur tree gives a second cut of the same thing: `Monetisasi (Community Building, Mentoring & Consulting, Speaker/Praktisi, Menjual produk F&B/fashion) · Digital Product (e-book, kelas online/webinar, template & framework businessplan) · Kolaborasi (collab bareng brand/influencer/sesama entrepreneur, joint venture/proyek bersama) · Networking (Komunitas Bisnis, Relasi ke Investor)`.
+
+#### 12.3 Digital Products — the 4-step build
+
+> **Karena Digital Product = Easy Money.** Cek portfolio Dafi · Belum lama coba tapi hasilnya lumayan · Side income, low effort maintenance.
+
+```
+   1. Idea  →  2. Create the Product   |   3. Funnel  →  4. Scale Up!
+   └──── Creating ────┘                    └──── Selling ────┘
+```
+
+**Digital vs Physical** (the slide's comparison table): Modal Awal (murah, cukup skill & laptop / mahal, perlu bahan baku, stok, gudang) · Biaya Produksi (sekali bikin, bisa dijual terus / tiap unit harus diproduksi lagi) · Penyimpanan (cukup cloud / harus ada gudang) · Pengiriman (instan, cuma butuh link download / perlu ongkir, packing, bisa kena delay) · Skalabilitas (bisa dijual ke ribuan orang tanpa ribet / terbatas stok & kapasitas produksi) · Keuntungan (100% masuk kantong setelah modal tertutup / harus hitung biaya produksi per unit) · Maintenance (bisa update kapan aja / harus siap retur, garansi, barang rusak) · Keunikan (bisa custom banget, lebih fleksibel / harus bersaing sama banyak produk serupa) · Risiko (minim, nggak ada stok mati / bisa rugi kalau barang nggak laku atau rusak).
+
+**1. Idea & Research**
+1. **Fokus ke Ikigai Diri Sendiri** → manfaatin skill kamu: kalau jago copywriting, bisa bikin e-book atau kursus online
+2. **Cari Masalah yang Sering Dihadapi Orang** → produk digital yang laris biasanya solusi dari masalah nyata. Contoh: banyak orang pengen jago desain tapi nggak bisa pakai Photoshop? Solusinya: jual template Canva!
+3. **Lihat Tren di Pasar** → cek media sosial, forum, atau marketplace buat lihat apa yang lagi tren. Misalnya, AI tools lagi booming, mungkin bisa bikin panduan atau template terkait AI
+4. **Kompetitor Benchmarking** → coba buat lebih baik sesuai dengan persona, ilmu dan pengalaman kamu. **(GAK BOLEH PLAGIAT!)**
+5. **Refleksi dari Pengalaman Pribadi** → kadang pengalaman sendiri bisa jadi ide. Contoh: pernah sukses dapat klien dari LinkedIn, bisa bikin panduan cara optimasi LinkedIn buat freelance
+> **Notes:** Jangan pernah plagiat apalagi mencuri, coba buat dari 0, kepercayaan dan kredibilitas harganya lebih mahal dari apapun.
+> Tools shown: Google Trends · Threads · Etsy · Lynk · Amazon · Tribeversity
+
+**2. Create the Product** (formats: Sheets · Canva · PDF · MP4)
+
+| Contoh Ide | Step-step |
+|---|---|
+| eBook Content Creating | 1. Apa aja yang bakal dibahas dicatet di docs (buat outline-nya) 2. Isi sesuai teori, ilmu dan pengalaman kita (bisa minta bantu AI untuk brainstorming bareng) 3. Finalisasi desain di Canva |
+| Template Personal Branding Builder | 1. Buat outline 2. Buat sheets dan rumusnya 3. Publikasi lewat platform |
+| Template Media kit & Rate Card | 1. Buat outline 2. Buat design-nya 3. Share template link |
+| Kelas Personal Branding | 1. Bikin webinar (Poster, Content Marketing, Grup WA) 2. Jual Recordnya (buat yang belum ikutan) |
+
+**3. Funnel** — ToFu / MoFu / BoFu
+- **Awareness** (ToFu): *Wildest audience, most general, least ready to convert* → Personal branding, Konten, Bikin/oleh community, dll
+- **Consideration stage** (MoFu): *Targeted audience, may already be a lead* → Free sample, Free Webinar, Testimoni, Product Knowledge
+- **Decision stage** (BoFu): *Narrow audience, interested or ready to buy* → Garansi, Diskon terbatas, Limited Edition
+- Flow: `TikTok/LinkedIn/Threads/YouTube/Instagram/WhatsApp → Bikin konten, cari pasar dan audiencenya → Masuk ke platform (Amazon/Lynk/Etsy/m·caas) → Kasih Call to Action!`
+
+**4. Scale Up!**
+- 🚀 **Optimasi yang sudah ada** – perbaiki yang bisa ditingkatkan
+- 🚀 **Tambah produk/bundling** – bikin pelanggan beli lebih banyak
+- 🚀 **Ekspansi ke platform & market baru** – jangkau audiens lebih luas
+- 🚀 **Automasi, Affiliate & delegasi** – supaya bisa fokus ke strategi besar
+- 🚀 **Bangun brand yang kuat** – supaya bisnis sustainable jangka panjang
+
+---
+
+### 13. Networking, collaboration, and LinkedIn
+
+#### 13.1 PING Framework
+
+> **Personal Branding = Akar Networking.**
+
+```
+        ┌── 1. Personal Branding        ← the root
+PING ───┼── 2. Interpersonal Communication
+        ├── 3. Networking
+        └── 4. Generating Value
+```
+
+**1. Personal Branding** is the root — the POV slides prove it: the same DM lands differently depending on whether the sender's profile shows `1 post / 181 followers` or a built profile. *POV Business Owner: "bro, kantor gue butuh orang, ngopi yok."* / *POV Organization Management: "mas, aku butuh kamu ngisi salah satu divisi di organisasiku, aku liat kamu capable."* The Before/After slide pairs a long formal cold WhatsApp application against an unsolicited LinkedIn recommendation from a recruiter.
+
+**2. Interpersonal Communication = Memasak** 🍳
+
+| Cooking | Communication |
+|---|---|
+| **Bahan** = Pesan yang Akan Disampaikan | sebelum memasak, kita harus memilih bahan yang tepat agar makanan enak → kita harus memilih kata-kata, nada, dan ekspresi yang sesuai agar pesan tersampaikan dengan baik |
+| **Resep** = Struktur & Cara Menyampaikan Pesan | resep membantu kita mengolah bahan dengan urutan yang benar → struktur pesan harus jelas, pembukaan, isi, dan kesimpulan, agar mudah dipahami lawan bicara |
+| **Teknik Memasak** = Gaya Komunikasi | menggoreng, merebus, atau memanggang? → nada suara, bahasa tubuh, dan ekspresi memengaruhi makna pesan yang diterima |
+| **Rasa & Bumbu** = Emosi & Empati | kurang garam? terlalu pedas? → perlu keseimbangan agar makanan enak. Dalam komunikasi, kita harus memahami emosi lawan bicara dan menyesuaikan pendekatan agar percakapan berjalan baik |
+| **Penyajian** = Cara Menyampaikan Pesan | makanan yang enak tapi disajikan asal-asalan bisa membuat orang enggan mencobanya → bahasa tubuh, dan konteks memengaruhi bagaimana pesan diterima |
+| **Umpan Balik** = Respon dari Lawan Bicara | jika orang yang makan memberi respons, kita tahu apakah masakan itu enak atau perlu diperbaiki → kita harus mendengarkan tanggapan lawan bicara dan menyesuaikan pendekatan agar lebih efektif |
+
+**3. Networking — Strategic Networking Framework**, a triangle:
+- **Analyze (Analisis)** — mengidentifikasi kebutuhan ("Needs") dan sumber daya yang dimiliki ("Haves")
+- **Plan (Perencanaan)** — menyusun portofolio hubungan yang berharga dan menentukan strategi dalam membangun jaringan. Fokus pada hubungan yang bernilai tinggi memungkinkan efektivitas dalam mencapai tujuan jangka panjang. *(Relationship Portfolio)*
+- **Network (Jaringan)** — mencari dan bertukar informasi, melakukan analisis kontak serta hubungan yang ada. Proses ini memungkinkan seseorang atau organisasi untuk memperluas akses ke informasi dan sumber daya yang relevan. *(Search & exchange, Contact & relationship analytics)*
+
+**4. Generating Value** 💯 — *bukan hanya sekadar membangun jaringan dan memperkenalkan brand, tetapi juga memberikan manfaat nyata kepada orang lain:*
+- **Sharing Sumber Daya** (informasi, ilmu, koneksi)
+- **Improve Diri** (membangun keterampilan agar dapat memberikan kontribusi lebih besar)
+- **Giving Back** (gak cuma nerima manfaat dari orang, tetapi juga memberikan sesuatu kembali)
+- **Pahami Kebutuhan dan Solusi** (tanya lebih dalam tentang tantangan bisnis rekan kerja, dan menawarkan solusi yang relevan)
+
+#### 13.2 Kolaborasi = Supply & Demand matching
+
+> Setiap orang punya **"supply"** (keahlian, skill, atau sumber daya) dan **"demand"** (kebutuhan, masalah yang ingin diselesaikan).
+
+- **Kolaborasi** — A's Supply meets B's Demand, and back
+- **Matching** — the two sides line up
+- **Menaikkan Visibilitas** — *Personal Branding* raises your Supply above everyone else's identical Supply
+> 🚀 **Jadi, personal branding meningkatkan visibilitas "supply" kita, sehingga lebih mudah ditemukan oleh orang yang memiliki "demand" yang cocok!**
+
+#### 13.3 LinkedIn specifics
+
+Included for completeness; only §13.3's STAR caption rule matters for video scripts.
+
+**Follow vs Connect**
+
+| | Connect | Follow |
+|---|---|---|
+| Hubungan | Terhubung dua arah | Satu arah (cuma yang follow) |
+| Konten | Saling melihat postingan | Hanya melihat postingan yang difollow |
+| Interaksi | Bisa DM langsung | Tidak bisa DM (kecuali lewat InMail) |
+| Tujuan | Membangun koneksi | Mengonsumsi konten tanpa terhubung |
+
+**Networking Circle** — three rings:
+- **Inner Circle – "Orang Terdekat"**: teman kuliah atau kerja, dosen pembimbing, rekan organisasi, koneksi dari acara networking. *Connect langsung karena mereka adalah jaringan awal kita. Bisa mulai membangun engagement seperti berbagi insight atau mendiskusikan topik yang relevan.*
+- **Middle Circle – "Jembatan Karier"**: alumni kampus yang bekerja di industri yang kita incar, rekruter atau HR dari perusahaan target, mentor atau senior dari komunitas profesional, orang yang pernah berbagi pengalaman terkait bidang yang kita minati. *Connect jika memungkinkan, atau Follow jika belum ada interaksi. Berikan engagement dengan komentar atau reaksi pada postingan mereka untuk membangun koneksi. Bisa DM mereka jika ada ketertarikan atau pertanyaan terkait karier.*
+- **Outer Circle – "Sumber Inspirasi & Insight"**: thought leaders di industri tertentu, C-level executives dari perusahaan yang kita minati, influencer LinkedIn yang sering berbagi insight bermanfaat, profesional yang sering membagikan pengalaman atau tips di bidangnya. *Follow mereka untuk mendapatkan insight berharga. Terlibat di kolom komentar untuk meningkatkan visibility di komunitas mereka. Jika ada kesempatan, DM dengan pendekatan profesional untuk membangun hubungan lebih lanjut.*
+
+**Funnel 3C** — `Connect (Bangun Koneksi yang Tepat) → Converse (Mulai & Jaga Interaksi) → Cultivate (Jaga & Perkuat Relasi)`
+
+- **Connect:** follow & connect dengan orang yang relevan (sesuai bidang, industri, atau interest) · kirim personalized connection request, jangan hanya klik "Connect" · gunakan Networking Circle Model
+- **Converse:** aktif berkomentar di postingan orang lain dengan opini yang bernilai · kirim pesan follow-up setelah connect, jangan hanya diam · gunakan metode **"Give First"** → berikan insight atau bantuan sebelum meminta sesuatu
+- **Cultivate:** bangun hubungan jangka panjang dengan check-in berkala (tanya kabar, diskusi ringan) · berikan dukungan dalam bentuk engagement (like, comment, share postingan mereka) · undang ke diskusi atau ajak kolaborasi kecil
+
+> **Kunci DM LinkedIn yang Efektif:** Jangan terkesan template & formal banget. Singkat, relevan, dan kasih alasan jelas kenapa mau connect. Lebih baik kasih nilai dulu (apresiasi, insight) sebelum minta sesuatu. **Ajak ngobrol, bukan wawancara!**
+
+**LinkedIn algorithm:** `Posting Konten/Berinteraksi → Engagement Awal (Like, Comment, Repost) → Algoritma Menilai Kualitas Interaksi → Jika Engagement Tinggi → Muncul di Second-Degree Connection → Semakin Banyak Interaksi → Semakin Luas Jangkauan`
+- ✅ **Engagement Awal itu Kunci!** Dalam 1-2 jam pertama setelah posting, usahakan ada like dan komentar. Balas setiap komentar untuk memperpanjang umur post di feed orang lain.
+- ✅ **Jadilah Aktif, Bukan Pasif**
+- ✅ **Ajak Audience Berdiskusi** — post yang mengajukan pertanyaan atau meminta pendapat lebih banyak mendapatkan engagement. LinkedIn memprioritaskan konten yang menciptakan diskusi dibanding sekadar informasi satu arah.
+
+**Profile mechanics:** Headline = 220 characters (crosscheck: Background Pendidikan/Pekerjaan · Pengalaman Magang · Aspirasi Karir/Tujuan Karir · Highlight Prestasi/skill dan sertifikasi). Summary = 2600 characters (crosscheck: Field of Interest · Key highlight · Call to Action · Top Skills). URL: shorten it — `linkedin.com/in/m-arif-maliki123/` ❌ → `linkedin.com/in/arifmaliki/` ✅. Banner: use one. Enable **Top Skills**, collect **Endorsements**, ask for and give **Recommendations**, fill **Featured** with achievements. **Caption = STAR Methods** (§2.5). Experience description = Definition + Key highlight + Skills and Documentation.
+
+<!-- journal: LinkedIn section is included because the user asked for complete coverage of the folder, but it is out of scope for a video-editing skill. If this file ever needs trimming, cut §13.3 first and move it to its own reference. The STAR caption rule and the PING framework should stay. -->
+
+---
+
+### 14. How SpliceCraft uses all of this
+
+A mapping so the agent knows which framework to reach for at which moment.
+
+| When the user says | Reach for | Why |
+|---|---|---|
+| "bikinin script" and cannot say who it is for | §6.1-6.2 superniche, §6.6 4K Method | a script without a specific *siapa* is the #1 source of AI-ish copy |
+| "kontenku sepi" | §6.3 algorithm, §10.3 consistency, §6.4 80/15/5 | usually a focus problem, not an editing problem |
+| "aku gak pede" / "takut dibilang pamer" | §3 Perception/Persona, §3.1 Circle of Control, §4 | the block is emotional; do not answer it with editing tips |
+| "gak tau mau bikin konten apa" | §2.4 Premis → §8.2 Pillar → `kadev-script-formulas.md` Unlimited Idea | premis + pillar generates the queue |
+| "mau jualan / monetisasi" | §12.1 Knowledge Gap, §12.2 five doors, §12.3 funnel | pick the door first, then write to that funnel stage |
+| "hasilnya masih AI banget" | §2.4 premis missing, §9.3 production errors, `anti-ai-ish.md` | almost always: no premis, no personal story, over-editing |
+| "mau ganti niche" | §6.10 bridge | never cut over abruptly |
+| "udah 2 minggu gak ada hasil" | §10.4 Grit (evaluate at 6 months), §10.5 Marathon | reset the time horizon |
+
+---
+
+### 15. Quote bank
+
+For CTA lines, closing cards, and callbacks. All by Kadafi Devayana unless noted. **Attribute them** if you put them on screen.
+
+- *"Konsistensi adalah bentuk kesetiaan kita kepada diri kita sendiri dan tujuan kita."*
+- *"Jadi dirimu sendiri, karena tidak ada orang lain yang bisa melakukannya lebih baik darimu."*
+- *"Kisah hidupmu adalah seni yang tak ternilai. Lukislah dengan bangga, dan biarkan dunia menikmati keindahannya."*
+- *"Mimpi ga bisa jadi kenyataan kalau kerjaan kamu cuma rebahan doang. Bangun, Planning dan Action!"*
+- *"Kegagalan adalah guru terbaik untuk kita belajar."*
+- *"Aku tidak menyesal sudah gagal di langkah atau percobaan pertamaku, karena kalau tidak dari langkah pertama itu, aku tidak akan ada di titik sekarang."*
+- *"Ikigai bikin kamu tahu nilai kamu, personal branding bikin nilai itu bersinar di depan dunia."*
+- *"Personal branding itu jadi diri sendiri bukan jadi orang lain."*
+- *"Personal branding bukan hanya tentang menjadi terlihat, tetapi juga tentang menjadi diingat."*
+- *"Belajar bukan tentang siapa yang paling cepat, tapi siapa yang paling konsisten!"*
+- *"Personal branding it's a process not a destination."*
+- *"Done is better than perfect."*
+- *"Peluang dan kesempatan akan datang kepada orang yang siap dan terlihat siap."*
+- *"Be yourself; everyone else is already taken."* — Oscar Wilde
+- *"Menjadi diri sendiri adalah kunci untuk bisa berkarya dengan hati."* — Maudy Ayunda
+
+---
+
+### Provenance
+
+| Source | What came from it |
+|---|---|
+| 64 slide screens, `E:\Download\SLIDE PPT KADEV` | §0, §2.4 (Premis/PMF), §6.2-6.7 (superniche, 80/15/5, Perfect Niche, 4K, Sweet Spot), §7, §8, §9, §10, §11, §12, §13 — the majority of this file |
+| `02 - Personal Branding Mengubahmu eBook.pdf` (100 pp) | §1.3, §2.1-2.2, §2.5, §3, §6.8-6.9, §8.3, §10.6 |
+| `04 - Content Creator Strategy.pdf` (53 pp) | §5.1-5.2, §6.8, §8.4 (Hirarki Konten), Idea Framework (in `kadev-script-formulas.md`) |
+| `06 - Content Creator Blueprint.pdf` (8 pp) | §6.8, §10.6, audience/competitor analysis |
+| `03 - Content Cheat (Hook Writing).pdf` (9 pp) | all 20 hooks → `kadev-script-formulas.md` |
+| 37 lesson video filenames | §0 chapter ordering and topic list |
+
+**Not extracted:** the lesson videos' spoken content. No transcription backend was available in this session (`GROQ_API_KEY` unset, `faster-whisper` not installed), so the videos contributed their titles and ordering only. The slides and PDFs are the author's own written version of the same lessons, and the slide deck is the more complete of the two — but **if a future session gets a transcription key, re-run over `E:\Download\kadev academy\*.mp4` and reconcile.** Two live-mentoring recordings in that folder (`22 Juli 2026 — Topik Format Winning`, `27 Agustus 2026 — Formula Script Viral & Jualan`) are the highest-value un-mined assets.
+
+---
+
+# Part 4. kadev-script-formulas.md
+
+## Script formulas: hooks, structure, and idea generation (Kadev method)
+
+> **Published:** 2026-09-23 · **Last reviewed:** 2026-09-23
+> **Source:** `03 - Content Cheat (Hook Writing).pdf`, `04 - Content Creator Strategy.pdf`, `02 - Personal Branding Mengubahmu eBook.pdf`, and the *Viral-Writing* / *Content-Writing* / *Bikin Orang Gak Bisa Move On* slide chapters. Extracted 2026-09-23.
+> **Editable:** `<!-- journal -->` comments mark provenance and known gaps. See `../JOURNAL.md`.
+
+This is the execution layer. The theory it depends on is in `kadev-personal-branding.md` — especially **Premis** (§2.4), **superniche** (§6.2), and the **4K Method** (§6.6). The quality gate that rejects the output is `anti-ai-ish.md`.
+
+Language note: everything here is written for **Indonesian-language scripts**. The phrasing is deliberately casual-Indonesian (*gue/aku*, *banget*, *nih*, *deh*) because that is the register of the source material and of the market. Do not translate the templates into formal Indonesian — that alone makes a script read as machine-written. For English scripts use `script-and-marketing.md` instead.
+
+---
+
+### 1. The structure question, settled
+
+The slides are explicit about this, and it is the single most important correction in the whole file:
+
+> **"Masih ada yang nulis konten pake struktur ini?"**
+> Hook → Body → Call to Action (CTA) ❌
+> **"Jangan gunakan ini doang, tapi…"**
+
+Hook/Body/CTA is not *wrong*. It is not *enough*. It is a skeleton with no meat, and a skeleton is exactly what an LLM produces when you ask it for a script. The Kadev method layers two things on top:
+
+```
+        ┌─────────────────────────────────────────┐
+        │  Hook  →  Body  →  CTA                  │   the skeleton (necessary)
+        └─────────────────────────────────────────┘
+                          +
+        ┌─────────────────────────────────────────┐
+        │  6 Script Hack Elements                 │   what must be PRESENT
+        └─────────────────────────────────────────┘
+                          +
+        ┌─────────────────────────────────────────┐
+        │  Storytelling Hack (5 beats)            │   what ORDER it moves in
+        └─────────────────────────────────────────┘
+```
+
+A script that has all three is hard to tell from a human's. A script with only the first is the thing the community has been complaining about.
+
+---
+
+### 2. The 6 Script Hack Elements
+
+From the *Viral-Writing* slide. These are **elements**, not steps — they can appear in any order, but a viral-shaped script has all six.
+
+| # | Element | What it is | Kadev's own example line |
+|---|---|---|---|
+| 1 | **Pain Point** | the specific frustration of a specific person | *"Anak desa tanpa privilege tapi pengen sukses"* |
+| 2 | **Spesific Number** | a real, odd, countable number — not "beberapa" | *"3 Cara untuk melawan keterbatasan"* |
+| 3 | **Promise of transformation** | who they become, not what they learn | *"Aku yakin kamu juga bisa berubah!"* |
+| 4 | **Urgency Action** | the thing to do now | *"Kamu juga harus lakukan…"* |
+| 5 | **Personal Opinion / Story** | your take or your scar — the uncopyable part | *(cerita pribadi)* |
+| 6 | **Interactions** | a reason to type something | *"Komen 'siap' buat kamu yang siap untuk berubah!"* |
+
+#### 2.1 Why these six, specifically
+
+Each one blocks a distinct failure:
+
+| Element | Failure it prevents |
+|---|---|
+| Pain Point | writing to "everyone" — see superniche, `kadev-personal-branding.md` §6.2 |
+| Spesific Number | vagueness; also gives the SpliceCraft planner a count-up card to animate |
+| Promise of transformation | a video that informs but does not move anyone |
+| Urgency Action | a video people enjoy and then do nothing about |
+| **Personal Opinion / Story** | **AI-ish flatness — this is the element LLMs cannot fake, because they have no scar** |
+| Interactions | dead comments, which the algorithm reads as low value |
+
+Element 5 is the load-bearing one. **A script missing element 5 is the definition of AI-ish.** If the user cannot supply a real story, do not invent one — stop and ask. That is a hard rule in `SKILL.md`.
+
+<!-- journal: the six elements are transcribed exactly as the slide labels them, including the spelling "Spesific Number" (sic — the slide misspells "Specific"). I kept the slide's spelling in the table header for traceability but use correct English in prose. The example lines come from the companion slide "Bikin Konten Tulisan!" which maps each icon to a sample line. -->
+
+---
+
+### 3. The Storytelling Hack (5 beats)
+
+From the slide *"Bikin Orang Gak Bisa Move On karena Ceritamu!"*. The stated purpose:
+
+> **Ceritakan kisah hidupmu yang kamu rasa biasa aja, jadi suatu hal menarik dan menginspirasi.**
+
+That sentence is the whole thesis. The user does not need a dramatic life. They need a structure.
+
+```
+  ①────────►②────────►③────────►④────────►⑤
+Set the   Highlight   The       Success    Wrap It Up
+Scene     the        Lesson    Follow-Up   with a Relatable
+(Bangun   Struggle   (Pelajaran (Pencapaian Message
+Konteks)  (Tunjukkan  dari      Setelah    (Motivasi dan
+          Kegagalan)  Gagal)    Gagal)     pertanyaan)
+```
+
+| Beat | Job | Test |
+|---|---|---|
+| **1. Set the Scene** | build the context: where you were, who you were | Can a stranger picture it in one sentence? |
+| **2. Highlight the Struggle** | show the failure, plainly | Is there an actual bad thing, or just "it was hard"? |
+| **3. The Lesson** | what the failure taught — this is the value payload | Would this help someone who has not failed yet? |
+| **4. Success Follow-Up** | what happened after | Is it proportionate? Not "and now I'm a millionaire" |
+| **5. Wrap It Up** | a relatable message + a question | Does the last line loop back to beat 1? |
+
+#### 3.1 A complete worked example
+
+From the slides, a networking-topic script built on the 5 beats. This is the shape to imitate:
+
+| Beat | Line |
+|---|---|
+| ① Set the Scene | *"Networking itu gila, bisa bikin kita sukses dan kaya raya"* |
+| ② Highlight the Struggle | *"kadang orang bingung gimana cara networking, ini dia 5 cara kita bisa kenal sama orang sukses biar kita juga ikut sukses."* |
+| ③ The Lesson | *1. Personal branding · 2. Interpersonal communication skill · 3. … · 4. … · 5. …* |
+| ④ Success Follow-Up | *"dari networking akhirnya bisa sukses dan punya kesempatan"* |
+| ⑤ Wrap It Up | *"networking bukan seberapa banyak orang yang kamu kenal, tapi seberapa banyak orang yang pengen kenal kamu."* |
+
+Note what beat ⑤ does: it is a **reversal of beat ①**. Beat 1 said networking makes you rich; beat 5 redefines what networking even is. That reversal is why the video loops.
+
+#### 3.2 Merging the two frameworks
+
+The elements map onto the beats naturally. This is the template to actually write against:
+
+| Beat | Elements that live here | Typical seconds (45 s video) |
+|---|---|---|
+| ① Set the Scene | **Pain Point** | 0-5 |
+| ② Highlight the Struggle | **Personal Story**, **Spesific Number** (announce the count) | 5-14 |
+| ③ The Lesson | the numbered list itself, **Personal Opinion** | 14-32 |
+| ④ Success Follow-Up | **Promise of transformation** | 32-38 |
+| ⑤ Wrap It Up | **Urgency Action** + **Interactions** | 38-45 |
+
+<!-- journal: the beat→element mapping and the second-column timings are MY synthesis, not printed on any slide. The two frameworks appear on adjacent slides and are clearly meant to be used together (one slide, "Bikin Konten Tulisan!", literally shows both diagrams stacked), but the explicit mapping is mine. Flagged so a future editor knows this table is inference, not source. -->
+
+---
+
+### 4. The 20 hooks
+
+From `03 - Content Cheat (Hook Writing).pdf`. The author's framing:
+
+> Yes, kuncinya adalah **HOOK** alias kata-kata pancingan **3 detik pertama** video kamu.
+> Aku udah analisis ratusan kreator viral dan ribuan video rame. Ini 20 daftar HOOK yang sering mereka pakai.
+
+Reproduce these as **templates with the brackets filled from the 4K Method** (`kadev-personal-branding.md` §6.6). The bracket names below tell you which 4K bucket to draw from.
+
+| # | Template | Contoh |
+|---|---|---|
+| 1 | Cara …**(mudah)**… tanpa …**(susah)**… | *"Cara dapetin duit tanpa harus keluar rumah"* · *"Cara matching outfit keren tanpa beli barang branded"* |
+| 2 | Kalau kamu ngerasa sulit untuk …**(keresahan audience)**…, tonton ini… | *"Kalau kamu ngerasa sulit ngomong depan kamera, coba tonton video ini…"* |
+| 3 | Lakukan …**(ini)**… agar …**(ini)**… | *"Lakukan 3 langkah ini, agar dapetin 10K followers dalam 10 hari"* · *"Lakukan ini setelah cuci muka, agar wajah kamu seger seharian"* |
+| 4 | Stop melakukan **(kebiasaan umum audiens)** kaya gini, tapi… | *"Stop bikin konten kaya gini!, tapi coba lakuin yang seperti ini"* |
+| 5 | Ciri-ciri kamu…**(ciri yang merepresentasikan audience)** | *"3 ciri-ciri kamu jago ngomong depan kamera, ciri nomer 3 paling penting!"* |
+| 6 | **(Solusi)**…ini bisa mengubah hidup kamu… | *"3 Habits ini bisa mengubah hidup kamu jadi produktif lagi!"* |
+| 7 | Kalau kamu pengen **(keinginan)**, tapi kamu **(keresahan)**, ini solusinya… | *"Kalau kamu pengen jadi konten kreator, tapi bingung caranya gimana, ini dia solusinya!"* |
+| 8 | Perbedaan antara **(dua hal yang sering ketuker)** | *"Perbedaan hoodie yang punya kualitas bagus dengan kualitas jelek, kamu harus tau biar gaketipu seller curang!"* |
+| 9 | 99% orang gamungkin dapetin **(keinginan)**, karena ini… | *"99% orang gamungkin bisa public speaking, karena hal ini.."* |
+| 10 | Rahasia **(yang audience pengen tau)**, agar **(keinginan)** | *"Rahasia bikin konten viral, agar dapetin 10K dalam 10 hari!"* |
+| 11 | Ini adalah **(x)** langkah untuk **(keinginan)** | *"Ini adalah 3 langkah untuk dapetin 10K Followers pertama di TikTok!"* |
+| 12 | Ini langkah pertama dan penting untuk **(keinginan)** | *"Ini langkah pertama dan penting untuk pede ngomong depan kamera"* |
+| 13 | Kalau kamu bosen dengan **(kebiasaan audiens)**, kamu perlu mencoba ini… | *"Kalau kamu bosen dengan belajar yang gitu-gitu aja, cobain metode ini deh biar belajar kamu gabosenin!"* |
+| 14 | Cara **(keinginan)**, dalam **(waktu singkat)**, dengan **(solusimu)** | *"Cara pede ngomong depan kamera dalam 1 jam dengan metode ini"* |
+| 15 | Ini fakta yang harus kamu tau tentang **(hal menarik)** | *"3 Fakta yang harus kamu tau tentang roket Elon Musk"* |
+| 16 | Kamu perlu hack rahasia ini untuk… | *"kamu perlu hack rahasia ini untuk sukses di umur 20an"* |
+| 17 | Cara ngga **(kesalahan umum audiens)** dengan **(x)** langkah mudah… | *"Cara ngga grogi public speaking dengan 3 langkah mudah ini"* |
+| 18 | Ternyata **(sekelompok orang)** berbohong ke kamu! | *"Ternyata banyak konten kreator berbohong ke kamu, ini rahasia mereka bisa viral!"* |
+| 19 | Ini **(keinginan)** yang gapernah dibahas oleh siapa pun… | *"Ini adalah rahasia bikin script konten yang gapernah dibahas oleh siapapun"* |
+| 20 | Kamu gaboleh **(kebiasaan audiens)**, sebelum mengetahui **(X)** hal ini | *"Kamu gaboleh mulai bikin konten, sebelum tau 3 hal ini.."* |
+
+#### 4.1 Rules for using them
+
+1. **Fill the brackets from the user's real 4K answers.** A hook template filled with a guess is worse than no hook. `#2` with *"sulit ngomong depan kamera"* works because that is a real Keresahan; `#2` with *"sulit mencapai potensi maksimal"* is machine filler.
+2. **Hooks 9, 18, and 19 are risky** in the sense defined in `script-and-marketing.md` §"Risky hooks". `#18` ("ternyata X berbohong ke kamu") and `#9` ("99% orang gamungkin") make claims. Use them only when the video actually proves the claim. Never aim `#18` at a named real person.
+3. **Hook 20 and hook 4 are pattern-interrupts.** They work by telling the viewer to stop. They burn out if every video uses them.
+4. **Odd numbers beat round numbers.** *3 langkah* and *5 cara* outperform *10 tips* in this material's own examples — every single numbered example in the PDF uses 3, 4, or 5.
+5. **No greeting before the hook.** "Halo guys, balik lagi di channel aku" is 2 wasted seconds. See `anti-ai-ish.md`.
+
+#### 4.2 Hook + first frame
+
+The hook is spoken *and* written. `kadev-personal-branding.md` §7.1: the viewer gives you **8 seconds**, and the slide on Feeds says the cover must be *catchy — pakai judul yang bikin penasaran*. SpliceCraft renders the hook as an on-screen title card at level 21+; make sure the card text is the hook, not a summary of the video.
+
+---
+
+### 5. The classic Hook / Body / CTA layer
+
+Still needed — it is the skeleton the six elements hang on. From the Content Strategy ebook:
+
+**HOOK** — *Tujuan: Menarik perhatian audiens dalam beberapa detik pertama.*
+1. **Tanya Pertanyaan** — mulailah dengan pertanyaan yang memicu rasa ingin tahu
+2. **Gunakan Cliffhangers** — tinggalkan audiens dengan sesuatu yang membuat mereka ingin tahu lebih lanjut
+3. **Jaga Singkat dan Padat** — sampaikan pesan utama dengan cepat dan tepat
+
+**BODY** — *Tujuan: Menyampaikan informasi utama secara mendetail.*
+1. **Elaborasi Hook** — kembangkan pertanyaan atau cliffhanger yang telah diajukan di hook
+2. **Tambahkan Nilai Lewat Konten** — berikan informasi yang berguna dan relevan
+3. **Libatkan Audiens** — buat konten yang menarik sehingga audiens merasa terlibat
+
+**CTA** — *Tujuan: Mengajak audiens melakukan tindakan spesifik.*
+1. **Buat Interaktif** — ajak audiens berpartisipasi, misalnya tanya apakah mereka relate dan minta berbagi pengalaman di komentar
+2. **Jaga Tetap Sederhana** — instruksi yang mudah dimengerti. Misalnya *"coba komen dibawah deh guys!"*
+
+**The author's own worked example** (Adobe Podcast video), quoted because it shows the register:
+- *Hook:* "Audio yang kalian dengar direkam dari jarak 1 meter tanpa mic, apasih rahasianya?"
+- *Body:* "Di video ini, aku akan membahas singkat tentang Adobe Podcast dan bagaimana cara menggunakan fitur-fitur canggihnya untuk meningkatkan kualitas audio. Dengan Adobe Podcast, kamu bisa merekam audio berkualitas tinggi tanpa perlu peralatan mahal…"
+- *CTA:* "Menurut kalian gimana? Kira-kira mic profesional bisa diganti sama AI ini? Beri tahu pendapat kalian di kolom komentar dan jangan lupa like serta share video ini kalau kalian merasa bermanfaat!"
+
+Notice: the hook is a **demonstration** ("the audio you are hearing right now"), and the CTA is a **real question with two sides**, not "follow for more". Both are copyable patterns.
+
+---
+
+### 6. Generating ideas that are not generic
+
+#### 6.1 Content Idea Framework
+
+From the Content Strategy ebook. A three-level tree:
+
+```
+                 General Topic
+        ┌──────────────┼──────────────┐
+    Problem        Problem        Problem
+     Topic          Topic          Topic
+        │              │              │
+     ┌──┴──┐        ┌──┴──┐        ┌──┴──┐
+     Do              Do              Do
+     Don't           Don't           Don't
+     Rekomendasi     Rekomendasi     Rekomendasi
+     QNA             QNA             QNA
+     Tips & Trik     Tips & Trik     Tips & Trik
+     Penyebab        Penyebab        Penyebab
+     Informasi       Informasi       Informasi
+```
+
+7 angles × 3 problems × N topics. The slides call the same structure **Unlimited Idea**.
+
+**Worked example (Skincare):**
+
+| | Kulit berminyak | Kulit berjerawat | Kulit kusam |
+|---|---|---|---|
+| Do / Don't / Rekomendasi / QNA / Tips & Trik / Penyebab / Informasi | ✓ | ✓ | ✓ |
+
+*Contoh studi kasus:* Skincare → Kulit berminyak → **QNA** → (read from a comment) *"kak gimana sih biar kulit ngga berminyak meskipun seharian berkegiatan diluar ruangan?"*
+
+**How to use it:**
+1. **Identifikasi Masalah Utama** — tentukan kategori mana yang paling relevan dengan audiens kamu
+2. **Pilih Sub-topik** — yang menarik dan menjawab permasalahan audiens
+3. **Kembangkan Konten** — informatif, menarik, solusi nyata
+4. **Diversifikasi** — variasikan format: Reels, TikTok, Carousel dll
+5. **Interaksi** — ajak audiens ke Q&A atau minta feedback
+
+#### 6.2 The AI prompt the course itself gives
+
+The slide *"Unlimited Idea with AI"* hands out this prompt. It is included verbatim because the users of this skill will use it, and it is better that SpliceCraft knows what they used:
+
+```
+"Saya sedang membangun personal branding dan ingin menemukan 100 ide konten
+untuk [topik/niche kamu]. Ide-ide ini harus berfokus pada permasalahan utama
+audiens saya, yaitu [masalah audiens kamu], serta memberikan solusi yang
+relevan dan bermanfaat.
+
+Kelompokkan ide menjadi beberapa kategori:
+  1. Edukasi     – Memberikan wawasan, strategi, atau informasi penting terkait topik saya.
+  2. Motivasi    – Menginspirasi audiens dengan kutipan, kisah sukses, atau pengalaman pribadi.
+  3. Tips Praktis– Berisi langkah-langkah atau strategi yang mudah diterapkan.
+  4. Interaktif  – Mengajak audiens berpartisipasi melalui polling, Q&A, challenge, atau diskusi.
+  5. Storytelling– Berbagi pengalaman atau kisah yang relatable dengan audiens.
+
+Buat daftar 100 ide konten yang jelas, actionable, dan mudah dipahami."
+```
+
+**⚠ SpliceCraft's obligation here.** This prompt produces a list of *topics*, which is fine. It does **not** produce a script, and the list will overlap heavily with what every other user of the same prompt got. Two consequences:
+
+1. Treat its output as **input to §6.1**, not as a content plan.
+2. **Run every idea through the content ledger** (`content-memory.md`) before writing. The whole reason the ledger exists is that this prompt hands 100 people the same 100 ideas.
+
+#### 6.3 Other idea sources (ebook)
+
+**Riset Tren dan Topik Populer** · **Analisis Kompetitor** (*ambil inspirasi, ciptakan konten yang lebih baik atau sudut pandang berbeda*) · **Feedback dari Audiens** (polling, Q&A, komentar) · **Gunakan Kalender Konten** · **Personal Experience** (*audiens cenderung lebih tertarik dengan cerita nyata yang otentik*).
+
+And the four Knowledge Gap methods from `kadev-personal-branding.md` §12.1 — Data analytics / People Problem / Competitor Benchmark / Self Experience — are idea sources too, and better ones, because they start from a gap rather than from a topic.
+
+---
+
+### 7. Content Pillar → script type
+
+Pick the pillar first; it determines the register before you touch a hook.
+
+| Pillar | Produces | Script leans on | Natural hooks |
+|---|---|---|---|
+| **Educate** | Kredibilitas | numbered list, Lesson beat | #3, #11, #12, #14, #17 |
+| **Inspiration / Story** | Diingat dan Disukai | full 5-beat Storytelling Hack | #2, #6, #7, #13 |
+| **Entertaining / Interaction** | Lebih dekat dan manusiawi | short, one idea, question CTA | #5, #8, #15 |
+| **Promotion** | Penjualan | problem → proof → offer | #1, #9, #10, #16, #20 |
+
+Ratio reminder: **80 / 15 / 5** (superniche / adjacent / personal life) — `kadev-personal-branding.md` §6.4. The ledger tracks pillar balance so the agent can tell a user *"the last nine scripts were all Educate; you are due a Story."*
+
+---
+
+### 8. Length and word budget
+
+Measured against the 82 reference videos in `E:\Download\CONTOH INSPIRASI TEKNIK NGOTEN DAN EDITING VIDEO` (see `viral-edit-teardown.md` for the full measurement):
+
+| Target | Seconds | Words (Indonesian, ~2.3 wps) | Use for |
+|---|---|---|---|
+| Short | 15-25 | 35-60 | one idea, entertaining, trend |
+| **Standard** | **25-40** | **60-90** | the default; the measured median was 37.5 s |
+| Long | 60-90 | 140-200 | full 5-beat story, tutorial |
+
+Measured distribution of the 82 reference videos: 10-20 s (14), **20-30 s (24)**, 30-45 s (10), 45-60 s (9), 60-90 s (17), >90 s (8). Median 37.5 s, p25 22.2 s, p75 66.0 s.
+
+Note the shape: it is **bimodal** — a big cluster at 20-30 s and a second cluster at 60-90 s, with a dip in between. Those are two different jobs (a quick hit vs. a full story), not one distribution. Pick which one you are making; do not land at 50 s by accident.
+
+---
+
+### 9. The writing pass
+
+Once the beats are filled, run these before handing the script over. Each line here traces to something in the source material.
+
+**Keep**
+- Short sentences. One idea each. A 1-3 word sentence becomes a giant word card in the edit.
+- Real numbers, spoken aloud. "Tiga langkah" → count-up card.
+- Ordinals: *pertama… kedua… ketiga…* → ranking card.
+- *"Dulu aku…"* — the Personal Story element, in the user's own words.
+- Casual particles: *nih, deh, sih, banget, kan, yaudah*. The source material is full of them.
+- Direct address: *kamu*, not *Anda* (unless the brief says B2B/formal).
+- A question in the CTA that has two possible answers.
+
+**Cut**
+- Greetings before the hook.
+- *"Di video kali ini aku akan membahas tentang…"* — the single most AI-ish sentence in Indonesian video.
+- Any claim the user has not confirmed. Numbers especially.
+- Words the user would not say out loud. Read it aloud; if it trips, rewrite it.
+- Triads of adjectives (*efektif, efisien, dan optimal*).
+- *"Semoga bermanfaat ya!"* as the whole CTA. That is a sign-off, not a call to action.
+
+The full rejection list, with the reasoning and the measurements behind it, is `anti-ai-ish.md`.
+
+---
+
+### 10. Checklist before the camera rolls
+
+```
+PREMIS       [ ] there is a premis, written down, from SWOT      (§2.4 theory)
+NICHE        [ ] superniche named as a WHO, not a topic          (§6.2 theory)
+4K           [ ] Keresahan / Kebutuhan / Keinginan / Kebiasaan filled from real input
+PILLAR       [ ] one of Educate / Inspiration / Entertaining / Promotion chosen
+LEDGER       [ ] checked against past scripts — not a repeat     (content-memory.md)
+HOOK         [ ] one of the 20, brackets filled with real 4K answers
+ELEMENTS     [ ] all 6 present — especially #5 Personal Story
+BEATS        [ ] 5 beats in order, beat ⑤ reverses beat ①
+LENGTH       [ ] target picked deliberately: 20-30 s OR 60-90 s
+FACTS        [ ] every number confirmed by the user
+LEDGER WRITE [ ] logged after production                         (content-memory.md)
+```
+
+If **ELEMENTS #5** or **FACTS** cannot be ticked, stop and talk to the user. Do not fill them in yourself.
+
+---
+
+# Part 5. viral-edit-teardown.md
+
+## Viral edit teardown: what 82 reference videos actually do
+
+> **Published:** 2026-09-23 · **Last reviewed:** 2026-09-23
+> **Corpus:** all 82 `.mp4` files in `E:\Download\CONTOH INSPIRASI TEKNIK NGOTEN DAN EDITING VIDEO` — reference videos the user collected as examples of viral, well-made Indonesian short-form content. Creators: `bahasvideo`, `fitrisitisalma`, and `kadafidevayana` (the bulk).
+> **Editable:** every number here is reproducible with the commands in §1. If you re-measure, update the numbers *and* the date.
+
+### Why this file exists, and an honest note on method
+
+The user asked SpliceCraft to learn editing, opening and closing technique from these videos so community users stop reporting that edits feel AI-ish.
+
+Claude cannot watch video. So rather than guess at "technique" and dress the guess up as analysis, every file was **measured** with `ffprobe` and `ffmpeg` scene detection. What follows is what the measurements support, and nothing more. Where a claim is inference rather than measurement, it says so.
+
+This turned out to matter: the measurements **contradicted** two things that seemed obviously true before the data came in. Both are documented in §6 rather than quietly dropped.
+
+---
+
+### 1. Method, so you can reproduce or challenge it
+
+```bash
+## per-file: dimensions, fps, duration
+ffprobe -v error -select_streams v:0 \
+  -show_entries stream=width,height,avg_frame_rate \
+  -show_entries format=duration -of csv=p=0 "$f"
+
+## per-file: scene-cut timestamps
+ffmpeg -hide_banner -nostats -i "$f" \
+  -vf "scale=160:-2,select='gt(scene,0.3)',showinfo" -f null - 2>&1 \
+  | grep -o "pts_time:[0-9.]*" | cut -d: -f2
+```
+
+Downscaling to 160 px wide before scene detection makes the pass fast and does not meaningfully change cut detection.
+
+**Known limits of this method, stated up front:**
+
+- **Threshold 0.3 is conventional but untuned.** It under-counts cuts between visually similar shots — two angles of the same person against the same wall read as one continuous shot. So the "single-take" bucket in §3 may be slightly overstated. The bimodality is far too strong to be a threshold artifact, but the exact bucket sizes are soft.
+- **A scene cut is not the only kind of edit.** Speed ramps, zooms, caption changes, and overlay animations are all editing and none of them register here. A video with zero scene cuts is not necessarily an unedited video.
+- **53 of 82 files are 540×960** — re-compressed downloads, not masters. Fine for cut detection; useless for any conclusion about grading, grain, or colour.
+- **No audio or transcript analysis.** No transcription backend was available this session. Music, loudness, ducking, and anything about what is *said* are unmeasured.
+
+<!-- journal: raw per-file data lived in the session scratchpad and was not committed - it is ~82 lines of timestamps and regenerating it takes about 12 minutes. If you need it, re-run the commands above. -->
+
+---
+
+### 2. The corpus at a glance
+
+| | |
+|---|---|
+| Files | 82 |
+| Resolution | 540×960 (53), 1080×1920 (27), 360×640 (2) — **all 9:16 vertical, no exceptions** |
+| Frame rate | 30 fps (80), 60 fps (2) |
+| Duration | min 12.7 s · p25 22.2 s · **median 37.5 s** · p75 66.0 s · max 132.8 s |
+
+**Duration is bimodal.** This is the first of three bimodal findings and they all point the same way.
+
+| Bucket | Count |
+|---|---|
+| 10-20 s | 14 |
+| **20-30 s** | **24** ← cluster |
+| 30-45 s | 10 |
+| 45-60 s | 9 |
+| **60-90 s** | **17** ← cluster |
+| > 90 s | 8 |
+
+Two clusters — a quick hit at 20-30 s and a full story at 60-90 s — with a visible dip at 30-60 s between them.
+
+**What follows:** pick which of the two jobs you are doing before you write. Landing at 50 s is usually what happens when nobody decided. See `kadev-script-formulas.md` §8 for the matching word budgets.
+
+---
+
+### 3. The headline finding: real edits are bimodal, AI-ish edits are uniform
+
+Average shot length (ASL = duration ÷ number of shots) across all 82:
+
+| | ASL |
+|---|---|
+| min | 0.54 s |
+| p25 | 1.87 s |
+| median | 3.23 s |
+| p75 | 11.63 s |
+| max | 46.35 s |
+
+That p25-to-p75 spread — 1.87 s to 11.63 s — is not a distribution around a centre. It is two populations:
+
+| Mode | ASL | Videos | Share | What it is |
+|---|---|---|---|---|
+| **Cut-driven** | 0.5 - 2.5 s | 32 | 39% | b-roll, voiceover, documentation, list content, jedag-jedug |
+| *(dead zone)* | 2.5 - 8 s | 27 | 33% | mixed or transitional |
+| **Single-take** | 8 s to no cuts | 23 | 28% | talking head, straight to camera |
+
+Full ASL histogram: `<1 s` (3), `1-1.5 s` (5), `1.5-2.5 s` (24), `2.5-4 s` (10), `4-8 s` (17), `>8 s` (23).
+
+**Six videos have zero scene cuts at all**, running 18.7 s, 29.5 s, 43.6 s and 46.3 s among others. They are in a folder the user collected as examples of good work. They are not under-edited — they are a different grammar: one take, one person, captions, nothing else.
+
+Length correlates with mode, and not in the direction most people assume:
+
+| | Median ASL |
+|---|---|
+| Videos under 30 s | 3.97 s |
+| Videos 60 s and over | **2.00 s** |
+
+**Longer videos cut faster.** A 90-second video earns its length by moving; a 20-second video can hold a single shot because it is over before attention runs out.
+
+#### Why this is the anti-AI-ish rule
+
+The failure is not "too many cuts" or "too few". It is **landing in the middle by default** — a cut every 3-4 seconds for the whole runtime regardless of what is being said. Nobody chooses that rhythm. It is what you get when a tool applies a uniform rule to non-uniform material.
+
+**The rule:** choose the mode before planning the edit, and commit to it.
+
+- Talking head, one location, personal story → **single-take mode**. Cuts only where a sentence is removed. Zero cuts is a legitimate outcome.
+- Voiceover over b-roll, a numbered list, a tutorial → **cut-driven mode**. Typical shot 1.3-2 s, and it *stays* there.
+
+Never average the two.
+
+---
+
+### 4. Openings — measured
+
+Restricting to the 32 cut-driven videos, since a single-take video has no opening cut by definition:
+
+| | Time to first cut |
+|---|---|
+| p25 | 0.80 s |
+| **median** | **2.22 s** |
+| p75 | 4.00 s |
+
+Across all 76 videos that have any cuts at all, the median is 4.33 s — pulled up by the single-take group.
+
+#### The counterintuitive part
+
+Cuts falling in the first 3 seconds, compared against what that video's own average cut rate would predict:
+
+> **median 0.75×** — the opening cuts **slower** than the video's own baseline.
+
+And the first shot compared to a typical shot in the same video:
+
+> **first shot = 1.58× the median shot length.** In 56% of cut-driven videos the opening shot is more than 1.2× a typical one.
+
+In absolute terms: first shot **2.22 s** median, against a typical shot of **1.32 s**.
+
+**The hook is held, not chopped.** This is the opposite of the "chop the first three seconds to grab attention" instinct. The opening shot stays on screen long enough for a person to read the on-screen hook and hear the spoken one — and *then* the video starts moving.
+
+**What follows for the edit:**
+1. Give the hook shot roughly **1.5× your typical shot length**. Do not cut into it to seem energetic.
+2. Something should still *change* early — a zoom, a card, a movement. Held is not the same as static.
+3. The hook is spoken **and** on screen simultaneously. Many viewers start muted, and 8 seconds is the whole budget (`kadev-personal-branding.md` §7.1).
+4. No logo animation, no intro card. The corpus has none.
+
+---
+
+### 5. Closings — measured, and the strongest finding in the file
+
+Gap from the last scene cut to the end of the video:
+
+| | All 76 with cuts | Cut-driven 32 |
+|---|---|---|
+| p25 | 2.21 s | 1.15 s |
+| **median** | **3.56 s** | **3.16 s** |
+| p75 | 4.33 s | 4.09 s |
+
+Cuts in the final 3 seconds versus the video's own baseline rate:
+
+> **median 0.21×** — the closing cuts at roughly **one fifth** of the video's normal rate.
+
+Last shot versus a typical shot in the same video:
+
+> **last shot = 2.42× the median shot length.**
+> **24 of 32 cut-driven videos (75%)** hold their final shot more than 1.2× longer than a typical one.
+
+In absolute terms: last shot **3.16 s** median, against a typical shot of **1.32 s**.
+
+**The ending is a landing, not a stop.** The final line is delivered on one held shot, with the cutting essentially switched off. This is consistent across three quarters of the corpus — the most consistent single behaviour measured.
+
+**What follows for the edit:**
+1. Give the closing line its own shot and **hold it ~2.4× your typical shot length** — around 3 seconds in a fast edit.
+2. Stop cutting entirely for the last ~3 s. No flourish, no rapid montage over the CTA.
+3. That held shot is where the Storytelling Hack's beat ⑤ lands — the line that reverses the opening (`kadev-script-formulas.md` §3). It needs room to be heard, because it is what makes the video loop.
+
+#### The shape, in one line
+
+> **Hold the open · chop the middle · hold the close.**
+> 1.58× — 1.0× — 2.42×
+
+That is the measured grammar of this corpus. It is also, usefully, the exact shape a uniform automatic cutter will never produce.
+
+---
+
+### 6. Two things I got wrong, corrected
+
+Both of these were written into `anti-ai-ish.md` before the timestamp measurement finished, on the strength of general short-form convention. Both were wrong for this corpus and have been corrected there. Recording them here because the wrong versions are widely believed.
+
+**Wrong: "the first cut lands a median of 1.2 s in."**
+That figure was the **p25**, misread as the median. The actual median is **2.22 s** for cut-driven videos and 4.33 s across the corpus. More importantly, the direction was wrong — openings cut *slower* than baseline (0.75×), not faster.
+
+**Wrong: "ends on the last word, no tail — do not add a 2-second tail."**
+The opposite is true here. The median final shot runs **3.16 s** and is **2.42× longer** than a typical shot, in 75% of cut-driven videos. The "tail" is not dead air; it is the held landing the closing line is delivered on. Cutting it off truncates the beat that makes the video loop.
+
+The general advice these came from is not nonsense — it is aimed at padded, dead-air endings. But applied to this style it removes the single most consistent thing the corpus does.
+
+---
+
+### 7. What is *not* measured, and must not be asserted
+
+Be honest with users about the boundary. The following were **not** measured and any claim about them is opinion:
+
+- **Music** — presence, genre, loudness, ducking behaviour. No audio analysis was run.
+- **Captions** — style, position, karaoke timing, font. Not detectable from scene cuts.
+- **Zooms, speed ramps, transitions** — invisible to scene detection. The claim in `anti-ai-ish.md` §C4 that "cuts are hard cuts and flashy transitions appear at topic changes" is **inference from the ASL distribution, not measurement.** Flagged as such there.
+- **Colour, grading, lighting** — most files are re-compressed 540×960; no valid conclusions available.
+- **What is actually said** — no transcripts. Everything about script content comes from the Kadev course material, not from these videos.
+- **Whether these videos actually performed well.** They are in a folder the user labelled as inspiring and viral. No view counts, no engagement data. Treat the corpus as "what this creator considers good", which is a real signal, not as verified top performers.
+
+---
+
+### 8. Applying it
+
+| Decision | Setting |
+|---|---|
+| Aspect ratio | 9:16, always. 100% of the corpus. |
+| Duration | 20-30 s **or** 60-90 s. Decide which. |
+| Mode | cut-driven (ASL 1.3-2 s) **or** single-take (few cuts to none). Decide which. Never average. |
+| Opening shot | ~1.5× your typical shot. Hold the hook. |
+| Middle | stay in your chosen mode |
+| Closing shot | ~2.4× your typical shot, ~3 s. Stop cutting. |
+| Tail | keep it — it is the landing, not dead air |
+| Longer video | cut *faster*, not slower |
+
+Wired into `SKILL.md` Step 4 (mode choice) and `anti-ai-ish.md` §C (the gate).
+
+### Reproducing
+
+Re-run §1 over the folder. Roughly 12 minutes for 82 files on the machine this was measured on. If you change the scene threshold, say so here and re-state every number that moves.
+
+---
+
+# Part 6. content-memory.md
+
+## Content memory: the ledger
+
+> **Published:** 2026-09-23 · **Last reviewed:** 2026-09-23
+> **Tool:** `scripts/ledger.py` (standard library only, Python 3.9+)
+> **Store:** `~/.splicecraft/ledger.json` on the user's own machine. Nothing is uploaded anywhere.
+
+### Why this exists
+
+An AI asked for "ide konten personal branding" produces roughly the same twelve ideas every time it is asked. One user, over one month, ends up with an account that says one thing twelve ways. The course diagnoses inconsistency as the killer; the modern failure is the opposite — **sameness**.
+
+The ledger is the fix: a local, permanent, user-owned record of every script, niche, hook and theme already produced, which the agent is required to consult *before* writing and required to update *after* producing.
+
+It also solves a second problem. A user comes back three weeks later in a fresh conversation. The agent has no memory of the previous session. The ledger is that memory, and it lives on the user's disk rather than in a chat log.
+
+---
+
+### The contract
+
+Two obligations, both mandatory, both wired into `SKILL.md`:
+
+1. **Before writing any script or idea list** → `ledger check`. Exit code 2 means do not write it.
+2. **After producing anything** → `ledger add`. Idea, script, or finished video — log it with its angle.
+
+An agent that skips step 2 breaks the tool for every future session. Logging is not optional bookkeeping; it is the product.
+
+---
+
+### Setup
+
+```bash
+LEDGER="python <skill-folder>/scripts/ledger.py"
+$LEDGER init
+```
+
+Prints the store path. Run once per machine. If it already exists, it says so and does nothing.
+
+To keep the ledger somewhere else (a synced folder, a project directory):
+
+```bash
+$LEDGER --store "D:/brand/ledger.json" init
+## or, for the whole session:
+export SPLICECRAFT_LEDGER="D:/brand/ledger.json"
+```
+
+---
+
+### Checking before you write
+
+```bash
+$LEDGER check "3 cara stop prokrastinasi buat mahasiswa" --theme prokrastinasi
+```
+
+```
+checking: "3 cara stop prokrastinasi buat mahasiswa prokrastinasi"
+against 14 entries
+
+  BLOCK   71%  478aac15  2026-08-02  3 langkah biar gak prokrastinasi lagi
+              angle: pakai timer fisik bukan app
+  warn    48%  1dd93368  2026-07-19  kenapa to-do list kamu gak kepake
+           9%  9f10ac22  2026-07-05  cerita gue gagal 4 tahun bikin konten
+
+VERDICT: too close. Do not write this.
+```
+
+| Exit code | Meaning | What the agent does |
+|---|---|---|
+| 0, score < 45% | clear | write it |
+| 0, score 45-61% | adjacent | allowed, but the agent must **say out loud what is new about it**. If it cannot, treat as a repeat. |
+| **2**, score ≥ 62% | collision | **do not write it.** Change the angle, the pillar, or the audience segment. |
+
+Useful flags: `--niche` restricts the comparison to one superniche first (falls back to everything if that niche is empty); `--json` for machine-readable output; `--hook` and `--angle` sharpen the probe.
+
+#### How the score works
+
+Two scores are computed and **the stronger wins**:
+
+- **Topic-level** — topic + themes only, scaled to 0.92. Catches "you already covered this subject" even when the hook and angle differ. Because it is capped below 1.0, a pure subject repeat lands in WARN, not BLOCK: reusing a subject with a genuinely new angle is allowed, it just has to be declared.
+- **Full-text** — topic, themes, hook, angle and premise together. Catches an actual rewrite, which blocks.
+
+Each score blends unigram **overlap** (`|A∩B| / min(|A|,|B|)`) at 65% with bigram **Jaccard** at 35%. Overlap rather than Jaccard on unigrams because Jaccard punishes the short side — a five-word topic compared against a fully-filled entry scored low purely because the union was large, which let real repeats read as "clear". Bigrams stay Jaccard because they measure shared *phrasing*, where union size is meaningful, and phrasing is what separates "same subject, new angle" from "same script, reworded".
+
+Indonesian and English stopwords are removed, plus words that appear in nearly every content brief (`konten`, `video`, `tiktok`, `script`, `tips`) and therefore carry no signal. A light Indonesian stemmer collapses `mengedit` / `editing` / `edit`.
+
+<!-- journal: thresholds WARN_AT=0.45 / BLOCK_AT=0.62 were set by hand against a small set of constructed cases (a near-duplicate, a verbatim rewrite, an unrelated topic) and verified to give warn/block/clear respectively. They are not tuned against real user data because none exists yet. Expect to revisit once a real ledger has ~50 entries. Both constants are at the top of ledger.py and are meant to be edited. -->
+
+---
+
+### Logging after you produce
+
+```bash
+$LEDGER add "3 cara stop prokrastinasi buat mahasiswa" \
+  --niche "produktivitas mahasiswa" \
+  --pillar educate \
+  --hook-template 11 \
+  --hook "Ini adalah 3 langkah untuk stop prokrastinasi" \
+  --angle "pakai timer fisik, bukan aplikasi" \
+  --theme prokrastinasi --theme mahasiswa \
+  --premise "dari mahasiswa yang selalu telat jadi yang selesai duluan" \
+  --platform tiktok --format talking_head --seconds 32 \
+  --script-path work/script.md --video-path work/edited.mp4 \
+  --status published
+```
+
+Every field except the topic is optional, but the ones that matter most for future de-duplication are **`--angle`** and **`--theme`**. The angle is the sentence that answers *"what made this one different?"* — without it, the ledger can tell you that you covered a subject but not how.
+
+`add` always reports the nearest existing entry. Logging a near-duplicate is permitted — the user may have decided it is fine — but it is never silent.
+
+#### Fields
+
+| Field | What goes in it |
+|---|---|
+| `topic` | what it was about, in the user's own words |
+| `niche` | the superniche it serves |
+| `pillar` | `educate` / `inspiration` / `entertaining` / `promotion` |
+| `hook` | the actual hook line used |
+| `hook_template` | which of the 20 templates (`kadev-script-formulas.md` §4) |
+| `angle` | **what made this one different** |
+| `themes` | repeatable tags |
+| `premise` | the premis this serves (`kadev-personal-branding.md` §2.4) |
+| `platform`, `format`, `seconds` | production facts |
+| `script_path`, `video_path` | where the artifacts live |
+| `status` | `idea` / `scripted` / `filmed` / `produced` / `published` |
+| `performance` | reserved; fill later by hand with views, saves, comments |
+| `notes` | anything |
+
+Log at `--status idea` too. A rejected idea is worth remembering — it stops the agent proposing it again next month.
+
+---
+
+### Reading the ledger back
+
+```bash
+$LEDGER list --limit 20              # recent, newest first
+$LEDGER list --pillar educate        # filter
+$LEDGER stats                        # pillar balance, niche mix, hook fatigue, cadence
+$LEDGER themes                       # everything covered, ranked
+$LEDGER suggest                      # what is under-used and due next
+$LEDGER show <id>                    # one entry in full
+$LEDGER export --format md --out ledger.md
+$LEDGER export --format csv --out ledger.csv
+```
+
+`stats` is the one to run at the start of a strategy conversation:
+
+```
+PILLAR BALANCE
+  educate          9    64%  ###############
+  inspiration      3    21%  #####
+  entertaining     1     7%  ##
+  promotion        1     7%  ##
+
+NICHE MIX  (target 80 / 15 / 5 - superniche / adjacent / personal)
+  personal branding             11    79%
+  self development               2    14%
+  kehidupan personal             1     7%
+
+HOOK TEMPLATES USED
+  #11       4  <- leaning on this
+  #2        3
+  #7        2
+
+CADENCE  2026-07-05 -> 2026-09-14  (71 days)
+  1.4 pieces per week
+  last entry was 9 days ago
+```
+
+That readout answers, with evidence: is the 80/15/5 ratio holding? Is the account a pillar monoculture? Is the same hook template being reused until it burns out? Has the user actually stopped posting?
+
+`suggest` turns the same data into a recommendation — which pillar is due, which hook templates are fatigued, and the last five topics so the agent does not circle back.
+
+---
+
+### Editing and correcting
+
+The store is plain JSON, indented, UTF-8. The user can open it in any editor. From the CLI:
+
+```bash
+$LEDGER edit 478aac15 --set status=published --set "notes=did 40k views"
+$LEDGER edit 478aac15 --set "themes=prokrastinasi,mahasiswa,produktivitas"
+$LEDGER remove 478aac15
+```
+
+IDs are matched by prefix — the first 8 characters shown in `list` are enough.
+
+If the file is hand-edited into invalid JSON, every command fails with a message naming the file and the parse error rather than silently starting over. Writes go to a temp file and are then moved into place, so an interrupted write cannot truncate an existing ledger.
+
+---
+
+### Privacy
+
+- The ledger never leaves the machine. There is no network code in `ledger.py`.
+- It is a plain file the user owns, can read, can back up, can delete.
+- It records what the user made. If a topic is sensitive, they can `remove` it or edit the file directly.
+- Do not copy ledger contents into anything that gets published.
+
+---
+
+### Limits
+
+- Similarity is lexical, not semantic. *"cara berhenti menunda pekerjaan"* and *"stop prokrastinasi"* mean the same thing but share no tokens, and the ledger will not catch it. The `--theme` tags exist to bridge this — **tag consistently and the gap mostly closes.**
+- One ledger per machine by default. A user running several brands should use `--store` per brand, or `SPLICECRAFT_LEDGER` per session.
+- Performance data is not collected automatically. The `performance` field is there to be filled in by hand.
+- The thresholds are hand-set, not learned. See the journal note above.
+
+<!-- journal: the lexical-vs-semantic limit is the known weak point. An embedding-based check would fix it but would need either a model download or a network call, and this skill is deliberately offline and stdlib-only. If that constraint is ever relaxed, this is the first thing to upgrade. Until then, the --theme discipline is what carries it, which is why SKILL.md tells the agent to always pass themes. -->
+
+---
+
+# Part 7. script-and-marketing.md
 
 ## Script, hooks, and platform strategy
 
@@ -463,7 +2698,7 @@ Checked 2026-09-15. Treat blog summaries as second-hand; platform pages change w
 
 ---
 
-# Part 3. audience-and-market.md
+# Part 8. audience-and-market.md
 
 ## Audience, market, and the project brief
 
@@ -575,7 +2810,7 @@ What splicecraft does: captions at y 1390, cards in the top third starting at y 
 
 ---
 
-# Part 4. captions.md
+# Part 9. captions.md
 
 ## Captions
 
@@ -665,7 +2900,7 @@ ffmpeg -i edited.ass edited.srt
 
 ---
 
-# Part 5. genres-and-variants.md
+# Part 10. genres-and-variants.md
 
 ## Genres, auto style, and variants
 
@@ -756,7 +2991,7 @@ Honest note: many neighboring combinations look alike (level 61 vs 62). The mean
 
 ---
 
-# Part 6. music-guide.md
+# Part 11. music-guide.md
 
 ## Background music guide
 
@@ -859,7 +3094,7 @@ Search phrases that find beds that work under speech: `<mood> background no voca
 
 ---
 
-# Part 7. beat-library.md
+# Part 12. beat-library.md
 
 ## Beat library
 
@@ -966,7 +3201,7 @@ Card timing rule for every type: `start` = the first word of the trigger, `end` 
 
 ---
 
-# Part 8. edit-levels.md
+# Part 13. edit-levels.md
 
 ## Edit levels 1 to 100
 
@@ -1028,7 +3263,7 @@ One number controls the whole edit. Switches change at tier borders. Continuous 
 
 ---
 
-# Part 9. color-and-cinematic.md
+# Part 14. color-and-cinematic.md
 
 ## Color, cinematic looks, and chroma key
 
@@ -1136,7 +3371,7 @@ Width for a 9:16 crop of 1080 px tall footage is 608 px. Change the third number
 
 ---
 
-# Part 10. audio.md
+# Part 15. audio.md
 
 ## Audio: voice, music, effects, loudness
 
@@ -1273,7 +3508,7 @@ Sources (checked 2026-09-15): FFmpeg atempo vs asetrate explanations at https://
 
 ---
 
-# Part 11. baseline-teardown.md
+# Part 16. baseline-teardown.md
 
 ## Baseline teardown: "Which AI edits better?"
 
@@ -1382,7 +3617,7 @@ Rated by how much each costs a viewer on a phone.
 
 ---
 
-# Part 12. design-secrets-glass.md
+# Part 17. design-secrets-glass.md
 
 ## Design study 2: the frosted-glass edit
 
@@ -1496,7 +3731,7 @@ Export the PNG at the final pixel size (for a 940 px wide card on 1080 output, e
 
 ---
 
-# Part 13. edl-schema.md
+# Part 18. edl-schema.md
 
 ## edl.json schema
 
@@ -1572,7 +3807,7 @@ Then run `render` and `qa`. The `no_card_overlap` gate catches cards whose times
 
 ---
 
-# Part 14. agent-prompts.md
+# Part 19. agent-prompts.md
 
 ## Prompts for different agents
 
@@ -1709,7 +3944,7 @@ python .splicecraft/skills/splicecraft/scripts/splicecraft.py auto raw/take1.mp4
 
 ---
 
-# Part 15. troubleshooting.md
+# Part 20. troubleshooting.md
 
 ## Troubleshooting
 
@@ -1738,7 +3973,7 @@ python .splicecraft/skills/splicecraft/scripts/splicecraft.py auto raw/take1.mp4
 
 ---
 
-# Part 16. Presets
+# Part 21. Presets
 
 ## presets/levels.json
 
