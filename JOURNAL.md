@@ -46,7 +46,7 @@ The skill measured how the 82 references **cut**, but not what they **say**. Now
 
 ### Not done, and why
 - **Nothing was pushed or deployed this session.** The course folder contains `Copyright - Hak Cipta © 2025 Kadev Academy.docx`: *"Dilarang keras untuk menduplikasi, mendistribusikan… Produk ini hanya untuk penggunaan pribadi pembeli yang sah."* The GitHub repo is **public**, and commit `ad2b9f3` already published `site/MEGA-SKILL.md` with the Kadev extracts, served at splicecraft.vercel.app/MEGA-SKILL.md. Publishing more of it needs the owner's decision. Options are listed in the chat record for 2026-09-24.
-- Not every one of the 38 lesson transcripts was read line by line against the slides. Lessons that looked slide-only by title were spot-checked (1.3, 3.1.2, 3.1.6, 3.2.6) and confirmed to narrate the slides, with the additions captured in §9. The rest are in `transcripts/kadev/` for anyone who wants to check.
+- **Later the same day:** all 34 lesson transcripts were read end to end. Lesson 5.5 had failed locally (54 words) and was re-transcribed on Groq (667 words). Everything the lessons add beyond the slides is in `kadev-live-mentoring.md` §9.5–9.11, chapter by chapter. Most lessons narrate the slides almost word for word. The additions are worked examples, Kadev's own numbers and cautionary stories, the LinkedIn mechanics, the Canva cover recipe, and the product-research method.
 - The ledger thresholds still haven't been tuned against a real 50+ entry ledger.
 
 ### Open items

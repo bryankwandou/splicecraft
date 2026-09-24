@@ -5,7 +5,7 @@ license: MIT
 ---
 
 > **MEGA-SKILL.md** · SKILL.md + 20 references + presets in one file.
-> **Published:** 2026-09-24 · built from commit `ad2b9f3` · rebuild with `python tools/build_mega.py`, never edit by hand.
+> **Published:** 2026-09-24 · built from commit `e18ea67` · rebuild with `python tools/build_mega.py`, never edit by hand.
 > **Agent check:** compare the published date with today. If more than 6 months have passed, re-research platform algorithms, lengths, safe zones, demographics and model names on the web before relying on them, tell the user what changed, and update the source files.
 
 ## Contents
@@ -2163,7 +2163,7 @@ Load this file when:
 - the user is nervous or stiff on camera
 - the user runs a business, or wants income from personal branding
 
-**Jump table:** §1 16 formats · §2 PAS & Storytelling Arc · §3 account diagnoses · §4 attention economy, emotions, thesis+arguments, outer/inner circle · §5 TOFU/MOFU/BOFU, test→win→replicate · §6 Trial Reels & Link Reels · §7 "the niche is you", six income streams · §8 yapping on camera · §9 lesson-only additions (success vs failure, LinkedIn, CapCut order) · §10 Rich's 10k experiment · §11 business branding, archetypes · §12 networking · §13 anatomy of a viral format, editing elements, SFX map · §14 agent rules
+**Jump table:** §1 16 formats · §2 PAS & Storytelling Arc · §3 account diagnoses · §4 attention economy, emotions, thesis+arguments, outer/inner circle · §5 TOFU/MOFU/BOFU, test→win→replicate · §6 Trial Reels & Link Reels · §7 "the niche is you", six income streams · §8 yapping on camera · §9 lesson-video additions, chapter by chapter (every lesson read) · §10 Rich's 10k experiment · §11 business branding, archetypes · §12 networking · §13 anatomy of a viral format, editing elements, SFX map · §14 agent rules
 
 Sources are listed at the bottom. Quotes are cleaned only where Whisper misheard a word. The meaning and the register are kept as spoken.
 
@@ -2564,6 +2564,103 @@ Only successes and the audience feels *"ini orang terlalu dewa, aku nggak bisa m
 
 This matches SpliceCraft's own pipeline order (`SKILL.md` Steps 1–6) and its ducking rule (`audio.md`). The agent may cite this lesson when a user asks why the voice must sit above the music.
 
+#### 9.5 Chapter 0: what the course promises, and "jual diri"
+- **Who it's for:** students and fresh graduates (competitiveness), professionals (workplace image), UMKM owners (be the face of the brand), creators and freelancers.
+- **Personal branding in two words: *jual diri*, in the positive sense.** You sell your **knowledge** (which earns trust), your **value** (which earns opportunity) and your **experience** (which earns strength).
+- **Why the rich keep posting** (Elon Musk, the Cleo owner): to keep influence and relevance, make business expansion easier, leave a legacy, and build trust for collaboration.
+- **Three claims** (Kadev cites Brand Builders Group): personal branding is the future, it's highly profitable, and it **accelerates trust**. *"Dua hal paling penting di dunia: waktu dan trust."*
+- **Offline vs online.** Offline (seminars, networking events) takes more time and money and reaches only your city. Online reaches the whole country and costs less. Kadev's analogy: introducing yourself to every table in every café in Malang is *"capek, dan freak banget."* **Ideal:** do online first, then add offline **speaker engagement** to build closeness. **Content is the key.**
+- **Eight outcomes promised** (expected, not guaranteed): a 3-digit income or your first million · 100k followers · recognising your potential and confidence · understanding the strategy · a changed mindset · being trusted and respected, not just known · strategic connections · job and career opportunities.
+
+#### 9.6 Chapter 1 additions
+- **Ikigai, the quick route.** If the four circles feel abstract, answer: *What makes you happy and never bored? What skill do people often praise? What problem can you solve for others in your industry? How could it earn money?* **All four must be filled.** *"Ikigai = niche."* You don't need to be a master to write it down. The basics are enough.
+- **Premis, worked examples** (all from SWOT → premis):
+  - **Kadev:** mysterious, *gengsi* and shy → tried personal branding → active income, a known name, collaborations. The post built on it (*"Anak muda harus personal branding… sampai kapan jadi orang misterius?"*) got about 421k likes and **121k saves**.
+  - **Kak Anggun:** a village kid who couldn't continue to high school → initiator of *work from anywhere*, helping thousands earn online.
+  - **"Kevin"** (illustrative): failed at business several times → mentor to UMKM on surviving. Monetised as a class, course, webinar or ebook.
+  - **"Nadia"** (illustrative): afraid to speak in public → teaches confident speaking on camera.
+  - *"Personal branding bukan pencitraan, tapi menyampaikan pesan yang berdampak."*
+- **50% art, 50% science** (lesson 1.4): there's no *1×1=2* formula. Goals and timelines differ (Kadev started in 2016–17 and only took off in 2023). **Art** is your delivery, dialect and style (Jerome Polin's *"mantappu jiwa"*, Gadgetin's funny reviews). **Science** is data and analytics. Kadev compares it to cooking fried rice: knowledge, reading, experience and your own art go into one pan. His "Rate Personal Branding" segment (moved from TikTok live to Reels) got **1.99M views and 27k comments**. The advice inside it: *"ubah mindset dari creating ke documenting."*
+- **Marathon, not sprint** (lesson 1.5): Kadev's mountain-climbing story. He rushed ahead at the first posts, burned out by the third, and was overtaken by the friend who walked steadily with a plan. Chasing virality isn't wrong. **Chasing it with no long-term strategy is.**
+- **Perception vs persona** (lesson 1.6): don't manufacture a persona that isn't you (posing in front of a friend's Porsche to look rich). The persona must be true, and if you want the brand to look diligent, become diligent. Take criticism, ignore hate.
+
+#### 9.7 Chapter 2 additions
+- **Opportunity mapping by time frame + *Eat That Frog*** (Brian Tracy): do the hardest, highest-impact thing first. Map goals by **semester** (student → internship, exchange, organisation, volunteering → dream company) · **year** (F&B owner 2026–2029) · **quarter** (writer: ebook first, then raise the target) · **week** (freelance designer: week 1 portfolio, week 2 email prospects…). Personal branding runs through the **whole** journey, not only once the goal is reached.
+- **Goal → platform:** content creator → TikTok/Instagram · career and jobs → LinkedIn.
+- **Kadev's own "why", split in two.** *For himself:* industry credibility, wider career and business opportunities, monetising knowledge. *For others:* educating and inspiring young people, being a source of social change (*Gen Z punya potensi*), being useful however small. When consistency slips, he rereads his written why.
+- **4K sweet spots, worked:**
+  - productivity → *"cara stop prokrastinasi dalam 5 menit"*
+  - personal finance → *"cara nabung tanpa ngerasa miskin"*, *"investasi mulai dari 10 ribu"*
+  - fitness → *"5 gerakan pemalas biar berat badan turun"*
+- **Too much persona** = irrelevant, ego, "just showing off". **Too much audience** = people-pleaser, no character, no USP.
+
+#### 9.8 Chapter 3.1 additions
+- **The algorithm as a snowball:** 1 → 5 → 20 → 100 → 1,000 viewers of the same kind, as long as each group engages. *"Pos jam 7 malam dijamin rame"* matters far less than content people interact with.
+- **A cautionary tale from Kadev's own account.** His media account *Skreatif* grew on a superniche (videography and editing on a smartphone). At about 100k followers he broadened it to Gen Z, finance and self-development, and **engagement dropped sharply: 157k fell to about 140k followers.** The algorithm and the audience both got confused.
+- **Changing niche:** Kadev made about **20 bridge posts** (editing × personal branding) before switching fully.
+- **Perfect niche = passion ∩ skill ∩ money-making potential.** Then narrow it: cooking → cooking for kos students / for housewives. The richest territory is **health, wealth, relationships**: timeless, always has a market, many ways to monetise.
+- **Quality audience over quantity.** Kak Anggun (31k followers) sells out products. Kadev's webinars sell out, and his engagement matches accounts with 500k followers.
+- **Profile formula (8-second test):**
+  - **Username** = your real name, not a brand.
+  - **Profile name** = name + niche, for search (*"Kadafi Devayana | Personal Branding"*).
+  - **Bio = Value → You → CTA**, in that order (*"orang tidak peduli siapa kamu, mereka peduli apa yang bisa kamu berikan"*).
+  - **Photo:** a clear, close face.
+  - **Highlights** = raw portfolio (audience reposts from speaking gigs).
+  - **Feed:** one visual identity (Kadev: black and white, partly because his design skills are limited), a mix of formats, curiosity thumbnails.
+- **Documenting yourself** (lesson 3.1.5):
+  - **Four content forms:** video (short form lives a week to a month; long form lives long) · writing (single post for quotes and micro-blogging, carousel for storytelling, Threads/X/LinkedIn) · Stories (connection) · live (engagement, monetisation).
+  - **Shooting:** enough light (golden hour 07–08 or 15–17 if you have no lamp) · clear sound matters most (*"audio visual, bukan visual audio"*) · CapCut's teleprompter · record moments anywhere and voice them over later · vertical for social, horizontal for YouTube · simple edit (subtitles + music).
+  - **Mistakes:** dark video · noisy audio · the wrong aspect ratio · over-editing *or* no editing at all (leaving fillers and "umm") · eyes and body not engaged with the lens.
+- **Canva carousel recipe** (lesson 3.1.7):
+  1. Write the Storytelling Hack plus the six elements first.
+  2. Cover: your photo, **duplicated**, with the background removed on the top copy, and a **black-shadow gradient layer placed between the two copies**. The headline sits behind your head for a depth effect.
+  3. Two-line headline in Poppins or Plus Jakarta Sans, the key phrase underlined, your name as a watermark.
+  4. Following slides kept **plain**, so nothing distracts from the text.
+
+  His networking carousel made this way got about 23.7k likes, 7k saves, 5.9k shares.
+
+#### 9.9 Chapter 3.2 additions (LinkedIn)
+- People spend about **35 seconds** on a LinkedIn profile.
+- **Photo mistakes:** a formal ID photo · a busy background · a selfie · no face visible · shot from too far away (LinkedIn compresses it). Zoom so your face fills the **centre cell of the 3×3 grid**. Explore many poses at a studio. Adobe Firefly can swap a T-shirt for a blazer.
+- **Banner** = name + field of interest + **email**, so people can reach you before a connection is accepted.
+- **Headline, 220 characters:** education + internship or experience + career aspiration + a prestigious highlight or certification. Shorten the custom URL.
+- **Credibility features:** skills & **endorsements** (ask supervisors and partners) · **recommendations** (up to 3,000 characters, choose the relationship) · **Featured** (pin 3–4 items, links from other platforms allowed).
+- **Posts:** 7 size options (prefer the largest) · single or carousel · caption in **STAR** (situation, task, action, result) · **experience descriptions** = definition of the organisation + key highlights with **measurable parameters** (a number, a percentage, a nominal amount: *"monitored 9 departments and 20 divisions"*) + skills + documentation (the top of an offer letter, certificates, publications).
+- **Connections:**
+  - Free accounts can send about **100 connection requests a week**. Aim for **500+** connections.
+  - **Connect** is two-way and lets you DM. **Follow** is one-way.
+  - **Circles:** inner (friends, colleagues, supervisors: connect and share insight) · middle (alumni, recruiters at dream companies, mentors in groups: connect without expecting a reply, comment on their wins) · outer (thought leaders, executives, LinkedIn creators: follow and join the discussion in comments).
+  - A personalised connection note for **2nd/3rd-degree** contacts is limited (about 5 a month on a free account), so use it only when it matters.
+  - Turn on **job alerts** by field.
+
+#### 9.10 Chapter 4 additions
+- **Kadev's four lost years on YouTube (2016–2021):** unclear topic (videography, giveaways, parody interviews, apps) · posting in bursts · copying idols word for word (*"4 fakta menarik tentang…"* after Agung Hapsah) · waiting for proper gear and perfect results · refusing criticism.
+  - The soto-seller analogy: soto one day, nothing the next, bubur ayam after that. Customers stop coming.
+- **Motivation starts you. Consistency keeps you going.** *"Konsisten itu nggak harus sehari sekali. Dua kali seminggu juga boleh, tapi minggu depannya tetap dua."* **Avoid over-claiming:** say *"aku masih belajar di bidang ini"*. Cut back on motivational content, and learn about consistency instead.
+- **Three kinds of criticism:** constructive (take it, even when it hurts) · careless (skip it) · hate comments (a sign you're becoming known). *"Kritik itu bahan bakar."* **Grit** = passion + commitment. Measure progress over **6 months**, not a week.
+- **Trend adaptation needs an output.** Kadev's *"halah foto sama satu sertif aja bangga"* trend showed credibility (21k likes). His *"rate IG"* trend added interaction (7k likes, 900 comments). A *jedag-jedug* of him on a 1,000-person stage signalled he's bookable. **Twist the trend with your own angle. The trend is a vehicle, not the destination.**
+- **Signature content:** Kadev's black-and-white gradient carousels, which others now copy · Jerome Polin's delivery · a creator whose signature is photobombing viral videos · a regional accent (*"jangan diubah jadi logat Jakarta"*). You find your signature by making a lot of content.
+- **Loyal audience:** reply to DMs and comments, discuss in Stories, give consistent value, build a small community (WhatsApp channel and group). *"If one person says you're great, it's subjective. If a hundred do, it's objective."*
+- **The sugar test** (lesson 4.3): if your name were a brand of sugar, would people say *sugar*, or *salt*? Ask **5 people** what they remember when they hear your name. Case: a UI/UX designer became known as a motivator after 6 months of mindset tips. Keep the tone consistent across platforms, with small adjustments for LinkedIn.
+
+#### 9.11 Chapter 5 additions
+- **Personal branding is an access card** to business, career (HR runs **background research** on your social media), relationships, collaboration and income.
+- **Knowledge gap = what you know that others want to know.** You build the bridge and charge a toll. Kadev's path: free editing tips (*"kulitnya doang"*) → paid workshops and classes → presets, templates and editing services. Speaker fee claimed: 1–2× the Jakarta minimum wage per 45–90 minutes.
+- **Finding the gap:** data (comments, Google Trends) · people's problems (DMs, communities) · competitor benchmarking (what they haven't covered) · your own experience (what used to confuse you).
+- **Digital products** (lesson 5.3):
+  - **Claims:** lifetime sales of about Rp 79 million on Lynk.id with little effort. Kak Anggun got Rp 100 million in under 3 months.
+  - **Why digital beats physical:** capital is your brain · make once, sell many times · cloud storage · instant delivery · scales to thousands · ~100% margin · update anytime. **The risk is plagiarism.**
+  - **Research:**
+    - **Google Trends**, set to Indonesia and the last 90 days, to compare topics (public speaking vs copywriting vs content creator).
+    - Browse **Etsy**, **Amazon "Read sample"** tables of contents, Trivesity and Lynk.id. Foreign markets reach Indonesia 1–2 years later.
+    - **ATM, never plagiarise.** *"Kredibilitas lebih mahal dari plagiasi."*
+  - **Build:** outline first (AI may suggest; cut, keep, rewrite until it's yours) · Canva templates at Rp 30–50k (100 buyers × Rp 50k = Rp 5 million) · sell recordings of your webinars.
+  - **Sell through the funnel:** TOFU content and community → MOFU free sample or free webinar plus testimonials → BOFU guarantee, limited-time discount, the platform checkout → scale up with bundles, new platforms, affiliates.
+- **Networking lesson (5.4):** Kadev's internship at Astra International (about 28k applicants, about 100 accepted) came after he polished his LinkedIn and messaged HR directly. *"Networking bukan soal berapa banyak orang yang kamu kenal, tapi berapa banyak yang pengen kenal kamu. Jangan datang dengan tangan kosong (pengalaman) dan otak kosong (ilmu)."*
+- **Collaboration = supply meets demand** (lesson 5.5): your skills and resources meet someone's problem. Personal branding makes your supply **visible**. Arif's PDF graphic-design portfolio on TikTok (287k views) brought his first **100 clients** that year, including one in Singapore. A pet-shop founder will hire the vet who is visible.
+
+<!-- journal 2026-09-24: §9.5–9.11 written after reading every lesson transcript end to end (34 lessons; 5.5 re-transcribed on Groq because the local run cut off after 54 words). Everything that merely restates the slides was left out; only additions are here. Numbers are the speaker's claims, shown on screen, not independently verified. -->
+
 ---
 
 ### 10. 10,000 followers in 3 weeks: Rich's own experiment (mentoring, 18 April 2026)
@@ -2704,7 +2801,7 @@ Not every video needs every element. An eye-to-eye talking head may need no B-ro
 | §6 | `[16 Jan 2065] Mentoring - Trial Reels & Link a Reel` (6,765 s, Groq; the year in the filename is a typo for 2026) | Nadif, Kadev |
 | §7 | `[13 Des 2025] Mentoring - 2026 Algorthm & Strategt (1)` (8,135 s, Groq) | Kadev, Rich |
 | §8 | `[27 Mei 2026] Kadev Academy - Mentoring VIP - The Art of Yapping` (6,685 s, Groq) | Kadev, Nadif, Rich |
-| §9 | Lesson videos `(1 3)`, `(3.1 2)`, `(3.1 6)`, `(3.2 6)` (faster-whisper local) | Kadev, Arif Maliki |
+| §9 | All 34 lesson videos, chapters 0–5 (local faster-whisper; 5.5 re-done on Groq) | Kadev, Arif Maliki |
 | §10 | `[18 April 2026] Kadev Academy - Mentoring VIP - Dapetin 10K Followers dalam 3 Minggu` (7,522 s, Groq) | Rich, Kadev |
 | §11 | `Kadev Academy - VIP Mentoring - February 21, 2026` (6,194 s, Groq) | Rich, Nadif |
 | §12 | `[21 Okt 2025] Mentoring - Networking Strategy` (5,804 s, local) | Kiki (Arif Maliki), Hardy |
