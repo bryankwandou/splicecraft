@@ -6,6 +6,15 @@ Newest entry first.
 
 ---
 
+## 2026-09-25: daily content planner and auto-logging; rebrand to SpliceCraft Academy
+
+- **Rebrand.** Every mention of the course and its founder is now "SpliceCraft Academy" / "the founder". Files renamed to `academy-*.md`. The transcript site moved to splicecraft-academy-docs (private repo); the old Vercel project was deleted.
+- **Planner.** New `ledger.py` commands: `plan`, `today`, `done`, `reflect`, `export-plan`. First version planned only 3 of 30 days: every candidate shared the niche theme tag, so the similarity check blocked it. Fixed by checking against already-made entries on problem + angle only, and by never repeating a problem + angle pair inside one plan. Verified: 30 posts at 5/week, mix 25/4/1, and a problem-angle pair already in the ledger ("penyebab gugup") was skipped.
+- **Auto-log.** `splicecraft.py script/render/auto` now log to the ledger by themselves. Verified: `script "Cara stop gugup sebelum presentasi"` created an entry with status `scripted`.
+- **Still open:** ledger thresholds untuned against a real 50+ entry ledger; `plan` topic templates are Indonesian only.
+
+---
+
 ## 2026-09-24: all videos transcribed; mentoring layer added; spoken-grammar measured
 
 ### Transcription (open item 1 from 2026-09-23, closed)

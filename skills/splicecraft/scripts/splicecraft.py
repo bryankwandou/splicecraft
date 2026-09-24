@@ -1600,6 +1600,21 @@ def compare(before: str, after: str, out: str):
 
 
 # -------------------------------------------------------------------- cli
+
+def _autolog(topic, **fields):
+    """Every script and render is written to the content ledger automatically,
+    so the user never has to remember. SPLICECRAFT_NO_LOG=1 turns it off."""
+    if os.environ.get("SPLICECRAFT_NO_LOG"):
+        return
+    try:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        import ledger
+        eid = ledger.auto_log(topic, **fields)
+        print(f"[splicecraft] logged to content ledger: {eid[:8]} ({topic[:60]})", file=sys.stderr)
+    except Exception as e:  # logging must never break an edit
+        print(f"[splicecraft] ledger auto-log skipped: {e}", file=sys.stderr)
+
+
 def main():
     ap = argparse.ArgumentParser(prog="splicecraft", description=__doc__, formatter_class=argparse.RawTextHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -1669,6 +1684,7 @@ def main():
         print(json.dumps(res, indent=2, ensure_ascii=False))
     elif a.cmd == "script":
         script(a.topic, a.genre, a.seconds, a.framework, a.hook, a.audience, a.language, a.out, a.brief)
+        _autolog(a.topic, status="scripted", seconds=a.seconds, script_path=str(Path(a.out).resolve()) if a.out else "")
     elif a.cmd == "brief":
         print(json.dumps(brief_report(load_brief(a.brief)), indent=2, ensure_ascii=False))
     elif a.cmd == "library":
@@ -1697,6 +1713,7 @@ def main():
     elif a.cmd == "render":
         render(a.src, a.edl, a.out, a.size, a.fps, a.music, a.music_db, a.key, a.bg, a.lut, a.grade,
                a.font_bold, a.font_body, a.fontsdir, a.crf, a.preset)
+        _autolog(getattr(a, "topic", None) or Path(a.src).stem, status="produced", video_path=str(Path(a.out).resolve()))
     elif a.cmd == "qa":
         sys.exit(0 if qa(a.video, a.edl, a.out) else 2)
     elif a.cmd == "sheet":
@@ -1715,6 +1732,7 @@ def main():
         out = str(d / "edited.mp4")
         render(a.src, str(d / "edl.json"), out, a.size, a.fps, a.music, a.music_db, a.key, a.bg, a.lut, a.grade,
                a.font_bold, a.font_body, a.fontsdir, a.crf, a.preset)
+        _autolog(Path(a.src).stem, status="produced", video_path=str(Path(out).resolve()))
         ok = qa(out, str(d / "edl.json"), str(d / "qa.json"))
         sheet(out, str(d / "sheet.jpg"))
         sys.exit(0 if ok else 2)

@@ -118,6 +118,20 @@ $LEDGER add "<topic>" --niche "<superniche>" --pillar <pillar> \
   --format <format> --funnel <tofu|mofu|bofu> --source "<where the idea came from>" \n  --theme <tag> --theme <tag> --status scripted --script-path script.md
 ```
 
+**0.5g — Plan the next 30 days (daily content planner).** Once the premis, niche and 4K keresahan are known, build the calendar instead of writing one-offs:
+
+```bash
+$LEDGER plan --days 30 --per-week 5 --niche "<superniche>" --goal "<the transformation>"   --problem "<keresahan 1>; <keresahan 2>; <keresahan 3>" --platform tiktok --followers <n>   [--winner-format <format that already won>] [--start YYYY-MM-DD] [--dry-run]
+$LEDGER today                 # what to post today, and anything overdue
+$LEDGER done <id> --metric views=1200 --metric saves=40
+$LEDGER reflect --answer 1="..." --answer 3="..."   # Refleksi Mingguan, 6 questions
+$LEDGER export-plan --out plan.csv                  # the 30-day tracker layout, opens in Excel/Sheets
+```
+
+What `plan` decides: pillar rotation (educate-heavy, one promotion a week), the 80/15/5 superniche / adjacent / personal mix, funnel stage (accounts under 1,000 followers get mostly TOFU), format (untried formats first; with `--winner-format`, ~80% winner + 20% testing), and an angle from the Content Idea Framework per problem. Every day is checked against what was already **made** and saved as `status=planned`, so later checks know those themes are taken. The topics are **seeds**: before scripting one, still get the real story, number and opinion from the user.
+
+**Auto-logging.** `splicecraft.py script`, `render` and `auto` write to the ledger by themselves (reusing the planned entry when the topic matches). The agent no longer has to remember. Set `SPLICECRAFT_NO_LOG=1` to turn it off for a test run. Still run `$LEDGER add` with the full fields (pillar, hook template, themes) when you have them: the auto entry only knows the topic, status and file path.
+
 Then the video gets filmed and you continue at Step 1 with `--brief brief.json` on every plan.
 
 If the footage already exists, skip to Step 1 but still run 0.5a and ask for the brief fields in question 1c.

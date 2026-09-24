@@ -203,3 +203,13 @@ If the file is hand-edited into invalid JSON, every command fails with a message
 - The thresholds are hand-set, not learned. See the journal note above.
 
 <!-- journal: the lexical-vs-semantic limit is the known weak point. An embedding-based check would fix it but would need either a model download or a network call, and this skill is deliberately offline and stdlib-only. If that constraint is ever relaxed, this is the first thing to upgrade. Until then, the --theme discipline is what carries it, which is why SKILL.md tells the agent to always pass themes. -->
+
+
+## Planner and auto-log (added 2026-09-25)
+
+- `plan` builds an N-day calendar from the user's audience problems and saves each day as `status=planned`. Statuses now run `planned → scripted → produced → published` (or `skipped`).
+- `today` lists what is due and overdue. `done <id>` marks a piece published and stores metrics. `reflect` prints the week and the six *Refleksi Mingguan* questions and saves answers under `reflections`. `export-plan` writes a CSV in the course's 30-day tracker layout (HARI, TANGGAL, TOPIK, PLATFORM, FORMAT, STATUS, SUDAH TAYANG?, CATATAN).
+- `splicecraft.py script/render/auto` call `ledger.auto_log()`, which updates a planned entry with the same topic or creates a new one. A logging failure prints a warning and never stops an edit.
+- Planned entries count in `stats` like any other, so the pillar balance shows the plan too.
+
+<!-- journal 2026-09-25: planner written after the user asked for "Ikigai sampai daily content planner" and "auto catat". The 30-day tracker xlsx from the course was read for its columns and weekly questions; its Google-Sheets copy link was not used. -->

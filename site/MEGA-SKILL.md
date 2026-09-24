@@ -5,7 +5,7 @@ license: MIT
 ---
 
 > **MEGA-SKILL.md** · SKILL.md + 20 references + presets in one file.
-> **Published:** 2026-09-24 · built from commit `8729e8c` · rebuild with `python tools/build_mega.py`, never edit by hand.
+> **Published:** 2026-09-25 · built from commit `dd74d85` · rebuild with `python tools/build_mega.py`, never edit by hand.
 > **Agent check:** compare the published date with today. If more than 6 months have passed, re-research platform algorithms, lengths, safe zones, demographics and model names on the web before relying on them, tell the user what changed, and update the source files.
 
 ## Contents
@@ -150,6 +150,20 @@ $LEDGER add "<topic>" --niche "<superniche>" --pillar <pillar> \
   --hook-template <1-20> --angle "<what made THIS one different>" \
   --format <format> --funnel <tofu|mofu|bofu> --source "<where the idea came from>" \n  --theme <tag> --theme <tag> --status scripted --script-path script.md
 ```
+
+**0.5g — Plan the next 30 days (daily content planner).** Once the premis, niche and 4K keresahan are known, build the calendar instead of writing one-offs:
+
+```bash
+$LEDGER plan --days 30 --per-week 5 --niche "<superniche>" --goal "<the transformation>"   --problem "<keresahan 1>; <keresahan 2>; <keresahan 3>" --platform tiktok --followers <n>   [--winner-format <format that already won>] [--start YYYY-MM-DD] [--dry-run]
+$LEDGER today                 # what to post today, and anything overdue
+$LEDGER done <id> --metric views=1200 --metric saves=40
+$LEDGER reflect --answer 1="..." --answer 3="..."   # Refleksi Mingguan, 6 questions
+$LEDGER export-plan --out plan.csv                  # the 30-day tracker layout, opens in Excel/Sheets
+```
+
+What `plan` decides: pillar rotation (educate-heavy, one promotion a week), the 80/15/5 superniche / adjacent / personal mix, funnel stage (accounts under 1,000 followers get mostly TOFU), format (untried formats first; with `--winner-format`, ~80% winner + 20% testing), and an angle from the Content Idea Framework per problem. Every day is checked against what was already **made** and saved as `status=planned`, so later checks know those themes are taken. The topics are **seeds**: before scripting one, still get the real story, number and opinion from the user.
+
+**Auto-logging.** `splicecraft.py script`, `render` and `auto` write to the ledger by themselves (reusing the planned entry when the topic matches). The agent no longer has to remember. Set `SPLICECRAFT_NO_LOG=1` to turn it off for a test run. Still run `$LEDGER add` with the full fields (pillar, hook template, themes) when you have them: the auto entry only knows the topic, status and file path.
 
 Then the video gets filmed and you continue at Step 1 with `--brief brief.json` on every plan.
 
@@ -3319,6 +3333,16 @@ If the file is hand-edited into invalid JSON, every command fails with a message
 - The thresholds are hand-set, not learned. See the journal note above.
 
 <!-- journal: the lexical-vs-semantic limit is the known weak point. An embedding-based check would fix it but would need either a model download or a network call, and this skill is deliberately offline and stdlib-only. If that constraint is ever relaxed, this is the first thing to upgrade. Until then, the --theme discipline is what carries it, which is why SKILL.md tells the agent to always pass themes. -->
+
+
+### Planner and auto-log (added 2026-09-25)
+
+- `plan` builds an N-day calendar from the user's audience problems and saves each day as `status=planned`. Statuses now run `planned → scripted → produced → published` (or `skipped`).
+- `today` lists what is due and overdue. `done <id>` marks a piece published and stores metrics. `reflect` prints the week and the six *Refleksi Mingguan* questions and saves answers under `reflections`. `export-plan` writes a CSV in the course's 30-day tracker layout (HARI, TANGGAL, TOPIK, PLATFORM, FORMAT, STATUS, SUDAH TAYANG?, CATATAN).
+- `splicecraft.py script/render/auto` call `ledger.auto_log()`, which updates a planned entry with the same topic or creates a new one. A logging failure prints a warning and never stops an edit.
+- Planned entries count in `stats` like any other, so the pillar balance shows the plan too.
+
+<!-- journal 2026-09-25: planner written after the user asked for "Ikigai sampai daily content planner" and "auto catat". The 30-day tracker xlsx from the course was read for its columns and weekly questions; its Google-Sheets copy link was not used. -->
 
 ---
 

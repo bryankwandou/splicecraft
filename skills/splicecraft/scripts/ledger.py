@@ -27,6 +27,10 @@ Commands
     edit <id> --field=value  amend an entry
     remove <id>              delete an entry
     export --format md|csv   dump for the user
+    plan --days 30           daily content calendar from audience problems
+    today / done <id>        what to post today / mark it posted
+    reflect                  weekly reflection
+    export-plan --out f.csv  calendar in the 30-day tracker layout
     themes                   what themes have been covered, ranked
 
 Exit codes
@@ -725,6 +729,245 @@ def cmd_export(args) -> int:
 # --------------------------------------------------------------------------- cli
 
 
+
+# --------------------------------------------------------------------------- planner
+#
+# `plan` builds an N-day content calendar and writes each day into the ledger as
+# status "planned", so later checks already know those themes are taken.
+# Rules come from the SpliceCraft Academy material:
+#   pillar rotation      academy-personal-branding.md §8.2 (educate/inspiration/entertaining/promotion)
+#   niche mix 80/15/5    §6.4 (superniche / adjacent / personal story)
+#   funnel               academy-live-mentoring.md §5.1 (small accounts lean TOFU)
+#   format               §1 + §5.3 (untried formats first; a known winner gets ~80%)
+#   angle                Content Idea Framework (Do/Don't, Penyebab, Q&A, Tips, Rekomendasi, Informasi)
+# Columns in `export-plan` mirror the academy's "30 Hari Content Challenge" tracker.
+
+ANGLES = [
+    ("penyebab", "{n} penyebab {p}"),
+    ("dont", "Jangan biarin {p} bikin kamu berhenti: ini yang aku lakuin"),
+    ("tips", "{n} cara biar {goal}"),
+    ("qna", "\"{p}?\" (jawab satu pertanyaan audiens)"),
+    ("rekomendasi", "{n} rekomendasi buat yang {p}"),
+    ("story", "Cerita: dulu aku {p}, sekarang {goal}"),
+    ("informasi", "Salah kaprah soal {p} yang jarang dibahas"),
+    ("comparison", "Pemula vs pro soal {p}"),
+]
+PILLAR_CYCLE = ["educate", "inspiration", "educate", "entertaining", "educate", "inspiration", "promotion"]
+NUMS = [3, 5, 7, 4, 6]
+
+
+def _parse_problems(raw: Optional[List[str]]) -> List[str]:
+    out = []
+    for r in raw or []:
+        out += [x.strip() for x in re.split(r"[;\n]", r) if x.strip()]
+    return out
+
+
+def cmd_plan(args) -> int:
+    path = Path(args.store) if args.store else default_store()
+    data = load(path)
+    problems = _parse_problems(args.problem)
+    if not problems:
+        print("plan: give at least one audience problem with --problem "
+              "(the Keresahan from the 4K method). Ideas without a real problem are "
+              "invented ideas; that is what makes content AI-ish.", file=sys.stderr)
+        return 1
+    goal = args.goal or "lebih baik"
+    start = _dt.date.fromisoformat(args.start) if args.start else _dt.date.today()
+    per_week = max(1, min(7, args.per_week))
+    posting_days = sorted({round(i * 7 / per_week) for i in range(per_week)})
+
+    used_formats = {e.get("format") for e in data["entries"] if e.get("format")}
+    winner = args.winner_format
+    fmt_queue = [f for f in FORMATS if f not in used_formats] + [f for f in FORMATS if f in used_formats]
+    small = args.followers is not None and args.followers < 1000
+
+    rows, day, k, tries = [], 0, 0, 0
+    while len(rows) < args.days and tries < args.days * 20:
+        tries += 1
+        date = start + _dt.timedelta(days=day)
+        day += 1
+        if (date - start).days % 7 not in posting_days:
+            continue
+        n = len(rows)
+        pillar = PILLAR_CYCLE[n % len(PILLAR_CYCLE)]
+        slot = n % 20
+        niche = "personal" if slot == 19 else ("adjacent" if slot in (6, 13, 17) else "superniche")
+        if niche == "personal":
+            pillar = "inspiration"
+        funnel = ("bofu" if pillar == "promotion" else
+                  "tofu" if (small and n % 3 != 2) or pillar == "entertaining" else
+                  "mofu" if pillar == "educate" else "tofu")
+        if winner and n % 5 != 4:
+            fmt = winner
+        else:
+            fmt = fmt_queue[k % len(fmt_queue)]
+            k += 1
+        # pick a problem x angle that the ledger has not seen yet
+        chosen = None
+        for j in range(len(problems) * len(ANGLES)):
+            p = problems[(n + j) % len(problems)]
+            aname, tpl = ANGLES[(n + j // len(problems)) % len(ANGLES)]
+            if niche == "personal":
+                aname, tpl = "story", "Cerita pribadi: momen aku {p} dan apa yang berubah"
+            topic = tpl.format(n=NUMS[n % len(NUMS)], p=p, p_neg=p, goal=goal)
+            themes = [t for t in [args.niche, p, aname] if t]
+            if any(r["_entry"]["source"] == f"keresahan: {p}" and r["_entry"]["angle"] == aname for r in rows):
+                continue  # same problem + same angle already in this plan
+            # compare against what was already MADE, on problem + angle (the niche tag is shared by design)
+            probe = " ".join([topic, p, aname])
+            near = _nearest([e for e in data["entries"] if e.get("status") != "planned"], probe, topic, 1)
+            if not near or near[0][0] < BLOCK_AT:
+                chosen = (topic, themes, aname, p, near[0][0] if near else 0.0)
+                break
+        if not chosen:
+            continue
+        topic, themes, aname, p, score = chosen
+        entry = {
+            "id": uuid.uuid4().hex, "date": date.isoformat(), "topic": topic,
+            "niche": args.niche or "", "pillar": pillar, "hook": "", "hook_template": "",
+            "angle": aname, "themes": themes, "premise": args.premise or "",
+            "platform": args.platform or "", "format": fmt, "funnel": funnel,
+            "source": f"keresahan: {p}", "seconds": None, "script_path": "", "video_path": "",
+            "status": "planned", "performance": {},
+            "notes": f"plan {start.isoformat()} day {len(rows)+1}; mix={niche}",
+        }
+        rows.append({"_entry": entry, "day": len(rows) + 1, "mix": niche, "score": score})
+
+    if not rows:
+        print("plan: every candidate collided with something already made. Add more --problem values.",
+              file=sys.stderr)
+        return 1
+    if not args.dry_run:
+        data["entries"] += [r["_entry"] for r in rows]
+        save(path, data)
+
+    print(f"{'HARI':<5}{'TANGGAL':<12}{'PILAR':<13}{'FUNNEL':<7}{'FORMAT':<26}TOPIK")
+    for r in rows:
+        e = r["_entry"]
+        print(f"{r['day']:<5}{e['date']:<12}{e['pillar']:<13}{e['funnel']:<7}{e['format']:<26}{e['topic']}")
+    mix = {m: sum(1 for r in rows if r["mix"] == m) for m in ("superniche", "adjacent", "personal")}
+    print(f"\n{len(rows)} posts, {per_week}/week | mix superniche {mix['superniche']} / adjacent "
+          f"{mix['adjacent']} / personal {mix['personal']}")
+    print("Each topic is a SEED, not a script. Before writing, fill the real story, number and "
+          "opinion from the user (anti-ai-ish.md). " +
+          ("(dry run: nothing saved)" if args.dry_run else f"Saved as status=planned in {path}"))
+    return 0
+
+
+def cmd_today(args) -> int:
+    path = Path(args.store) if args.store else default_store()
+    data = load(path)
+    d = args.date or _today()
+    due = [e for e in data["entries"] if e.get("status") == "planned" and e.get("date", "") <= d]
+    if not due:
+        print(f"nothing planned up to {d}. Run `plan`, or `suggest` for what is overdue.")
+        return 0
+    due.sort(key=lambda e: e.get("date", ""))
+    for e in due:
+        late = " (TERLAMBAT)" if e["date"] < d else ""
+        print(f"{_short(e)}  {e['date']}{late}  [{e.get('pillar')}/{e.get('funnel')}/{e.get('format')}]  {e['topic']}")
+    print("\nWhen it is posted: `done <id>`. When skipped: `edit <id> --set status=skipped`.")
+    return 0
+
+
+def cmd_done(args) -> int:
+    path = Path(args.store) if args.store else default_store()
+    data = load(path)
+    e = _find(data, args.id)
+    e["status"] = "published"
+    e["date"] = args.date or _today()
+    for kv in args.metric or []:
+        k, _, v = kv.partition("=")
+        try:
+            e.setdefault("performance", {})[k] = float(v)
+        except ValueError:
+            e.setdefault("performance", {})[k] = v
+    save(path, data)
+    print(f"published {_short(e)}  {e['topic']}")
+    return 0
+
+
+REFLECT_Q = [
+    "Konten mana yang performanya paling bagus minggu ini?",
+    "Apa tantangan terbesar yang kamu hadapi?",
+    "Apa yang akan kamu lakukan berbeda di minggu berikutnya?",
+    "Apakah kamu mencapai target posting minggu ini?",
+    "Berapa level energimu minggu ini? (1-10)",
+    "Insight atau pelajaran terpenting minggu ini:",
+]
+
+
+def cmd_reflect(args) -> int:
+    path = Path(args.store) if args.store else default_store()
+    data = load(path)
+    end = _dt.date.fromisoformat(args.date) if args.date else _dt.date.today()
+    beg = end - _dt.timedelta(days=6)
+    week = [e for e in data["entries"] if beg.isoformat() <= e.get("date", "") <= end.isoformat()]
+    pub = [e for e in week if e.get("status") in ("published", "produced")]
+    plan = [e for e in week if e.get("status") in ("planned", "published", "produced", "skipped")]
+    print(f"MINGGU {beg} .. {end}: {len(pub)} tayang / {len(plan)} direncanakan")
+    for e in week:
+        perf = ", ".join(f"{k}={v}" for k, v in (e.get("performance") or {}).items())
+        print(f"  {e.get('status','?'):<10} {e.get('date','')}  {e.get('topic','')}  {perf}")
+    print()
+    answers = dict(a.partition("=")[::2] for a in (args.answer or []))
+    for i, q in enumerate(REFLECT_Q, 1):
+        print(f"{i}. {q} {answers.get(str(i), '')}")
+    if args.answer and not args.dry_run:
+        data.setdefault("reflections", []).append(
+            {"week_end": end.isoformat(), "answers": {REFLECT_Q[int(k) - 1]: v for k, v in answers.items()}})
+        save(path, data)
+        print("\nsaved.")
+    return 0
+
+
+def cmd_export_plan(args) -> int:
+    path = Path(args.store) if args.store else default_store()
+    data = load(path)
+    rows = [e for e in data["entries"] if e.get("notes", "").startswith("plan ") or e.get("status") == "planned"]
+    rows.sort(key=lambda e: e.get("date", ""))
+    tay = {"published": "Sudah Tayang", "produced": "Terjadwal"}
+    st = {"planned": "Direncanakan", "scripted": "Sedang Dikerjakan", "produced": "Selesai ✓",
+          "published": "Selesai ✓", "skipped": "Dilewati"}
+    buf = io.StringIO()
+    w = csv.writer(buf)
+    w.writerow(["HARI", "TANGGAL", "TOPIK / IDE KONTEN", "PLATFORM", "FORMAT", "PILAR", "FUNNEL",
+                "STATUS", "SUDAH TAYANG?", "CATATAN"])
+    for i, e in enumerate(rows, 1):
+        w.writerow([i, e.get("date", ""), e.get("topic", ""), e.get("platform", ""), e.get("format", ""),
+                    e.get("pillar", ""), e.get("funnel", ""), st.get(e.get("status"), e.get("status")),
+                    tay.get(e.get("status"), "Belum Tayang"), e.get("id", "")[:8]])
+    out = buf.getvalue()
+    if args.out:
+        Path(args.out).write_text(out, encoding="utf-8-sig")
+        print(f"wrote {args.out} ({len(rows)} rows); open it in Excel or Google Sheets")
+    else:
+        sys.stdout.write(out)
+    return 0
+
+
+def auto_log(topic: str, **fields) -> Optional[str]:
+    """Called by splicecraft.py after `script` and `render` so nothing goes unlogged.
+    Reuses the planned entry for the same topic if one exists."""
+    path = default_store()
+    data = load(path)
+    t = topic.strip().lower()
+    hit = next((e for e in data["entries"] if e.get("topic", "").strip().lower() == t
+                and e.get("status") in ("planned", "idea", "scripted")), None)
+    if hit is None:
+        hit = {"id": uuid.uuid4().hex, "date": _today(), "topic": topic, "niche": "", "pillar": "",
+               "hook": "", "hook_template": "", "angle": "", "themes": [], "premise": "", "platform": "",
+               "format": "", "funnel": "", "source": "auto", "seconds": None, "script_path": "",
+               "video_path": "", "status": "", "performance": {}, "notes": "auto-logged"}
+        data["entries"].append(hit)
+    for k, v in fields.items():
+        if v not in (None, ""):
+            hit[k] = v
+    save(path, data)
+    return hit["id"]
+
+
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
         prog="ledger",
@@ -800,6 +1043,30 @@ def build_parser() -> argparse.ArgumentParser:
     s = sub.add_parser("suggest", help="what is under-used / due next")
     s.set_defaults(func=cmd_suggest)
 
+    s = sub.add_parser("plan", help="build an N-day content calendar (saved as planned)")
+    s.add_argument("--days", type=int, default=30)
+    s.add_argument("--start", help="YYYY-MM-DD, default today")
+    s.add_argument("--per-week", dest="per_week", type=int, default=7)
+    s.add_argument("--problem", action="append", help="audience keresahan; repeat or separate with ;")
+    s.add_argument("--goal", help="the transformation, e.g. 'pede ngomong di depan kamera'")
+    s.add_argument("--niche"); s.add_argument("--premise"); s.add_argument("--platform")
+    s.add_argument("--followers", type=int, help="small accounts (<1000) get more TOFU")
+    s.add_argument("--winner-format", dest="winner_format", help="a format already proven to win")
+    s.add_argument("--dry-run", dest="dry_run", action="store_true")
+    s.set_defaults(func=cmd_plan)
+    s = sub.add_parser("today", help="what is planned for today (and overdue)")
+    s.add_argument("--date")
+    s.set_defaults(func=cmd_today)
+    s = sub.add_parser("done", help="mark a planned piece as published")
+    s.add_argument("id"); s.add_argument("--date"); s.add_argument("--metric", action="append", metavar="views=1200")
+    s.set_defaults(func=cmd_done)
+    s = sub.add_parser("reflect", help="weekly reflection (Refleksi Mingguan)")
+    s.add_argument("--date"); s.add_argument("--answer", action="append", metavar="N=text")
+    s.add_argument("--dry-run", dest="dry_run", action="store_true")
+    s.set_defaults(func=cmd_reflect)
+    s = sub.add_parser("export-plan", help="CSV in the 30-day tracker layout")
+    s.add_argument("--out")
+    s.set_defaults(func=cmd_export_plan)
     s = sub.add_parser("export", help="dump for the user")
     s.add_argument("--format", choices=("md", "csv"), default="md")
     s.add_argument("--out")
