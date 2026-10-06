@@ -1,0 +1,652 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<!--
+  splicecraft studio overlay. Rendered headless by studio.py, one screenshot per
+  distinct frame, transparent background, composited over the video by ffmpeg.
+
+  Contract: window.SC_DATA is set before load. window.scRender(t) draws the
+  frame at output time t (seconds) and returns a signature string. Two frames
+  with the same signature are pixel-identical, so studio.py screenshots only
+  when the signature changes. Nothing here may depend on wall-clock time:
+  no CSS transitions, no animations, no Date.now().
+-->
+<style>
+  @font-face { font-family: "SC Sans"; src: url("fonts/PlusJakartaSans.ttf"); font-weight: 200 800; }
+  @font-face { font-family: "SC Inter"; src: url("fonts/Inter.ttf"); font-weight: 100 900; }
+  :root {
+    --ink: #151515; --muted: #6b6b6b; --accent: #2563eb; --on-accent: #ffffff;
+    --card: #ffffff; --bg: #f3f2ee; --cap-bg: rgba(18,18,18,.86); --cap-ink: #ffffff; --cap-key: #ffd166;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1080px; height: 1920px; background: transparent; overflow: hidden; }
+  body { font-family: "SC Sans", "SC Inter", "Segoe UI", Arial, sans-serif; color: var(--ink);
+         -webkit-font-smoothing: antialiased; font-kerning: normal; }
+  .abs { position: absolute; }
+  .hidden { display: none; }
+
+  /* header: the title that stays for the whole video (withpt / bahasvideo pattern) */
+  #header { left: 64px; right: 64px; text-align: center; }
+  #header .t { font-weight: 800; font-size: 60px; line-height: 1.08; letter-spacing: -0.02em; }
+  #header .s { margin-top: 14px; font-weight: 600; font-size: 31px; color: var(--accent); letter-spacing: -0.005em; }
+  #header .s b { color: var(--ink); font-weight: 700; }
+
+  /* captions: dark chip inside the inset, one accent keyword */
+  #cap { left: 0; width: 1080px; text-align: center; }
+  #cap span.chip { display: inline-block; background: var(--cap-bg); color: var(--cap-ink);
+    font-weight: 700; font-size: 44px; line-height: 1.18; padding: 12px 24px 14px; border-radius: 16px;
+    max-width: 880px; letter-spacing: -0.01em; }
+  #cap .k { color: var(--cap-key); }
+
+  /* cards */
+  .card { background: var(--card); border-radius: 30px; padding: 30px 34px 32px;
+    box-shadow: 0 22px 60px rgba(0,0,0,.20), 0 2px 8px rgba(0,0,0,.08); max-width: 560px; }
+  .eyebrow { font-family: "SC Inter", sans-serif; font-weight: 700; font-size: 21px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--muted); }
+  .eyebrow.acc { color: var(--accent); }
+  .title { font-weight: 800; font-size: 46px; line-height: 1.08; letter-spacing: -0.02em; margin-top: 8px; }
+  .body { font-weight: 500; font-size: 29px; line-height: 1.3; color: var(--muted); margin-top: 12px; }
+  .stat .v { font-family: "SC Inter", sans-serif; font-weight: 800; font-size: 132px; line-height: .95;
+    letter-spacing: -0.045em; color: var(--accent); font-variant-numeric: tabular-nums; }
+  .stat .v small { font-size: 50px; letter-spacing: -0.02em; margin-left: 6px; color: var(--ink); }
+  .stat .l { font-weight: 600; font-size: 30px; margin-top: 10px; color: var(--ink); }
+
+  .chip-sec { background: var(--accent); color: var(--on-accent); font-family: "SC Inter", sans-serif;
+    font-weight: 800; font-size: 25px; letter-spacing: .1em; text-transform: uppercase; padding: 12px 18px 11px;
+    border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,.18); }
+
+  .word { font-weight: 800; font-size: 104px; line-height: .98; letter-spacing: -0.035em; color: #fff;
+    text-shadow: 0 6px 34px rgba(0,0,0,.45), 0 2px 6px rgba(0,0,0,.35); max-width: 520px; }
+  .word .lt { font-weight: 300; font-size: 46px; letter-spacing: -0.01em; display: block; margin-bottom: 6px; }
+
+  .quote .mark { font-family: Georgia, serif; font-size: 120px; line-height: .6; color: var(--accent); height: 46px; }
+  .quote .q { font-weight: 700; font-size: 42px; line-height: 1.16; letter-spacing: -0.015em; }
+  .quote .by { font-weight: 600; font-size: 25px; color: var(--muted); margin-top: 16px; }
+
+  .list .row { display: flex; align-items: center; gap: 22px; margin-top: 22px; }
+  .list .n { flex: none; width: 58px; height: 58px; border-radius: 50%; background: var(--accent);
+    color: var(--on-accent); font-family: "SC Inter", sans-serif; font-weight: 800; font-size: 30px;
+    display: flex; align-items: center; justify-content: center; }
+  .list .n.chk { font-size: 32px; }
+  .list .it { font-weight: 700; font-size: 38px; line-height: 1.15; letter-spacing: -0.012em; }
+  .list .it i { display: block; font-style: normal; font-weight: 500; font-size: 26px; color: var(--muted); margin-top: 4px; }
+
+  .flow .node { background: var(--bg); border: 2px solid rgba(0,0,0,.08); border-radius: 20px; padding: 18px 24px;
+    margin-top: 0; }
+  .flow .node b { display: block; font-weight: 800; font-size: 38px; letter-spacing: -0.015em; }
+  .flow .node span { display: block; font-weight: 500; font-size: 25px; color: var(--muted); margin-top: 2px; }
+  .flow .node.on { border-color: var(--accent); background: #fff; box-shadow: 0 10px 30px rgba(0,0,0,.10); }
+  .flow .arrow { height: 42px; display: flex; justify-content: center; align-items: center; }
+  .flow .arrow i { width: 3px; height: 26px; background: var(--accent); position: relative; display: block; }
+  .flow .arrow i::after { content: ""; position: absolute; left: -8px; bottom: -8px; border: 9.5px solid transparent;
+    border-top: 11px solid var(--accent); border-bottom: 0; }
+
+  .compare { display: flex; gap: 18px; max-width: 900px; }
+  .compare .col { flex: 1; background: var(--card); border-radius: 26px; padding: 26px 26px 28px;
+    box-shadow: 0 18px 50px rgba(0,0,0,.18); }
+  .compare .col.hi { outline: 4px solid var(--accent); }
+
+  .question { background: var(--card); border-radius: 999px; padding: 22px 34px; font-weight: 800; font-size: 40px;
+    letter-spacing: -0.015em; box-shadow: 0 16px 44px rgba(0,0,0,.2); max-width: 860px; }
+
+  .cta { background: var(--accent); color: var(--on-accent); border-radius: 22px; padding: 24px 34px;
+    font-weight: 800; font-size: 44px; letter-spacing: -0.015em; box-shadow: 0 18px 44px rgba(0,0,0,.22); }
+
+  /* takeover: covers the inset, speaker stays as a PiP circle drawn by ffmpeg */
+  .takeover { background: var(--card); border-radius: 44px; padding: 70px 64px; }
+  .takeover .title { font-size: 58px; }
+  .takeover .list .it { font-size: 44px; }
+  .takeover .stat .v { font-size: 190px; }
+
+  /* end card covers the whole canvas */
+  .endcard { left: 0; top: 0; width: 1080px; height: 1920px; background: var(--bg); display: flex;
+    flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 90px; }
+  .endcard .eic { width: 150px; height: 150px; margin-bottom: 34px; }
+  .endcard .eb { font-family: "SC Inter", sans-serif; font-weight: 800; font-size: 28px; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 22px; }
+  .endcard .l1 { font-weight: 800; font-size: 56px; line-height: 1.12; letter-spacing: -0.02em; }
+  .endcard .l2 { font-weight: 600; font-size: 34px; color: var(--accent); margin-top: 28px; }
+  .endcard .l3 { font-weight: 500; font-size: 28px; color: var(--muted); margin-top: 12px; }
+
+  /* icons (assets/icons.js): flat drawings recoloured by the theme */
+  svg { display: block; width: 100%; height: 100%; overflow: visible; }
+  .ic-acc { fill: var(--accent); } .ic-ink { fill: var(--ink); } .ic-soft { fill: var(--soft); }
+  .ic-hole { fill: var(--card); }
+  .ic-line { fill: none; stroke: var(--ink); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+  .icons { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+  .icons .ic { width: 92px; height: 92px; flex: none; }
+  .icons .ic.wide { width: 146px; }
+  .icons .arr { font-style: normal; font-weight: 800; font-size: 40px; color: var(--accent); }
+  .list .n.pic, .flow .pic { background: none; width: 72px; height: 72px; flex: none; }
+  .flow .node { display: flex; align-items: center; gap: 18px; }
+  .flow .node .tx { flex: 1; }
+
+  /* props: things "put on the table" one by one, each on the word that names it */
+  .props { display: flex; gap: 16px; align-items: flex-end; justify-content: center; }
+  .props .tile { background: var(--card); border-radius: 26px; padding: 16px 16px 18px; width: 214px; text-align: center;
+    box-shadow: 0 18px 40px rgba(0,0,0,.22), 0 2px 6px rgba(0,0,0,.10); border: 3px solid transparent; }
+  .props .tile.on { border-color: var(--accent); }
+  .props .pic { width: 112px; height: 112px; margin: 0 auto 8px; }
+  .props b { display: block; font-weight: 800; font-size: 34px; line-height: 1.05; letter-spacing: -0.015em; }
+  .props span { display: block; font-weight: 600; font-size: 22px; color: var(--muted); margin-top: 4px; line-height: 1.15; }
+
+  /* prop: one big illustrated item (an SID card, a whistle) with an optional label */
+  .prop { display: flex; flex-direction: column; align-items: center; }
+  .prop .big { width: 190px; height: 190px; filter: drop-shadow(0 16px 26px rgba(0,0,0,.35)); }
+  .prop .big.wide { width: 320px; height: 202px; }
+  .prop .lab { margin-top: 14px; background: var(--card); color: var(--ink); font-weight: 800; font-size: 36px;
+    letter-spacing: -0.015em; padding: 14px 26px 16px; border-radius: 20px; box-shadow: 0 14px 36px rgba(0,0,0,.22);
+    max-width: 600px; text-align: center; line-height: 1.12; }
+  /* the card rises out of the envelope: the envelope clips the card below its own bottom edge only */
+  .prop .stage { position: relative; width: 300px; height: 300px; filter: drop-shadow(0 16px 26px rgba(0,0,0,.35)); }
+  .prop .stage .env { position: absolute; left: 0; bottom: 0; width: 300px; height: 205px; clip-path: inset(-600px -60px 0 -60px); }
+  .prop .stage .env > svg { position: absolute; inset: 0; }
+  .prop .stage .env-front { position: absolute; inset: 0; z-index: 2; }
+  .prop .stage .card-in { position: absolute; left: 16px; width: 268px; height: 169px; top: -95px; z-index: 1; }
+
+  #progress { left: 0; top: 0; height: 8px; background: var(--accent); }
+
+  /* ===== full layout: footage fills the screen; cards open as a slate, then sit in a sheet ===== */
+  body.full #cap span.chip { background: none; padding: 0 12px; border-radius: 0; font-weight: 800; font-size: 68px;
+    line-height: 1.1; color: #fff; max-width: 1000px; letter-spacing: -0.012em;
+    text-shadow: 3px 0 0 #000, -3px 0 0 #000, 0 3px 0 #000, 0 -3px 0 #000, 2px 2px 0 #000, -2px 2px 0 #000,
+                 2px -2px 0 #000, -2px -2px 0 #000, 0 8px 26px rgba(0,0,0,.5); }
+  body.full #cap .w { display: inline-block; }
+  body.full #cap .w.on { color: var(--cap-key); }
+  .scrim { left: 0; top: 0; width: 1080px; height: 1920px; background: linear-gradient(rgba(0,0,0,.42), rgba(0,0,0,.30)); }
+  .hook { left: 64px; right: 64px; text-align: center; }
+  .hook .t { font-weight: 800; font-size: 112px; line-height: 1.0; letter-spacing: -0.035em; color: #fff;
+    text-shadow: 0 8px 34px rgba(0,0,0,.55), 0 2px 6px rgba(0,0,0,.4); }
+  .hook .t span { display: inline-block; white-space: pre; }
+  .hook .s { margin-top: 26px; font-weight: 700; font-size: 36px; color: #fff; text-shadow: 0 2px 12px rgba(0,0,0,.6); }
+  .fo { left: 0; top: 0; width: 1080px; height: 1920px; }
+  .fo .slate { position: absolute; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; }
+  .fo .sin { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 84px; }
+  .sbig { width: 430px; height: 430px; filter: drop-shadow(0 26px 40px rgba(0,0,0,.22)); }
+  .sbig.wide { width: 740px; height: 466px; }
+  .srow { display: flex; gap: 34px; align-items: center; margin-bottom: 10px; }
+  .srow .sbig { width: 300px; height: 300px; } .srow .sbig.wide { width: 480px; height: 302px; }
+  .srow .arr { font-style: normal; font-size: 96px; font-weight: 800; color: var(--accent); }
+  .seb { font-family: "SC Inter", sans-serif; font-weight: 800; font-size: 34px; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--accent); margin-top: 34px; }
+  .st { font-weight: 800; font-size: 118px; line-height: 1.0; letter-spacing: -0.035em; color: var(--ink); margin-top: 30px; }
+  .st.long { font-size: 86px; line-height: 1.04; }
+  .sq { font-weight: 800; font-size: 80px; line-height: 1.06; letter-spacing: -0.025em; color: var(--ink); margin-top: 30px; }
+  .smark { font-family: Georgia, serif; font-size: 280px; line-height: .6; height: 120px; color: var(--accent); }
+  .sv { font-family: "SC Inter", sans-serif; font-weight: 800; font-size: 400px; line-height: .9; letter-spacing: -0.055em;
+    color: var(--accent); font-variant-numeric: tabular-nums; }
+  .sv small { font-size: 120px; letter-spacing: -0.02em; color: var(--ink); margin-left: 12px; }
+  .sl { font-weight: 700; font-size: 62px; margin-top: 26px; color: var(--ink); }
+  .ssub { font-weight: 600; font-size: 48px; color: var(--muted); margin-top: 16px; }
+  .sstage { zoom: 2.1; }
+  .fo .sheet { position: absolute; left: 0; right: 0; bottom: 0; background: var(--card); border-radius: 56px 56px 0 0;
+    padding: 50px 64px 0; box-shadow: 0 -18px 60px rgba(0,0,0,.28); }
+  .sheet .card { background: none; box-shadow: none; padding: 0; max-width: none; border-radius: 0; }
+  .sheet .pc > * { zoom: 1.75; }
+  .sheet .pc > .props { zoom: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .sheet .props .tile { width: auto; display: grid; grid-template-columns: auto 1fr; align-content: center; column-gap: 18px; text-align: left; padding: 16px 20px;
+    box-shadow: none; background: var(--bg); }
+  .sheet .props .pic { width: 200px; height: 200px; margin: 0; grid-row: span 2; align-self: center; }
+  .sheet .props b { align-self: end; } .sheet .props span { align-self: start; }
+  body.full #cap span.chip { transform-origin: center bottom; }
+  .sheet .props b { font-size: 58px; } .sheet .props span { font-size: 34px; }
+  body.full .endcard .eic { width: 300px; height: 300px; margin-bottom: 56px; }
+  body.full .endcard .eb { font-size: 40px; margin-bottom: 30px; }
+  body.full .endcard .l1 { font-size: 92px; line-height: 1.04; letter-spacing: -0.03em; }
+  body.full .endcard .l2 { font-size: 48px; margin-top: 40px; }
+  body.full .endcard .l3 { font-size: 38px; margin-top: 16px; }
+  /* punch: one spoken word slammed full screen, a hard cut in and out (v1's "what else?" cards) */
+  .punch { left: 0; top: 0; width: 1080px; height: 1920px; display: flex; align-items: center; justify-content: center; background: var(--ink); }
+  .punch.alt { background: var(--accent); }
+  .punch .pin { text-align: center; padding: 0 70px; }
+  .punch .pw { font-weight: 800; font-size: 200px; line-height: .95; letter-spacing: -0.045em; color: var(--bg); }
+  .punch .pw.long { font-size: 138px; }
+  .punch.alt .pw { color: var(--on-accent, #fff); }
+  .punch .pl { font-weight: 700; font-size: 56px; color: var(--bg); opacity: .72; margin-bottom: 22px; }
+  .sheet .fly { position: absolute; left: 0; top: 0; width: 200px; height: 200px; z-index: 5; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="icons.js"></script>
+<script>
+(function () {
+  const D = window.SC_DATA;
+  const R = document.getElementById("root");
+  const css = document.documentElement.style;
+  css.setProperty("--soft", "color-mix(in srgb, var(--accent) 20%, white)");
+  for (const [k, v] of Object.entries(D.colors || {})) css.setProperty("--" + k, v);
+  const SAFE_BOTTOM = D.safe_bottom || 1632;   // below this, TikTok / Reels UI covers the frame
+  const ICON = n => window.SC_ICON(n);
+  const isWide = n => n === "sid" || n === "envelope";
+
+  const INSET = D.inset;                 // {x,y,w,h,r}
+  const CAPY = D.caption_y;              // caption chip vertical centre
+  const esc = s => String(s == null ? "" : s).replace(/[&<>]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;"}[c]));
+
+  // ---------- easing, all pure functions of t
+  const clamp01 = x => Math.max(0, Math.min(1, x));
+  const outBack = x => { const c1 = 1.35, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); };
+  const outCubic = x => 1 - Math.pow(1 - x, 3);
+  const inCubic = x => x * x * x;
+  const IN = 0.36, OUT = 0.22;
+  // phase of an element: {v: visibility 0..1, e: entrance progress 0..1 eased, x: exit progress, k: frame key}
+  function phase(t, a, b) {
+    if (t < a || t >= b) return null;
+    const pe = clamp01((t - a) / IN), px = clamp01((t - (b - OUT)) / OUT);
+    const animating = pe < 1 || px > 0;
+    return { e: pe, x: px, key: animating ? Math.round(t * 30) : "s" };
+  }
+  function apply(el, ph, dy = 26, sc = 0.94) {
+    const e = outBack(ph.e), x = inCubic(ph.x);
+    const o = Math.min(clamp01(ph.e * 1.6), 1 - x);
+    const ty = (1 - e) * dy - x * 10, s = sc + (1 - sc) * e - x * 0.02;
+    el.style.opacity = o.toFixed(3);
+    el.style.transform = `translateY(${ty.toFixed(2)}px) scale(${s.toFixed(4)})`;
+    if (ph.e < 1) el.style.filter = `blur(${((1 - outCubic(ph.e)) * 6).toFixed(2)}px)`; else el.style.filter = "none";
+  }
+
+  const FULL = D.layout === "full";
+  if (FULL) document.body.classList.add("full");
+
+  // ---------- frame: the canvas colour everywhere except a rounded hole where the speaker shows
+  if (!FULL) {
+    const frame = document.createElement("div");
+    frame.className = "abs";
+    Object.assign(frame.style, { left: INSET.x + "px", top: INSET.y + "px", width: INSET.w + "px", height: INSET.h + "px",
+      borderRadius: INSET.r + "px", boxShadow: "0 0 0 3000px var(--bg), inset 0 0 0 1.5px rgba(0,0,0,.10)" });
+    R.appendChild(frame);
+  }
+
+  // ---------- header (inset: stays all video) / hook (full: the title, big, over the first seconds)
+  const header = document.createElement("div");
+  let scrim = null, HOOK_END = 0;
+  if (FULL) {
+    scrim = document.createElement("div"); scrim.className = "abs scrim"; R.appendChild(scrim);
+    header.className = "abs hook";
+    header.innerHTML = `<div class="t">${esc(D.title).split(/(\s+)/).map(w => `<span>${w}</span>`).join("")}</div>` +
+      (D.subtitle ? `<div class="s">${esc(D.subtitle)}</div>` : "");
+    R.appendChild(header);
+    HOOK_END = D.hook_end || 2.4;
+    const f0 = D.shots.length ? D.shots[0].face : null, hb = header.getBoundingClientRect();
+    // away from the face: below it when the face sits high (camera cut the head), else above it
+    const top = f0 && f0.y + f0.h / 2 < 760 ? Math.max(f0.y + f0.h + 80, 820) : Math.max(170, (f0 ? f0.y : 600) - hb.height - 70);
+    header.style.top = Math.min(top, 1300 - hb.height) + "px";
+  } else {
+    header.id = "header"; header.className = "abs";
+    header.innerHTML = `<div class="t">${esc(D.title)}</div>` + (D.subtitle ? `<div class="s">${D.subtitle_html || esc(D.subtitle)}</div>` : "");
+    R.appendChild(header);
+    // vertically centre the header in the band above the inset
+    const hb = header.getBoundingClientRect();
+    header.style.top = Math.max(96, (INSET.y - hb.height) / 2 + 18) + "px";
+  }
+
+  // ---------- captions
+  const cap = document.createElement("div");
+  cap.id = "cap"; cap.className = "abs"; R.appendChild(cap);
+  let capLast = null, capAct = -1;
+
+  // ---------- overlays: build once, measure, place
+  const OV = D.overlays.map((o, i) => Object.assign({ id: i }, o));
+  const faceOf = t => { for (const s of D.shots) if (t >= s.start && t < s.end) return s.face; return D.shots.length ? D.shots[D.shots.length - 1].face : null; };
+  // every face the card will sit next to while it is on screen (shots change under a card)
+  const facesDuring = (a, b) => { const fs = D.shots.filter(s => s.end > a && s.start < b).map(s => s.face); return fs.length ? fs : [faceOf(a)].filter(Boolean); };
+  const faceUnion = (a, b) => {
+    const fs = facesDuring(a, b); if (!fs.length) return null;
+    const x0 = Math.min(...fs.map(f => f.x)), y0 = Math.min(...fs.map(f => f.y));
+    const x1 = Math.max(...fs.map(f => f.x + f.w)), y1 = Math.max(...fs.map(f => f.y + f.h));
+    return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 };
+  };
+
+  // a row of icons on top of a card ("pintu -> rumah"); each pops on its own word
+  const iconRow = o => !o.icons || !o.icons.length ? "" : `<div class="icons">` + o.icons.map((ic, k) =>
+    (k && o.arrows !== false ? `<i class="arr" data-ik="a${k}">→</i>` : "") +
+    `<span class="ic${isWide(ic.icon) ? " wide" : ""}" data-ik="${k}">${ICON(ic.icon)}</span>`).join("") + `</div>`;
+  const pic = n => n ? `<div class="pic">${ICON(n)}</div>` : "";
+
+  // full layout: what a card says in its opening slate, as big as the screen allows
+  function slateOf(o) {
+    const T = o.type, big = n => `<div class="sbig${isWide(n) ? " wide" : ""}">${ICON(n)}</div>`;
+    const ics = (o.icons || []).map(i => i.icon);
+    const row = ics.length ? `<div class="srow">${ics.map((n, k) => (k && o.arrows !== false ? `<i class="arr">→</i>` : "") + big(n)).join("")}</div>` : "";
+    const st = s => `<div class="st${String(s).length > 18 ? " long" : ""}">${esc(s)}</div>`;
+    const eb = o.eyebrow ? `<div class="seb">${esc(o.eyebrow)}</div>` : "";
+    if (T === "term") return row + eb + st(o.title);
+    if (T === "stat") return row + `<div class="sv"><span class="num"></span>${o.suffix ? `<small>${esc(o.suffix)}</small>` : ""}</div>` + (o.label ? `<div class="sl">${esc(o.label)}</div>` : "");
+    if (T === "quote") return (row || `<div class="smark">“</div>`) + `<div class="sq">${esc(o.text)}</div>`;
+    if (T === "list" || T === "flow") return row + eb + st(o.title || o.items.map(i => i.text).join(" · "));
+    if (T === "props") { const it = o.items[0]; return (it.icon ? big(it.icon) : "") + st(it.text || "") + (it.sub ? `<div class="ssub">${esc(it.sub)}</div>` : ""); }
+    if (T === "prop") return (o.from === "envelope"
+      ? `<div class="sstage"><div class="prop"><div class="stage"><div class="env">${ICON("envelope_back")}<div class="card-in">${ICON(o.icon)}</div><div class="env-front">${ICON("envelope_front")}</div></div></div></div></div>`
+      : big(o.icon)) + (o.text ? st(o.text) : "");
+    if (T === "compare") return st(`${o.left.title} vs ${o.right.title}`);
+    if (T === "word") return row + (o.lead ? `<div class="ssub">${esc(o.lead)}</div>` : "") + st(o.text);
+    return st(o.text || "");
+  }
+
+  function build(o) {
+    const el = document.createElement("div");
+    el.className = "abs";
+    const T = o.type;
+    if (T === "term") el.innerHTML = `<div class="card">${iconRow(o)}${o.eyebrow ? `<div class="eyebrow acc">${esc(o.eyebrow)}</div>` : ""}<div class="title">${esc(o.title)}</div>${o.body ? `<div class="body">${esc(o.body)}</div>` : ""}</div>`;
+    else if (T === "stat") el.innerHTML = `<div class="card stat">${iconRow(o)}${o.eyebrow ? `<div class="eyebrow">${esc(o.eyebrow)}</div>` : ""}<div class="v"><span class="num"></span>${o.suffix ? `<small>${esc(o.suffix)}</small>` : ""}</div>${o.label ? `<div class="l">${esc(o.label)}</div>` : ""}</div>`;
+    else if (T === "chip") el.innerHTML = `<div class="chip-sec">${esc(o.text)}</div>`;
+    else if (T === "word") el.innerHTML = `<div class="word">${iconRow(o)}${o.lead ? `<span class="lt">${esc(o.lead)}</span>` : ""}${esc(o.text)}</div>`;
+    else if (T === "quote") el.innerHTML = `<div class="card quote">${o.icons && o.icons.length ? iconRow(o) : `<div class="mark">“</div>`}<div class="q">${esc(o.text)}</div>${o.by ? `<div class="by">${esc(o.by)}</div>` : ""}</div>`;
+    else if (T === "list") el.innerHTML = `<div class="card list">${iconRow(o)}${o.eyebrow ? `<div class="eyebrow acc">${esc(o.eyebrow)}</div>` : ""}${o.title ? `<div class="title">${esc(o.title)}</div>` : ""}` +
+      o.items.map((it, k) => `<div class="row" data-k="${k}">${it.icon ? `<div class="n pic">${ICON(it.icon)}</div>` : `<div class="n${o.marker === "check" ? " chk" : ""}">${o.marker === "check" ? "✓" : (k + 1)}</div>`}<div class="it">${esc(it.text)}${it.sub ? `<i>${esc(it.sub)}</i>` : ""}</div></div>`).join("") + `</div>`;
+    else if (T === "flow") el.innerHTML = `<div class="card flow">${o.eyebrow ? `<div class="eyebrow acc">${esc(o.eyebrow)}</div>` : ""}${o.title ? `<div class="title" style="margin-bottom:18px">${esc(o.title)}</div>` : ""}` +
+      o.items.map((it, k) => (k ? `<div class="arrow" data-k="${k}"><i></i></div>` : "") + `<div class="node" data-k="${k}">${pic(it.icon)}<div class="tx"><b>${esc(it.text)}</b>${it.sub ? `<span>${esc(it.sub)}</span>` : ""}</div></div>`).join("") + `</div>`;
+    else if (T === "compare") el.innerHTML = `<div class="compare">` + ["left", "right"].map(s => `<div class="col${o.highlight === s ? " hi" : ""}"><div class="eyebrow acc">${esc(o[s].eyebrow || "")}</div><div class="title">${esc(o[s].title)}</div>${o[s].body ? `<div class="body">${esc(o[s].body)}</div>` : ""}</div>`).join("") + `</div>`;
+    else if (T === "question") el.innerHTML = `<div class="question">${esc(o.text)}</div>`;
+    else if (T === "cta") el.innerHTML = `<div class="cta">${esc(o.text)}</div>`;
+    else if (T === "props") el.innerHTML = `<div class="props">` + o.items.map((it, k) =>
+      `<div class="tile" data-k="${k}">${pic(it.icon)}${it.text ? `<b>${esc(it.text)}</b>` : ""}${it.sub ? `<span>${esc(it.sub)}</span>` : ""}</div>`).join("") + `</div>`;
+    else if (T === "prop") {
+      const art = o.from === "envelope"
+        ? `<div class="stage"><div class="env">${ICON("envelope_back")}<div class="card-in">${ICON(o.icon)}</div><div class="env-front">${ICON("envelope_front")}</div></div></div>`
+        : `<div class="big${isWide(o.icon) ? " wide" : ""}">${ICON(o.icon)}</div>`;
+      el.innerHTML = `<div class="prop">${art}${o.text ? `<div class="lab">${esc(o.text)}</div>` : ""}</div>`;
+    }
+    else if (T === "punch") { el.className = "abs punch" + (OV.filter(x => x.type === "punch").indexOf(o) % 2 ? " alt" : "");
+      el.innerHTML = `<div class="pin">${o.lead ? `<div class="pl">${esc(o.lead)}</div>` : ""}<div class="pw${String(o.text).length > 7 ? " long" : ""}">${esc(o.text)}</div></div>`; }
+    else if (T === "endcard") { el.className = "abs endcard"; el.innerHTML = (o.icon ? `<div class="eic">${ICON(o.icon)}</div>` : "") + (o.eyebrow ? `<div class="eb">${esc(o.eyebrow)}</div>` : "") + (o.lines || []).map((l, k) => `<div class="l${k + 1}">${esc(l)}</div>`).join(""); }
+    else throw new Error("unknown overlay type " + T);
+    if (FULL && T !== "endcard" && T !== "chip" && T !== "punch") {
+      el.className = "abs fo";
+      el.innerHTML = `<div class="slate"><div class="sin">${slateOf(o)}</div></div><div class="sheet"><div class="pc">${el.innerHTML}</div></div>`;
+      const sh = el.querySelector(".sheet");
+      sh.style.paddingBottom = (1920 - SAFE_BOTTOM + 30) + "px";
+      if (T === "props") sh.querySelectorAll(".tile").forEach(n => {
+        if (!n.querySelector(".pic")) return;
+        n.querySelector(".pic").style.visibility = "hidden";
+        const fly = document.createElement("div"); fly.className = "fly"; fly.dataset.f = n.dataset.k;
+        fly.innerHTML = ICON(o.items[+n.dataset.k].icon); sh.appendChild(fly);
+      });
+    } else if (o.mode === "takeover") {
+      const inner = el.firstElementChild;
+      inner.classList.add("takeover"); inner.classList.remove("card");
+      inner.style.maxWidth = "none";
+      el.style.left = INSET.x + "px"; el.style.top = INSET.y + "px";
+      inner.style.width = INSET.w + "px"; inner.style.height = INSET.h + "px";
+      inner.style.borderRadius = INSET.r + "px";
+      inner.style.display = "flex"; inner.style.flexDirection = "column"; inner.style.justifyContent = "center";
+    }
+    R.appendChild(el);
+    return el;
+  }
+
+  // candidate slots inside the inset, in canvas px. Face box comes from the tracker.
+  function place(o, el) {
+    const box = el.firstElementChild.getBoundingClientRect();
+    const w = box.width, h = box.height;
+    const M = 36;                                    // margin to inset edge
+    const x0 = INSET.x + M, x1 = INSET.x + INSET.w - M;
+    const y0 = INSET.y + M + (o.type === "chip" ? 0 : 70), y1 = CAPY - 60;   // stay above the caption band
+    const f = faceUnion(o.start, o.end) || { x: INSET.x + INSET.w * 0.35, y: INSET.y + INSET.h * 0.25, w: INSET.w * 0.3, h: INSET.h * 0.25 };
+    const pad = 34;
+    const fx0 = f.x - pad, fx1 = f.x + f.w + pad, fy0 = f.y - pad, fy1 = f.y + f.h + pad * 2;
+    if (o.type === "chip") return { x: x0, y: INSET.y + M, w, h, slot: "chip" };
+    if (o.type === "endcard") return { x: 0, y: 0, w: 1080, h: 1920, slot: "full" };
+    if (o.mode === "takeover") return { x: INSET.x, y: INSET.y, w: INSET.w, h: INSET.h, slot: "takeover" };
+    if (o.type === "cta" || o.type === "question") {
+      const y = Math.max(fy1 + 20, Math.min(y1 - h, CAPY - 110 - h));
+      return { x: (1080 - w) / 2, y, w, h, slot: "lower" };
+    }
+    // on the table: bottom of the inset, above the app UI; the captions step up over it
+    const table = { slot: "table", x: (INSET.x + INSET.w / 2) - w / 2,
+                    y: Math.min(INSET.y + INSET.h - 22, SAFE_BOTTOM - 10) - h };
+    table.fit = table.y >= fy1;
+    const want = o.place || (o.type === "props" ? "table" : "auto");
+    if (want === "table") return Object.assign(table, { x: Math.round(table.x), y: Math.round(table.y), w: Math.round(w), h: Math.round(h) });
+    const cands = [];
+    // side slots at face height
+    const ly = Math.max(y0, Math.min(y1 - h, f.y + f.h * 0.35 - h / 2));
+    cands.push({ slot: "left", x: x0, y: ly, fit: fx0 - x0 >= w });
+    cands.push({ slot: "right", x: x1 - w, y: ly, fit: x1 - fx1 >= w });
+    // below the chin: the torso is the negative space in a vertical frame
+    const by = Math.max(fy1 + 10, y0);
+    cands.push({ slot: "lower", x: (INSET.x + INSET.w / 2) - w / 2, y: Math.min(by, y1 - h), fit: y1 - by >= h });
+    // above the head
+    cands.push({ slot: "top", x: (INSET.x + INSET.w / 2) - w / 2, y: y0, fit: fy0 - y0 >= h });
+    if (o.type === "prop") cands.unshift(cands.splice(2, 1)[0]);   // a held object sits below the chin first
+    cands.push(table);
+    let pick = cands.find(c => c.slot === want && c.fit) || cands.find(c => c.fit && c.slot !== "top") || cands.find(c => c.fit);
+    if (!pick) pick = cands.find(c => c.slot === "lower");   // clamped: lint reports the overlap
+    return { x: Math.round(pick.x), y: Math.round(pick.y), w: Math.round(w), h: Math.round(h), slot: pick.slot };
+  }
+
+  for (const o of OV) {
+    o.el = build(o);
+    if (o.type === "punch") { o.box = { x: 0, y: 0, w: 1080, h: 1920, slot: "punch" }; o.el.style.display = "none"; continue; }
+    if (o.el.classList.contains("fo")) {
+      o.el.style.display = "block";
+      const sl = o.el.querySelector(".slate"), sh = o.el.querySelector(".sheet"), pc = sh.querySelector(".pc");
+      sl.style.display = "none";
+      const sr = sh.getBoundingClientRect(), r = pc.getBoundingClientRect();
+      o.box = { x: 0, y: Math.round(sr.top), w: 1080, h: Math.round(r.bottom - sr.top), slot: "sheet", sheetH: sr.height };
+      if (o.type === "props") {
+        // each object lands big in the open space between the face and the sheet, then shrinks into its tile
+        const f = faceUnion(o.start + (o.slate || 0), o.end), fy1 = f ? f.y + f.h : 300;
+        const room = sr.top - 130 - Math.max(fy1, 260);     // caption band sits right above the sheet
+        const ty = Math.max(fy1, 260) + Math.max(room, 200) / 2;
+        o.flyBig = Math.max(1.6, Math.min(2.7, room / 200));
+        o.el.querySelectorAll(".fly").forEach(fl => {
+          const p = sh.querySelector(`.tile[data-k="${fl.dataset.f}"] .pic`).getBoundingClientRect();
+          fl.style.left = (p.left - sr.left) + "px"; fl.style.top = (p.top - sr.top) + "px";
+          fl.dataset.dx = 540 - (p.left + p.width / 2); fl.dataset.dy = ty - (p.top + p.height / 2);
+        });
+      }
+      sl.style.display = "";
+      o.el.style.display = "none";
+      continue;
+    }
+    const p = place(o, o.el);
+    o.box = p;
+    if (o.mode !== "takeover" && o.type !== "endcard") { o.el.style.left = p.x + "px"; o.el.style.top = p.y + "px"; }
+    o.el.style.transformOrigin = p.slot === "left" ? "left center" : (p.slot === "right" ? "right center" : (p.slot === "table" ? "center bottom" : "center top"));
+    o.el.style.display = "none";
+  }
+
+  // ---------- report for lint: overflow + face overlap, measured in the browser
+  window.scReport = function () {
+    return OV.map(o => {
+      if (o.box.slot === "punch") {
+        o.el.style.display = "flex";
+        const text = (o.el.innerText || "").replace(/\s+/g, " ").trim(), pw = o.el.querySelector(".pw"), wide = pw.scrollWidth > pw.clientWidth + 2 || pw.getBoundingClientRect().height > 640;
+        o.el.style.display = "none";
+        return { id: o.id, type: o.type, mode: "takeover", slot: "punch", start: o.start, end: o.end, box: [0, 0, 1080, 1920],
+                 faces: [], overflow: wide ? ["pw"] : [], off_canvas: wide, text, icons: 0, safe_bottom: SAFE_BOTTOM };
+      }
+      if (o.box.slot === "sheet") {
+        o.el.style.display = "block";
+        const sh = o.el.querySelector(".sheet"), over = [];
+        sh.querySelectorAll("*").forEach(n => { if (n.scrollWidth > n.clientWidth + 2 && getComputedStyle(n).overflow !== "visible") over.push(n.className); });
+        const sr = sh.getBoundingClientRect(), wide = [...o.el.querySelectorAll(".st,.sq,.sv")].some(n => n.getBoundingClientRect().width > 1080 - 60);
+        const text = (o.el.innerText || "").replace(/\s+/g, " ").trim();
+        o.el.style.display = "none";
+        return { id: o.id, type: o.type, mode: "sheet", slot: "sheet", start: o.start, end: o.end,
+                 box: [o.box.x, o.box.y, o.box.w, o.box.h], faces: facesDuring(o.start + (o.slate || 0), o.end).map(f => [f.x, f.y, f.w, f.h]),
+                 overflow: over, off_canvas: sr.top < 0 || wide, text, icons: o.el.querySelectorAll("svg").length, safe_bottom: SAFE_BOTTOM };
+      }
+      o.el.style.display = "block";
+      const inner = o.el.firstElementChild || o.el;
+      const over = [];
+      inner.querySelectorAll("*").forEach(n => { if (n.scrollWidth > n.clientWidth + 2 && getComputedStyle(n).overflow !== "visible") over.push(n.className); });
+      const r = inner.getBoundingClientRect();
+      o.el.style.display = "none";
+      const offCanvas = r.left < 0 || r.right > 1080 || r.top < 0 || r.bottom > 1920;
+      return { id: o.id, type: o.type, mode: o.mode || "side", slot: o.box.slot, start: o.start, end: o.end,
+               box: [Math.round(r.left), Math.round(r.top), Math.round(r.width), Math.round(r.height)],
+               faces: facesDuring(o.start, o.end).map(f => [f.x, f.y, f.w, f.h]), overflow: over, off_canvas: offCanvas,
+               text: (inner.innerText || "").replace(/\s+/g, " ").trim(), icons: inner.querySelectorAll("svg").length,
+               safe_bottom: SAFE_BOTTOM };
+    });
+  };
+
+  // ---------- per-frame
+  function capChunk(t) {
+    for (const c of D.captions) if (t >= c.s && t < c.e) return c;
+    return null;
+  }
+  window.scRender = function (t) {
+    const sig = [];
+    // header: fades in over the first 0.4 s, hidden under a full-canvas end card
+    const endOn = OV.some(o => o.type === "endcard" && t >= o.start);
+    if (FULL) {
+      const on = t < HOOK_END && !endOn;
+      header.style.display = scrim.style.display = on ? "block" : "none";
+      if (on) {                                       // kinetic title: words rise in one after another
+        const x = clamp01((t - (HOOK_END - 0.2)) / 0.2);
+        scrim.style.opacity = header.style.opacity = (1 - x).toFixed(3);
+        header.querySelectorAll(".t span").forEach((s, k) => {
+          const q = clamp01((t - 0.04 - k * 0.06) / 0.3);
+          s.style.opacity = outCubic(q).toFixed(3);
+          s.style.transform = `translateY(${((1 - outBack(q)) * 46).toFixed(1)}px)`;
+        });
+        const sub = header.querySelector(".s");
+        if (sub) sub.style.opacity = outCubic(clamp01((t - 0.45) / 0.3)).toFixed(3);
+        sig.push("K" + Math.round(t * 30));
+      } else sig.push("K-");
+    } else {
+      const hp = clamp01(t / 0.4);
+      header.style.opacity = endOn ? 0 : outCubic(hp).toFixed(3);
+      header.style.transform = `translateY(${((1 - outCubic(hp)) * 14).toFixed(2)}px)`;
+      sig.push(endOn ? "H0" : (hp < 1 ? "H" + Math.round(t * 30) : "Hs"));
+    }
+
+    let capLimit = 1e9;                               // captions step up over anything on the table
+    let slateOn = false;
+    for (const o of OV) {
+      const ph = phase(t, o.start, o.end);
+      if (!ph) { o.el.style.display = "none"; continue; }
+      o.el.style.display = o.type === "endcard" || o.type === "punch" ? "flex" : "block";   // these centre with flex
+      let key = ph.key;
+      if (o.box.slot === "punch") {                   // hard cut in, the word lands a touch big and settles
+        slateOn = true;
+        const q = clamp01((t - o.start) / 0.14);
+        o.el.style.opacity = "1";
+        o.el.firstElementChild.style.transform = `scale(${(1.14 - 0.14 * outCubic(q) + 0.03 * clamp01((t - o.start) / Math.max(0.1, o.end - o.start))).toFixed(4)})`;
+        sig.push("O" + o.id + ":P" + Math.round(t * 30));
+        continue;
+      }
+      if (o.box.slot === "sheet") {
+        const S = o.slate || 0, sl = o.el.querySelector(".slate"), sh = o.el.querySelector(".sheet");
+        if (t < o.start + S) {                        // slate: the card's words fill the screen, drifting in
+          slateOn = true;
+          sl.style.display = "flex"; sh.style.display = "none";
+          const q = clamp01((t - o.start) / 0.2), x = clamp01((t - (o.start + S - 0.12)) / 0.12);
+          sl.style.opacity = Math.min(outCubic(q), 1 - x).toFixed(3);
+          const drift = clamp01((t - o.start) / Math.max(S, 0.1));
+          sl.firstElementChild.style.transform = `scale(${((0.84 + 0.16 * outBack(q)) * (1 + 0.035 * drift + 0.05 * x)).toFixed(4)})`;
+          key = "S" + Math.round(t * 30);
+        } else {                                      // sheet: slides up over the bottom of the footage
+          sl.style.display = "none"; sh.style.display = "block";
+          const p2 = phase(t, o.start + S, o.end) || { e: 1, x: 0, key: "s" };
+          const ty = (1 - outCubic(p2.e)) * o.box.sheetH + inCubic(p2.x) * o.box.sheetH;
+          sh.style.transform = `translateY(${ty.toFixed(1)}px)`;
+          capLimit = Math.min(capLimit, o.box.y + ty - 18);
+          key = "H" + p2.key;
+        }
+      } else {
+        if (o.box.slot === "table") capLimit = Math.min(capLimit, o.box.y - 16);
+        const dy = o.type === "chip" ? -14 : (o.mode === "takeover" ? 40 : 26);
+        if (o.type === "props") apply(o.el, ph, 0, 1);  // the tiles do their own entrance
+        else apply(o.el, ph, dy, o.mode === "takeover" ? 0.97 : 0.94);
+      }
+      // icons on a card pop on their own word (or one after another from the card's start)
+      o.el.querySelectorAll(".icons [data-ik]").forEach(n => {
+        const id = n.dataset.ik, k = id[0] === "a" ? +id.slice(1) : +id;
+        const ic = o.icons[k], at = ic.t != null ? ic.t : o.start + 0.15 + k * 0.35;
+        const q = clamp01((t - at) / 0.32);
+        n.style.opacity = (t < at ? 0 : outCubic(q)).toFixed(3);
+        n.style.transform = `scale(${(0.6 + 0.4 * outBack(q)).toFixed(4)})`;
+        key += "|i" + (q > 0 && q < 1 ? Math.round(t * 30) : (t >= at ? "y" : "n"));
+      });
+      if (o.type === "props" && o.box.slot === "sheet") {
+        let last = -1;
+        o.el.querySelectorAll(".sheet .tile").forEach(n => {
+          const k = +n.dataset.k, it = o.items[k], at = it.t != null ? it.t : o.start + (o.slate || 0) + k * 0.6;
+          const fl = o.el.querySelector(`.fly[data-f="${k}"]`), land = fl ? at + 0.95 : at;
+          if (t >= at) last = k;
+          if (fl) {                                   // falls in big at the centre, holds, then shrinks into its tile
+            const dx = +fl.dataset.dx, dy = +fl.dataset.dy, BIG = o.flyBig;
+            const q1 = clamp01((t - at) / 0.35), e2 = outCubic(clamp01((t - land) / 0.4));
+            fl.style.opacity = (t < at ? 0 : Math.min(1, q1 * 3)).toFixed(3);
+            fl.style.transform = `translate(${(dx * (1 - e2)).toFixed(1)}px, ${(dy * (1 - e2) - (1 - outBack(q1)) * 160).toFixed(1)}px) ` +
+              `scale(${(BIG - (BIG - 1) * e2).toFixed(4)}) rotate(${((1 - outCubic(q1)) * (k % 2 ? 9 : -9)).toFixed(2)}deg)`;
+          }
+          n.style.opacity = outCubic(clamp01((t - land) / 0.3)).toFixed(3);
+          key += "|f" + (t >= at && t < land + 0.45 ? Math.round(t * 30) : (t >= at ? "y" : "n"));
+        });
+        o.el.querySelectorAll(".sheet .tile").forEach(n => n.classList.toggle("on", +n.dataset.k === last && o.items.length > 1));
+        key += "|on" + last;
+      } else if (o.type === "props") {
+        let last = -1;
+        o.el.querySelectorAll(".tile").forEach(n => {
+          const k = +n.dataset.k, it = o.items[k], at = it.t != null ? it.t : o.start + k * 0.6;
+          if (t >= at) last = k;
+          const q = clamp01((t - at) / 0.42);
+          // put down on the table: falls a little, lands with a small bounce
+          n.style.opacity = (t < at ? 0 : Math.min(1, q * 3)).toFixed(3);
+          n.style.transform = `translateY(${(-(1 - outBack(q)) * 70).toFixed(2)}px) rotate(${((1 - outCubic(q)) * (k % 2 ? 5 : -5)).toFixed(2)}deg)`;
+          key += "|t" + (q > 0 && q < 1 ? Math.round(t * 30) : (t >= at ? "y" : "n"));
+        });
+        o.el.querySelectorAll(".tile").forEach(n => n.classList.toggle("on", +n.dataset.k === last && o.items.length > 1));
+        key += "|on" + last;
+      }
+      if (o.type === "prop" && o.from === "envelope") {
+        const q = clamp01((t - o.start - 0.3) / 0.75);
+        o.el.querySelector(".card-in").style.transform = `translateY(${((1 - outCubic(q)) * 150).toFixed(2)}px)`;
+        key += "|e" + (q > 0 && q < 1 ? Math.round(t * 30) : (q >= 1 ? "y" : "n"));
+      }
+      if (o.type === "stat") {
+        const v = parseFloat(String(o.value).replace(",", "."));
+        const dec = (String(o.value).split(/[.,]/)[1] || "").length;
+        const p = Number.isFinite(v) && o.count !== false ? outCubic(clamp01((t - o.start) / 0.9)) : 1;
+        const shown = Number.isFinite(v) ? (v * p).toFixed(dec).replace(".", D.decimal || ".") : o.value;
+        o.el.querySelectorAll(".num").forEach(n => { n.textContent = shown; });
+        key += "|" + shown;
+      }
+      if (o.type === "list" || o.type === "flow") {
+        const items = o.items;
+        o.el.querySelectorAll("[data-k]").forEach(n => {
+          const k = +n.dataset.k, at = items[k].t != null ? items[k].t : o.start + k * 0.5;
+          const q = clamp01((t - at) / 0.3);
+          n.style.opacity = (q < 1 ? outCubic(q) : 1).toFixed(3);
+          n.style.transform = `translateX(${((1 - outBack(q)) * 22).toFixed(2)}px)`;
+          if (n.classList.contains("node")) n.classList.toggle("on", t >= at && (k === items.length - 1 || t < (items[k + 1].t != null ? items[k + 1].t : 1e9)));
+          key += "|" + (q < 1 ? Math.round(t * 30) : (t >= at ? "y" : "n")) + (n.classList.contains("on") ? "o" : "");
+        });
+      }
+      sig.push("O" + o.id + ":" + key);
+    }
+
+    // captions (hidden during a takeover of the inset or the end card)
+    const takeover = OV.some(o => o.mode === "takeover" && t >= o.start && t < o.end);
+    const c = (takeover && !D.caption_on_takeover) || endOn || slateOn || (FULL && t < HOOK_END) ? null : capChunk(t);
+    if (c) {
+      let act = -1;                                   // full layout: the word being said lights up
+      if (FULL && c.t) c.t.forEach((s, k) => { if (t >= s) act = k; });
+      if (capLast !== c || capAct !== act) {
+        cap.innerHTML = FULL
+          ? `<span class="chip">${c.w.map((w, k) => `<span class="w${k === act ? " on" : ""}">${esc(w)}</span>`).join(" ")}</span>`
+          : `<span class="chip">${c.w.map((w, k) => k === c.key ? `<span class="k">${esc(w)}</span>` : esc(w)).join(" ")}</span>`;
+        capLast = c; capAct = act;
+      }
+      const ch = cap.firstElementChild, pe = clamp01((t - c.s) / (FULL ? 0.16 : 0.12));
+      const hh = FULL ? ch.offsetHeight : ch.getBoundingClientRect().height;
+      cap.style.display = "block";
+      cap.style.top = Math.min(CAPY - hh / 2, capLimit - hh) + "px";
+      ch.style.transform = FULL ? `scale(${(0.86 + 0.14 * outBack(pe)).toFixed(4)})` : `scale(${(0.965 + 0.035 * outCubic(pe)).toFixed(4)})`;
+      ch.style.opacity = (0.4 + 0.6 * outCubic(pe)).toFixed(3);
+      sig.push("C" + c.i + ":" + act + (pe < 1 ? ":" + Math.round(t * 30) : "") + (capLimit < 1e9 ? "^" + Math.round(capLimit) : ""));
+    } else { cap.style.display = "none"; capLast = null; sig.push("C-"); }
+    return sig.join(",");
+  };
+  window.scReady = true;
+})();
+</script>
+</body>
+</html>

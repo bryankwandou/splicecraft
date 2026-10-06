@@ -125,7 +125,7 @@ def multipart(fields: dict, files: dict) -> tuple[bytes, str]:
     return bytes(out), f"multipart/form-data; boundary={b}"
 
 
-def transcribe(src: str, out: str, language: str | None, key_file: str | None, engine: str):
+def transcribe(src: str, out: str, language: str | None, key_file: str | None, engine: str, model_name: str | None = None):
     need("ffmpeg")
     tmp = Path(tempfile.mkdtemp()) / "voice.mp3"
     run(["ffmpeg", "-y", "-v", "error", "-i", src, "-vn", "-ac", "1", "-ar", "16000", "-b:a", "48k", str(tmp)])
@@ -154,8 +154,14 @@ def transcribe(src: str, out: str, language: str | None, key_file: str | None, e
         except ImportError:
             die("no GROQ_API_KEY and faster-whisper is not installed. Either export GROQ_API_KEY "
                 "or run: pip install faster-whisper")
-        log("transcribing locally with faster-whisper small")
-        model = WhisperModel("small", compute_type="int8")
+        # small mangles Indonesian names and loanwords; turbo is ~as fast on CPU and far more accurate
+        name = model_name or os.environ.get("SPLICECRAFT_WHISPER") or "large-v3-turbo"
+        log(f"transcribing locally with faster-whisper {name}")
+        try:
+            model = WhisperModel(name, compute_type="int8")
+        except Exception as e:  # offline and the model is not cached yet
+            log(f"could not load {name} ({e}); falling back to small")
+            model = WhisperModel("small", compute_type="int8")
         segs, info = model.transcribe(str(tmp), word_timestamps=True, language=language)
         for s in segs:
             segments.append({"text": s.text.strip(), "s": s.start, "e": s.end})
@@ -1622,6 +1628,7 @@ def main():
     s = sub.add_parser("probe"); s.add_argument("src")
     s = sub.add_parser("transcribe"); s.add_argument("src"); s.add_argument("-o", "--out", default="words.json")
     s.add_argument("--language"); s.add_argument("--key-file"); s.add_argument("--engine", default="auto", choices=["auto", "groq", "local"])
+    s.add_argument("--model", help="local faster-whisper model (default large-v3-turbo, fallback small)")
 
     def plan_args(s):
         s.add_argument("--level", type=int, default=60)
@@ -1673,7 +1680,7 @@ def main():
     if a.cmd == "probe":
         print(json.dumps(probe(a.src), indent=2))
     elif a.cmd == "transcribe":
-        transcribe(a.src, a.out, a.language, a.key_file, a.engine)
+        transcribe(a.src, a.out, a.language, a.key_file, a.engine, a.model)
     elif a.cmd == "plan":
         plan(a.words, a.out, a.level, a.style, a.duration, a.brand, a.no_cut, a.genre, a.variant, a.captions, a.brief)
     elif a.cmd == "detect":
